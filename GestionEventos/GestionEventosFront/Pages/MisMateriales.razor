@@ -1,0 +1,195 @@
+﻿@* Ruta de esta página *@
+@page "/mis-materiales"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+@* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
+
+<div class="pagina-con-menu">
+
+    @* ---- MENÚ LATERAL REUTILIZADO ---- *@
+    <MenuAsistente />
+
+    @* ---- CONTENIDO PRINCIPAL ---- *@
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Juan</span>
+                <span class="barra-email">juan@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        @* ---- CUERPO ---- *@
+        <div class="cuerpo-dashboard">
+
+            @* ---- TÍTULO ---- *@
+            <h1 class="titulo-pagina">Mis Materiales</h1>
+            <p class="subtitulo-pagina">Accede a los materiales de los eventos en los que participaste</p>
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(3, 1fr);">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📄</div>
+                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-texto">Materiales Disponibles</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-morado">📥</div>
+                    <div class="estadistica-numero">423</div>
+                    <div class="estadistica-texto">Total Descargas</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">📋</div>
+                    <div class="estadistica-numero">1</div>
+                    <div class="estadistica-texto">Eventos con Material</div>
+                </div>
+
+            </div>
+
+            @* ---- BARRA DE BÚSQUEDA ---- *@
+            <div class="contenedor-busqueda" style="margin-bottom: 24px;">
+                <span class="icono-busqueda">🔍</span>
+                <input class="campo-busqueda" type="text"
+                       placeholder="Buscar materiales por nombre o evento..."
+                       @bind="busqueda"
+                       @bind:event="oninput" />
+            </div>
+
+            @* ---- GRID DE MATERIALES ---- *@
+            <div class="grid-materiales">
+
+                @foreach (var material in MaterialesFiltrados)
+                {
+                    <div class="tarjeta-material">
+
+                        @* Ícono del tipo de archivo *@
+                        <div class="material-icono-contenedor">
+                            <div class="material-icono">📄</div>
+                            <span class="material-tipo-badge">@material.Tipo</span>
+                        </div>
+
+                        @* Información del material *@
+                        <div class="material-info">
+                            <h3 class="material-nombre">@material.Nombre</h3>
+
+                            <div class="material-detalles">
+                                <span><strong>Evento:</strong> @material.Evento</span>
+                                <span><strong>Tamaño:</strong> @material.Tamanio</span>
+                                <span><strong>Subido:</strong> @material.FechaSubida</span>
+                                <span><strong>Descargas:</strong> @material.Descargas</span>
+                            </div>
+
+                            @* Botones Ver y Descargar *@
+                            <div class="material-botones">
+                                <button class="boton-ver-material">
+                                    👁 Ver
+                                </button>
+                                <button class="boton-descargar-material">
+                                    📥 Descargar
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+            @* Si no hay materiales que coincidan *@
+            @if (!MaterialesFiltrados.Any())
+            {
+                <div class="sin-resultados">
+                    <p>😕 No se encontraron materiales.</p>
+                </div>
+            }
+
+            @* ---- NOTA INFORMATIVA ---- *@
+            <div class="nota-informativa">
+                <div class="nota-icono">📄</div>
+                <div class="nota-texto">
+                    <strong>Acceso a Materiales</strong>
+                    <p>
+                        Solo puedes acceder a los materiales de eventos en los que hayas confirmado tu pago.
+                        Los materiales incluyen presentaciones, documentos, videos y recursos adicionales
+                        proporcionados por los organizadores.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        @* fin cuerpo-dashboard *@
+
+    </div>
+    @* fin contenido-principal *@
+
+</div>
+
+@* ===================== C# - LA LÓGICA ===================== *@
+@code {
+
+    // Variable que guarda la fecha de hoy
+    private string fechaHoy = "";
+
+    // Variable que guarda lo que el usuario escribe en la búsqueda
+    private string busqueda = "";
+
+    // Clase que representa un material con todos sus datos
+    private class Material
+    {
+        public string Nombre { get; set; } = "";
+        public string Tipo { get; set; } = "";
+        // Evento al que pertenece el material
+        public string Evento { get; set; } = "";
+        public string Tamanio { get; set; } = "";
+        public string FechaSubida { get; set; } = "";
+        public int Descargas { get; set; }
+    }
+
+    // Lista de materiales de ejemplo
+    private List<Material> listaMateriales = new List<Material>
+    {
+        new Material
+        {
+            Nombre = "Presentación Keynote - IA",
+            Tipo = "pdf",
+            Evento = "Conferencia de Tecnología 2026",
+            Tamanio = "2.5 MB",
+            FechaSubida = "20/2/2026",
+            Descargas = 245
+        },
+        new Material
+        {
+            Nombre = "Guía Workshop ML",
+            Tipo = "pdf",
+            Evento = "Conferencia de Tecnología 2026",
+            Tamanio = "3.8 MB",
+            FechaSubida = "21/2/2026",
+            Descargas = 178
+        }
+    };
+
+    // Propiedad que filtra la lista según la búsqueda
+    private IEnumerable<Material> MaterialesFiltrados => listaMateriales
+        .Where(m =>
+            string.IsNullOrEmpty(busqueda) ||
+            m.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+            m.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+
+    // OnInitialized se ejecuta cuando la página carga
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+}

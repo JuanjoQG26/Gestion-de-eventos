@@ -1,0 +1,250 @@
+﻿@* Ruta de esta página *@
+@page "/mis-inscripciones"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+@* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
+
+<div class="pagina-con-menu">
+
+    @* ---- MENÚ LATERAL REUTILIZADO ---- *@
+    <MenuAsistente />
+
+    @* ---- CONTENIDO PRINCIPAL ---- *@
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Juan</span>
+                <span class="barra-email">juan@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        @* ---- CUERPO ---- *@
+        <div class="cuerpo-dashboard">
+
+            @* ---- TÍTULO ---- *@
+            <h1 class="titulo-pagina">Mis Inscripciones</h1>
+            <p class="subtitulo-pagina">Gestiona tus inscripciones y estado de pago</p>
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(3, 1fr);">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📅</div>
+                    <div class="estadistica-numero">4</div>
+                    <div class="estadistica-texto">Total Inscripciones</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">✅</div>
+                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-texto">Pagos Confirmados</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🕐</div>
+                    <div class="estadistica-numero">1</div>
+                    <div class="estadistica-texto">Pagos Pendientes</div>
+                </div>
+
+            </div>
+
+            @* ---- BARRA DE BÚSQUEDA ---- *@
+            <div class="contenedor-busqueda" style="margin-bottom: 24px;">
+                <span class="icono-busqueda">🔍</span>
+                <input class="campo-busqueda" type="text"
+                       placeholder="Buscar por evento o participante..."
+                       @bind="busqueda"
+                       @bind:event="oninput" />
+            </div>
+
+            @* ---- LISTA DE INSCRIPCIONES ---- *@
+            <div class="lista-inscripciones">
+
+                @foreach (var inscripcion in InscripcionesFiltradas)
+                {
+                    @* Por cada inscripción genera una tarjeta *@
+                    <div class="tarjeta-inscripcion">
+
+                        @* ---- LADO IZQUIERDO: información del evento ---- *@
+                        <div class="inscripcion-info">
+
+                            <h3 class="inscripcion-nombre">@inscripcion.NombreEvento</h3>
+
+                            @* Badge de estado de pago *@
+                            <span class="badge-pago @inscripcion.EstadoClase">
+                                @inscripcion.EstadoPago
+                            </span>
+
+                            <div class="inscripcion-detalles">
+                                <span>📅 Inscrito el @inscripcion.FechaInscripcion</span>
+                                <span>📍 @inscripcion.Email</span>
+                            </div>
+
+                            @* Actividades seleccionadas *@
+                            <div class="inscripcion-actividades">
+                                <span class="actividades-titulo">
+                                    Actividades Seleccionadas (@inscripcion.Actividades.Count):
+                                </span>
+                                <div class="actividades-badges">
+                                    @foreach (var actividad in inscripcion.Actividades)
+                                    {
+                                        <span class="actividad-badge">@actividad</span>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                        @* ---- LADO DERECHO: información del pago y botones ---- *@
+                        <div class="inscripcion-pago">
+
+                            <div class="pago-card">
+                                <span class="pago-label">Monto Total</span>
+                                <span class="pago-monto">$@inscripcion.Monto</span>
+                                <div class="pago-detalle">
+                                    <span class="pago-detalle-label">Método:</span>
+                                    <span class="pago-detalle-valor">@inscripcion.MetodoPago</span>
+                                </div>
+                                <div class="pago-detalle">
+                                    <span class="pago-detalle-label">Transacción:</span>
+                                    <span class="pago-detalle-valor">@inscripcion.Transaccion</span>
+                                </div>
+                            </div>
+
+                            @* Botones según estado de pago *@
+                            @if (inscripcion.EstadoPago == "Pago Confirmado")
+                            {
+                                <button class="boton-inscripcion boton-materiales"
+                                        @onclick='() => NavegaA("/mis-materiales")'>
+                                    Ver Materiales
+                                </button>
+                                <button class="boton-inscripcion boton-certificado"
+                                        @onclick='() => NavegaA("/mis-certificados")'>
+                                    Ver Certificado
+                                </button>
+                            }
+                            else
+                            {
+                                @* Si el pago está pendiente muestra botón de pagar *@
+                                <button class="boton-inscripcion boton-pagar">
+                                    Completar Pago
+                                </button>
+                            }
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+            @* Si no hay inscripciones que coincidan *@
+            @if (!InscripcionesFiltradas.Any())
+            {
+                <div class="sin-resultados">
+                    <p>😕 No se encontraron inscripciones.</p>
+                </div>
+            }
+
+        </div>
+        @* fin cuerpo-dashboard *@
+
+    </div>
+    @* fin contenido-principal *@
+
+</div>
+
+@* ===================== C# - LA LÓGICA ===================== *@
+@code {
+
+    // Variable que guarda la fecha de hoy
+    private string fechaHoy = "";
+
+    // Variable que guarda lo que el usuario escribe en la búsqueda
+    private string busqueda = "";
+
+    // Clase que representa una inscripción con todos sus datos
+    private class Inscripcion
+    {
+        public string NombreEvento { get; set; } = "";
+        public string EstadoPago { get; set; } = "";
+        // EstadoClase es el nombre de la clase CSS según el estado
+        public string EstadoClase { get; set; } = "";
+        public string FechaInscripcion { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Monto { get; set; } = "";
+        public string MetodoPago { get; set; } = "";
+        public string Transaccion { get; set; } = "";
+        // Lista de actividades seleccionadas por el asistente
+        public List<string> Actividades { get; set; } = new();
+    }
+
+    // Lista de inscripciones de ejemplo
+    private List<Inscripcion> listaInscripciones = new List<Inscripcion>
+    {
+        new Inscripcion
+        {
+            NombreEvento = "Conferencia de Tecnología 2026",
+            EstadoPago = "Pago Confirmado",
+            EstadoClase = "badge-confirmado",
+            FechaInscripcion = "15/2/2026",
+            Email = "maria.gonzalez@email.com",
+            Monto = "150",
+            MetodoPago = "Tarjeta de crédito",
+            Transaccion = "",
+            Actividades = new List<string> { "a1", "a2" }
+        },
+        new Inscripcion
+        {
+            NombreEvento = "Conferencia de Tecnología 2026",
+            EstadoPago = "Pago Confirmado",
+            EstadoClase = "badge-confirmado",
+            FechaInscripcion = "16/2/2026",
+            Email = "juan.perez@email.com",
+            Monto = "150",
+            MetodoPago = "PayPal",
+            Transaccion = "",
+            Actividades = new List<string> { "a1" }
+        },
+        new Inscripcion
+        {
+            NombreEvento = "Taller de Inteligencia Artificial",
+            EstadoPago = "Pago Pendiente",
+            EstadoClase = "badge-pendiente",
+            FechaInscripcion = "20/3/2026",
+            Email = "carlos.torres@email.com",
+            Monto = "50",
+            MetodoPago = "-",
+            Transaccion = "-",
+            Actividades = new List<string> { "a1" }
+        }
+    };
+
+    // Propiedad que filtra la lista según la búsqueda
+    private IEnumerable<Inscripcion> InscripcionesFiltradas => listaInscripciones
+        .Where(i =>
+            string.IsNullOrEmpty(busqueda) ||
+            i.NombreEvento.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+            i.Email.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+
+    // OnInitialized se ejecuta cuando la página carga
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    // Función que navega a la ruta indicada
+    private void NavegaA(string ruta)
+    {
+        Navegacion.NavigateTo(ruta);
+    }
+}

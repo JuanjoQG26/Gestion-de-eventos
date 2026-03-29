@@ -44,8 +44,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkQXNpc3RlbnRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/ExplorarEventos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXhwbG9yYXJFdmVudG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/MisInscripciones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzSW5zY3JpcGNpb25lcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/MisMateriales.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzTWF0ZXJpYWxlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/NotFound.razor]

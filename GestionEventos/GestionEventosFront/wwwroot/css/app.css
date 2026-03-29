@@ -246,19 +246,19 @@ code {
     /* Animación suave al cambiar estilos */
 }
 
-    .boton-tipo:hover {
+.boton-tipo:hover {
         /* Al pasar el mouse encima */
         border-color: #1a56db;
         color: #1a56db;
-    }
+}
 
-    .boton-tipo.seleccionado {
+.boton-tipo.seleccionado {
         /* Cuando el botón está seleccionado */
         border-color: #1a56db;
         color: #1a56db;
         background: #eff6ff;
         /* Azul muy claro de fondo */
-    }
+}
 
 /* =============================================
    GRUPOS DE CAMPOS (etiqueta + input juntos)
@@ -286,11 +286,11 @@ code {
     transition: border-color 0.2s;
 }
 
-    .campo-texto:focus {
+.campo-texto:focus {
         /* Cuando el usuario hace click en el campo */
         border-color: #1a56db;
         /* El borde se vuelve azul */
-    }
+}
 
 /* =============================================
    BOTÓN PRINCIPAL "INICIAR SESIÓN"
@@ -311,10 +311,10 @@ code {
     margin-top: 4px;
 }
 
-    .boton-principal:hover {
+.boton-principal:hover {
         background: #1648c0;
         /* Azul más oscuro al pasar el mouse */
-    }
+ }
 
 /* =============================================
    ENLACE "¿NO TIENES CUENTA? REGÍSTRATE"
@@ -327,16 +327,16 @@ code {
     font-size: 0.9rem;
 }
 
-    .enlace-registro a {
+.enlace-registro a {
         color: #1a56db;
         font-weight: 600;
         cursor: pointer;
         text-decoration: none;
-    }
+}
 
-        .enlace-registro a:hover {
+.enlace-registro a:hover {
             text-decoration: underline;
-        }
+}
 
 /* =============================================
    MENSAJE DE ERROR EN ROJO
@@ -526,18 +526,18 @@ code {
     font-size: 0.9rem;
 }
 
-    .menu-item:hover {
+.menu-item:hover {
         /* Al pasar el mouse encima */
         background: #2d3f55;
         color: white;
-    }
+}
 
-    .menu-item.activo {
+ .menu-item.activo {
         /* Cuando el item está seleccionado */
         background: #1a56db;
         /* Fondo azul */
         color: white;
-    }
+ }
 
 .menu-item-icono {
     font-size: 1.1rem;
@@ -561,11 +561,11 @@ code {
     /* Rojo suave para cerrar sesión */
 }
 
-    .menu-cerrar-sesion:hover {
+.menu-cerrar-sesion:hover {
         background: #3f1f1f;
         /* Fondo rojo oscuro al pasar el mouse */
         color: #f87171;
-    }
+}
 
 /* =============================================
    CONTENIDO PRINCIPAL - EL LADO DERECHO
@@ -758,10 +758,10 @@ code {
     /* Animación al pasar el mouse */
 }
 
-    .accion-rapida:hover {
+.accion-rapida:hover {
         transform: translateY(-3px);
         /* Sube 3px al pasar el mouse */
-    }
+}
 
 .accion-icono {
     font-size: 1.4rem;
@@ -817,23 +817,43 @@ code {
 }
 
 /* =============================================
-   LISTA DE EVENTOS
+   LISTA DE EVENTOS Y INSCRIPCIONES
    ============================================= */
 
 .lista-eventos {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+}
+
+.lista-inscripciones {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .tarjeta-evento {
     background: white;
-    border-radius: 12px;
-    padding: 20px 24px;
+    border-radius: 16px;
+    padding: 24px;
     display: flex;
-    align-items: center;
-    gap: 20px;
+    flex-direction: row;
+    gap: 24px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    align-items: flex-start;
+    width: 100%;
+}
+
+.tarjeta-inscripcion {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    align-items: flex-start;
+    width: 100%;
 }
 
 .evento-fecha-badge {
@@ -844,12 +864,13 @@ code {
     font-weight: 700;
     font-size: 0.85rem;
     white-space: nowrap;
-    /* No parte el texto en dos líneas */
 }
 
 .evento-info {
     flex: 1;
-    /* Ocupa todo el espacio disponible */
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .evento-nombre {
@@ -870,18 +891,17 @@ code {
     padding: 3px 10px;
     border-radius: 20px;
     font-weight: 600;
+    width: fit-content;
 }
 
     .evento-estado.confirmado {
         background: #dcfce7;
         color: #16a34a;
-        /* Verde */
     }
 
     .evento-estado.pendiente {
         background: #fef9c3;
         color: #ca8a04;
-        /* Amarillo */
     }
 
 .boton-evento {
@@ -901,3 +921,557 @@ code {
         background: #1a56db;
         color: white;
     }
+
+/* =============================================
+   INSCRIPCIONES - LADO IZQUIERDO
+   ============================================= */
+
+.inscripcion-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.inscripcion-nombre {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.badge-pago {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.badge-confirmado {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.badge-pendiente {
+    background: #fef9c3;
+    color: #ca8a04;
+}
+
+.inscripcion-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* =============================================
+   ACTIVIDADES SELECCIONADAS
+   ============================================= */
+
+.inscripcion-actividades {
+    margin-top: 8px;
+}
+
+.actividades-titulo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.actividades-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.actividad-badge {
+    background: #e5e7eb;
+    color: #374151;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+/* =============================================
+   INSCRIPCIONES - LADO DERECHO (PAGO)
+   ============================================= */
+
+.inscripcion-pago {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 220px;
+    flex-shrink: 0;
+}
+
+.pago-card {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.pago-label {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.pago-monto {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.pago-detalle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+}
+
+.pago-detalle-label {
+    color: #6b7280;
+}
+
+.pago-detalle-valor {
+    font-weight: 600;
+    color: #111827;
+}
+
+/* =============================================
+   BOTONES DE INSCRIPCIÓN
+   ============================================= */
+
+.boton-inscripcion {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.boton-materiales {
+    background: white;
+    border: 1.5px solid #1a56db;
+    color: #1a56db;
+}
+
+    .boton-materiales:hover {
+        background: #1a56db;
+        color: white;
+    }
+
+.boton-certificado {
+    background: #7c3aed;
+    color: white;
+}
+
+    .boton-certificado:hover {
+        background: #6d28d9;
+    }
+
+.boton-pagar {
+    background: #16a34a;
+    color: white;
+}
+
+    .boton-pagar:hover {
+        background: #15803d;
+    }
+
+/* =============================================
+   SIN RESULTADOS
+   ============================================= */
+
+.sin-resultados {
+    text-align: center;
+    padding: 60px;
+    color: #6b7280;
+    font-size: 1rem;
+}
+/* =============================================
+   EXPLORAR EVENTOS - ENCABEZADO
+   ============================================= */
+
+.explorar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+/* =============================================
+   BARRA DE BÚSQUEDA Y FILTROS
+   ============================================= */
+
+.barra-busqueda-filtros {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    /* En pantallas pequeñas baja a la siguiente línea */
+}
+
+.contenedor-busqueda {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 10px 16px;
+    gap: 8px;
+    flex: 1;
+    /* Ocupa todo el espacio disponible */
+    min-width: 200px;
+}
+
+.icono-busqueda {
+    font-size: 1rem;
+    color: #6b7280;
+}
+
+.campo-busqueda {
+    border: none;
+    outline: none;
+    /* Sin borde ni contorno */
+    font-size: 0.9rem;
+    color: #111827;
+    width: 100%;
+    background: transparent;
+}
+
+.botones-filtro {
+    display: flex;
+    gap: 8px;
+}
+
+.boton-filtro {
+    padding: 10px 18px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 8px;
+    background: white;
+    color: #374151;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.boton-filtro:hover {
+        border-color: #1a56db;
+        color: #1a56db;
+}
+
+.boton-filtro.filtro-activo {
+        background: #1a56db;
+        /* Fondo azul cuando está activo */
+        color: white;
+        border-color: #1a56db;
+}
+
+/* =============================================
+   GRID DE TARJETAS DE EVENTOS
+   ============================================= */
+
+.grid-eventos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 columnas iguales */
+    gap: 24px;
+}
+
+.tarjeta-evento-explorar {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    /* Oculta lo que salga de los bordes redondeados */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s;
+}
+
+.tarjeta-evento-explorar:hover {
+        transform: translateY(-4px);
+        /* Sube al pasar el mouse */
+}
+
+/* =============================================
+   IMAGEN DEL EVENTO
+   ============================================= */
+
+.evento-imagen-contenedor {
+    position: relative;
+    /* Para posicionar el badge encima */
+    height: 180px;
+    background: linear-gradient(135deg, #1e2a3a, #2d3f55);
+    /* Fondo oscuro mientras no hay imagen real */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.evento-imagen-placeholder {
+    font-size: 4rem;
+    /* Emoji grande como placeholder */
+    opacity: 0.5;
+}
+
+/* =============================================
+   BADGE DE ESTADO (Próximo, En Curso, Completado)
+   ============================================= */
+
+.badge-estado {
+    position: absolute;
+    /* Se posiciona encima de la imagen */
+    top: 12px;
+    right: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: white;
+}
+
+.badge-proximo { background: #3b82f6; }
+/* Azul para próximos */
+    .badge-en-curso {
+        background: #a855f7;
+    }
+    /* Morado para en curso */
+    .badge-completado {
+        background: #22c55e;
+    }
+    /* Verde para completados */
+    /* =============================================
+   INFORMACIÓN DE LA TARJETA DE EVENTO
+   ============================================= */
+.evento-explorar-info {
+    padding: 20px;
+}
+
+    .evento-explorar-nombre {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 6px;
+    }
+
+    .evento-explorar-desc {
+        font-size: 0.85rem;
+        color: #6b7280;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+
+    .evento-explorar-detalles {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.82rem;
+        color: #374151;
+        margin-bottom: 12px;
+    }
+
+    .evento-precio {
+        font-weight: 700;
+        color: #1a56db;
+        /* Precio en azul */
+    }
+    /* =============================================
+   BARRA DE OCUPACIÓN
+   ============================================= */
+
+    .barra-ocupacion-contenedor {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #6b7280;
+        margin-bottom: 4px;
+    }
+
+    .barra-ocupacion {
+        height: 6px;
+        background: #e5e7eb;
+        /* Fondo gris de la barra */
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .barra-ocupacion-progreso {
+        height: 100%;
+        background: #1a56db;
+        /* Azul para el progreso */
+        border-radius: 3px;
+        transition: width 0.3s;
+        /* Animación suave */
+    }
+    /* =============================================
+   SIN RESULTADOS
+   ============================================= */
+
+    .sin-resultados {
+        text-align: center;
+        padding: 60px;
+        color: #6b7280;
+        font-size: 1rem;
+    }
+    /* =============================================
+GRID DE MATERIALES
+============================================= */
+    .grid-materiales {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-bottom: 32px;
+    }
+
+    .tarjeta-material {
+        background: white;
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    }
+
+    .material-icono-contenedor {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .material-icono {
+        font-size: 2rem;
+        background: #eff6ff;
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .material-tipo-badge {
+        background: #e5e7eb;
+        color: #374151;
+        padding: 3px 10px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .material-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .material-nombre {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #111827;
+        margin: 0;
+    }
+
+    .material-detalles {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.82rem;
+        color: #6b7280;
+    }
+
+        .material-detalles strong {
+            color: #374151;
+        }
+
+    .material-botones {
+        display: flex;
+        gap: 8px;
+    }
+
+    .boton-ver-material {
+        flex: 1;
+        padding: 10px;
+        background: white;
+        border: 1.5px solid #1a56db;
+        color: #1a56db;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+        .boton-ver-material:hover {
+            background: #1a56db;
+            color: white;
+        }
+
+    .boton-descargar-material {
+        flex: 1;
+        padding: 10px;
+        background: #7c3aed;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+        .boton-descargar-material:hover {
+            background: #6d28d9;
+        }
+
+    .nota-informativa {
+        background: white;
+        border-radius: 16px;
+        padding: 20px 24px;
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+        margin-top: 8px;
+    }
+
+    .nota-icono {
+        font-size: 1.5rem;
+        background: #eff6ff;
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .nota-texto {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.85rem;
+        color: #6b7280;
+        line-height: 1.6;
+    }
+
+        .nota-texto strong {
+            color: #111827;
+            font-size: 0.95rem;
+        }
