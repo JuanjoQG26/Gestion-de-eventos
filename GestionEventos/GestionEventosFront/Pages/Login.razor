@@ -1,0 +1,125 @@
+﻿@* Esta línea define la ruta de esta página, es decir, que cuando el usuario vaya a "/" (la raíz) se muestra esta página *@
+@page "/"
+
+@* Esto permite usar NavigationManager para navegar entre páginas *@
+@inject NavigationManager Navegacion
+
+@* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
+
+@* DIV que cubre toda la pantalla con el fondo degradado *@
+<div class="fondo-login">
+
+    @* DIV que agrupa y centra todo el contenido *@
+    <div class="contenedor-login">
+
+        @* ---- ENCABEZADO: ícono + título ---- *@
+        <div class="encabezado">
+            <div class="icono-logo">📅</div>
+            <h1 class="titulo-logo">Gestión de Eventos</h1>
+        </div>
+
+        @* ---- TARJETA BLANCA DEL FORMULARIO ---- *@
+        <div class="tarjeta">
+
+            <h2 class="titulo-tarjeta">Iniciar sesión</h2>
+            <p class="subtitulo-tarjeta">Plataforma de gestión de eventos</p>
+
+            @* ---- SELECTOR TIPO DE USUARIO ---- *@
+            <label class="etiqueta">Tipo de Usuario</label>
+            <div class="botones-tipo">
+
+                @* Si tipoUsuario es "asistente" le agrega la clase "seleccionado" *@
+                <button class="boton-tipo @(tipoUsuario == "asistente" ? "seleccionado" : "")"
+                        @onclick='() => tipoUsuario = "asistente"'>
+                    <span>👤</span>
+                    <span>Asistente</span>
+                </button>
+
+                <button class="boton-tipo @(tipoUsuario == "organizador" ? "seleccionado" : "")"
+                        @onclick='() => tipoUsuario = "organizador"'>
+                    <span>👥</span>
+                    <span>Organizador</span>
+                </button>
+
+            </div>
+
+            @* ---- CAMPO EMAIL ---- *@
+            <div class="grupo-campo">
+                <label class="etiqueta">Email</label>
+                @* @bind="email" conecta este input con la variable email del código C# *@
+                <input class="campo-texto" type="email" placeholder="tu@email.com" @bind="email" />
+            </div>
+
+            @* ---- CAMPO CONTRASEÑA ---- *@
+            <div class="grupo-campo">
+                <label class="etiqueta">Contraseña</label>
+                <input class="campo-texto" type="password" placeholder="••••••••" @bind="password" />
+            </div>
+
+            @* ---- MENSAJE DE ERROR: solo aparece si mensajeError tiene texto ---- *@
+            @if (!string.IsNullOrEmpty(mensajeError))
+            {
+                <p class="mensaje-error">@mensajeError</p>
+            }
+
+            @* ---- BOTÓN INICIAR SESIÓN ---- *@
+            @* @onclick="IniciarSesion" llama a la función IniciarSesion del código C# *@
+            <button class="boton-principal" @onclick="IniciarSesion">Iniciar Sesión</button>
+
+            @* ---- ENLACE A REGISTRO ---- *@
+            <p class="enlace-registro">
+                ¿No tienes cuenta? <a @onclick="IrARegistro">Regístrate</a>
+            </p>
+
+        </div>
+
+        @* ---- PIE DE PÁGINA INFORMATIVO ---- *@
+        <div class="pie-pagina">
+            <p><strong>Asistente:</strong> Inscríbete a eventos, descarga materiales y certificados</p>
+            <p><strong>Organizador:</strong> Crea eventos, gestiona ponentes y genera reportes</p>
+        </div>
+
+    </div>
+</div>
+
+@* ===================== C# - LA LÓGICA ===================== *@
+@code {
+
+    // Variable que guarda el tipo de usuario seleccionado. Por defecto es "asistente"
+    private string tipoUsuario = "asistente";
+
+    // Variable que guarda lo que escribe el usuario en el campo email
+    private string email = "";
+
+    // Variable que guarda lo que escribe el usuario en el campo contraseña
+    private string password = "";
+
+    // Variable que guarda el mensaje de error si algo falla
+    private string mensajeError = "";
+
+    // Función que se ejecuta al hacer click en "Iniciar Sesión"
+    private void IniciarSesion()
+    {
+        // Si email O contraseña están vacíos, muestra error y para
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            mensajeError = "Por favor completa todos los campos.";
+            return; // Detiene la función aquí
+        }
+
+        // Si los campos están llenos, limpia el error
+        mensajeError = "";
+
+        // Navega según el tipo de usuario seleccionado
+        if (tipoUsuario == "organizador")
+            Navegacion.NavigateTo("/dashboard-organizador");
+        else
+            Navegacion.NavigateTo("/dashboard-asistente");
+    }
+
+    // Función que lleva a la página de registro
+    private void IrARegistro()
+    {
+        Navegacion.NavigateTo("/registro");
+    }
+}

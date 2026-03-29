@@ -1,0 +1,106 @@
+﻿@* Este componente es el menú lateral del asistente
+   Se va a reutilizar en todas las páginas del asistente *@
+
+@inject NavigationManager Navegacion
+
+@* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
+
+@* DIV que contiene todo el menú lateral *@
+<div class="menu-lateral">
+
+    @* ---- LOGO Y TÍTULO ARRIBA DEL MENÚ ---- *@
+    <div class="menu-logo">
+        <div class="menu-icono-logo">📅</div>
+        <div class="menu-texto-logo">
+            <span class="menu-titulo-logo">Gestión de</span>
+            <span class="menu-titulo-logo">eventos</span>
+            <span class="menu-subtitulo-logo">Panel Asistente</span>
+        </div>
+    </div>
+
+    @* ---- INFORMACIÓN DEL USUARIO ---- *@
+    <div class="menu-usuario">
+        <div class="menu-avatar">👤</div>
+        <div class="menu-info-usuario">
+            <span class="menu-nombre-usuario">Asistente</span>
+            @* La etiqueta azul que dice "Asistente" *@
+            <span class="menu-rol">Asistente</span>
+        </div>
+    </div>
+
+    @* ---- ITEMS DE NAVEGACIÓN ---- *@
+    <nav class="menu-nav">
+        @* Cada item llama a NavegaA() con la ruta correspondiente *@
+        @* La clase "activo" se agrega si la ruta actual coincide con la del item *@
+
+        <a class="menu-item @(rutaActual == "/dashboard-asistente" ? "activo" : "")"
+           @onclick='() => NavegaA("/dashboard-asistente")'>
+            <span class="menu-item-icono">🏠</span>
+            <span>Mis Eventos</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/explorar-eventos" ? "activo" : "")"
+           @onclick='() => NavegaA("/explorar-eventos")'>
+            <span class="menu-item-icono">📅</span>
+            <span>Explorar Eventos</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/mis-inscripciones" ? "activo" : "")"
+           @onclick='() => NavegaA("/mis-inscripciones")'>
+            <span class="menu-item-icono">👤</span>
+            <span>Mis Inscripciones</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/mis-materiales" ? "activo" : "")"
+           @onclick='() => NavegaA("/mis-materiales")'>
+            <span class="menu-item-icono">📄</span>
+            <span>Mis Materiales</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/mis-certificados" ? "activo" : "")"
+           @onclick='() => NavegaA("/mis-certificados")'>
+            <span class="menu-item-icono">🏆</span>
+            <span>Mis Certificados</span>
+        </a>
+
+    </nav>
+
+    @* ---- BOTÓN CERRAR SESIÓN AL FONDO ---- *@
+    <div class="menu-pie">
+        <a class="menu-item menu-cerrar-sesion" @onclick="CerrarSesion">
+            <span class="menu-item-icono">🚪</span>
+            <span>Cerrar Sesión</span>
+        </a>
+    </div>
+
+</div>
+
+@* ===================== C# - LA LÓGICA ===================== *@
+@code {
+
+    // Variable que guarda la ruta actual para saber qué item del menú marcar como activo
+    private string rutaActual = "";
+
+    // OnInitialized se ejecuta automáticamente cuando el componente carga
+    protected override void OnInitialized()
+    {
+        // Obtiene la ruta actual de la URL, por ejemplo "/dashboard-asistente"
+        rutaActual = Navegacion.Uri.Replace(Navegacion.BaseUri, "/");
+
+        // Si la ruta termina en "/" extra la limpiamos
+        if (rutaActual != "/" && rutaActual.EndsWith("/"))
+            rutaActual = rutaActual.TrimEnd('/');
+    }
+
+    // Función que navega a la ruta indicada
+    private void NavegaA(string ruta)
+    {
+        Navegacion.NavigateTo(ruta);
+    }
+
+    // Función que cierra sesión y vuelve al login
+    private void CerrarSesion()
+    {
+        Navegacion.NavigateTo("/");
+    }
+}

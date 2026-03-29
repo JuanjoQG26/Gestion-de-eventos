@@ -1,0 +1,157 @@
+﻿@* Ruta de esta página *@
+@page "/dashboard-asistente"
+
+@* Permite usar el componente del menú que creamos en Layout *@
+@using GestionEventosFront.Layout
+
+@* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
+
+@* DIV que envuelve toda la página: menú + contenido *@
+<div class="pagina-con-menu">
+
+    @* ---- MENÚ LATERAL: reutilizamos el componente que creamos ---- *@
+    <MenuAsistente />
+
+    @* ---- CONTENIDO PRINCIPAL DEL LADO DERECHO ---- *@
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Asistente</span>
+                <span class="barra-email">asistente@email.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        @* ---- CUERPO DEL DASHBOARD ---- *@
+        <div class="cuerpo-dashboard">
+
+            @* ---- TÍTULO DE BIENVENIDA ---- *@
+            <h1 class="titulo-pagina">Mis Eventos</h1>
+            <p class="subtitulo-pagina">Bienvenido, Asistente</p>
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas">
+
+                @* Cada tarjeta muestra un número y una descripción *@
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📅</div>
+                    <div class="estadistica-numero">4</div>
+                    <div class="estadistica-texto">Mis Inscripciones</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">✅</div>
+                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-texto">Pagos Confirmados</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-morado">🕐</div>
+                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-texto">Eventos Próximos</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🏆</div>
+                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-texto">Certificados</div>
+                </div>
+
+            </div>
+
+            @* ---- ACCIONES RÁPIDAS ---- *@
+            <h2 class="titulo-seccion">Acciones Rápidas</h2>
+            <div class="acciones-rapidas">
+
+                <div class="accion-rapida fondo-azul-grad" @onclick='() => NavegaA("/explorar-eventos")'>
+                    <span class="accion-icono">📅</span>
+                    <span class="accion-titulo">Explorar Eventos</span>
+                    <span class="accion-desc">Descubre nuevos eventos</span>
+                </div>
+
+                <div class="accion-rapida fondo-verde-grad" @onclick='() => NavegaA("/mis-inscripciones")'>
+                    <span class="accion-icono">👥</span>
+                    <span class="accion-titulo">Mis Inscripciones</span>
+                    <span class="accion-desc">Ver mi participación</span>
+                </div>
+
+                <div class="accion-rapida fondo-morado-grad" @onclick='() => NavegaA("/mis-materiales")'>
+                    <span class="accion-icono">💲</span>
+                    <span class="accion-titulo">Mis Materiales</span>
+                    <span class="accion-desc">Descargar recursos</span>
+                </div>
+
+                <div class="accion-rapida fondo-naranja-grad" @onclick='() => NavegaA("/mis-certificados")'>
+                    <span class="accion-icono">🏆</span>
+                    <span class="accion-titulo">Mis Certificados</span>
+                    <span class="accion-desc">Descargar certificados</span>
+                </div>
+
+            </div>
+
+            @* ---- PRÓXIMOS EVENTOS ---- *@
+            <div class="seccion-header">
+                <h2 class="titulo-seccion">Próximos Eventos Disponibles</h2>
+                <a class="ver-todos" @onclick='() => NavegaA("/explorar-eventos")'>Ver todos →</a>
+            </div>
+
+            <div class="lista-eventos">
+
+                @* Evento 1 *@
+                <div class="tarjeta-evento">
+                    <div class="evento-fecha-badge">15 May</div>
+                    <div class="evento-info">
+                        <h3 class="evento-nombre">Congreso de Tecnología 2026</h3>
+                        <p class="evento-detalle">📍 Medellín &nbsp;&nbsp; 💲 $150.000</p>
+                        <span class="evento-estado confirmado">Inscrito</span>
+                    </div>
+                    <button class="boton-evento">Ver detalle</button>
+                </div>
+
+                @* Evento 2 *@
+                <div class="tarjeta-evento">
+                    <div class="evento-fecha-badge">22 Jun</div>
+                    <div class="evento-info">
+                        <h3 class="evento-nombre">Taller de Innovación</h3>
+                        <p class="evento-detalle">📍 Bogotá &nbsp;&nbsp; 💲 $80.000</p>
+                        <span class="evento-estado pendiente">Pago Pendiente</span>
+                    </div>
+                    <button class="boton-evento">Ver detalle</button>
+                </div>
+
+            </div>
+
+        </div>
+        @* fin cuerpo-dashboard *@
+
+    </div>
+    @* fin contenido-principal *@
+
+</div>
+@* fin pagina-con-menu *@
+
+@* ===================== C# - LA LÓGICA ===================== *@
+@code {
+
+    @inject NavigationManager Navegacion
+
+    // Variable que guarda la fecha de hoy formateada
+    private string fechaHoy = "";
+
+    // OnInitialized se ejecuta automáticamente cuando la página carga
+    protected override void OnInitialized()
+    {
+        // Obtiene la fecha actual y la formatea en español
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    // Función que navega a la ruta indicada
+    private void NavegaA(string ruta)
+    {
+        Navegacion.NavigateTo(ruta);
+    }
+}
