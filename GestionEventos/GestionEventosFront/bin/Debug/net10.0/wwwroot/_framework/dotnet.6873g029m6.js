@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "GestionEventosFront",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-MGMiYFziv/mJOgoUj3zteX3LTYf40AFE4YWk9mgX9xc=",
+    "hash": "sha256-4SurTP/1FsPiExtGozn6GR1fBcVqQcdh0GgNYC9ykMY=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.ykrnppwhq2.js"
@@ -1242,16 +1242,16 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "GestionEventosFront.wasm",
-        "name": "GestionEventosFront.9k6606mjyj.wasm",
-        "integrity": "sha256-uV6csYXn2A1wvW4ENjykgcrkKLsRE/F3j+rS4FWhp1A=",
+        "name": "GestionEventosFront.3z0p1somi7.wasm",
+        "integrity": "sha256-0Z0JBX4Vuber+8bV7pAI9/smofxAUKmkMZv/rFFuIfg=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "GestionEventosFront.pdb",
-        "name": "GestionEventosFront.rkg7b5aghw.pdb",
-        "integrity": "sha256-VfHP3KyjoDj7JxaNFjeZoakwT9m06M81xy6g5Z1MPEw=",
+        "name": "GestionEventosFront.pnrzuymhrb.pdb",
+        "integrity": "sha256-xbzIB8yn7nMg1fLeuHm2VwQSJDEOD++MxRPrmzHLPc0=",
         "cache": "force-cache"
       }
     ],

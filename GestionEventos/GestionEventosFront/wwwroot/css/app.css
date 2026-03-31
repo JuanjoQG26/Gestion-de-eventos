@@ -1475,3 +1475,145 @@ GRID DE MATERIALES
             color: #111827;
             font-size: 0.95rem;
         }
+
+/* =============================================
+   LISTA DE CERTIFICADOS
+   ============================================= */
+
+.lista-certificados {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.tarjeta-certificado {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.certificado-icono-contenedor {
+    flex-shrink: 0;
+}
+
+.certificado-icono {
+    font-size: 2rem;
+    background: #fef9c3;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.certificado-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.certificado-nombre {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.certificado-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.82rem;
+    color: #6b7280;
+}
+
+.certificado-acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.cert-estado {
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.cert-disponible {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.cert-generando {
+    background: #ffedd5;
+    color: #ea580c;
+}
+
+.cert-mensaje {
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-align: right;
+}
+
+.boton-descargar-cert {
+    padding: 10px 20px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+    .boton-descargar-cert:hover {
+        background: #6d28d9;
+    }
+
+/* =============================================
+   ESTADO VACÍO DE CERTIFICADOS
+   ============================================= */
+
+.certificados-vacios {
+    background: white;
+    border-radius: 16px;
+    padding: 60px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+.vacios-icono {
+    font-size: 3rem;
+    color: #d1d5db;
+}
+
+.vacios-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.vacios-desc {
+    color: #6b7280;
+    font-size: 0.9rem;
+    max-width: 400px;
+    line-height: 1.6;
+}

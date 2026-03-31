@@ -1,0 +1,179 @@
+﻿@* Ruta de esta página *@
+@page "/mis-certificados"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+@* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
+
+<div class="pagina-con-menu">
+
+    @* ---- MENÚ LATERAL REUTILIZADO ---- *@
+    <MenuAsistente />
+
+    @* ---- CONTENIDO PRINCIPAL ---- *@
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Juan Jose Quiroz Gonzalez</span>
+                <span class="barra-email">juanjosequiroz26@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        @* ---- CUERPO ---- *@
+        <div class="cuerpo-dashboard">
+
+            @* ---- TÍTULO ---- *@
+            <h1 class="titulo-pagina">Mis Certificados</h1>
+            <p class="subtitulo-pagina">Descarga tus certificados de participación</p>
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(2, 1fr);">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">✅</div>
+                    <div class="estadistica-numero">@certificados.Count(c => c.Disponible)</div>
+                    <div class="estadistica-texto">Certificados Disponibles</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🕐</div>
+                    <div class="estadistica-numero">@certificados.Count(c => !c.Disponible)</div>
+                    <div class="estadistica-texto">En Generación</div>
+                </div>
+
+            </div>
+
+            @* ---- BARRA DE BÚSQUEDA ---- *@
+            <div class="contenedor-busqueda" style="margin-bottom: 24px;">
+                <span class="icono-busqueda">🔍</span>
+                <input class="campo-busqueda" type="text"
+                       placeholder="Buscar certificados por evento..."
+                       @bind="busqueda"
+                       @bind:event="oninput" />
+            </div>
+
+            @* ---- LISTA DE CERTIFICADOS ---- *@
+            @if (CertificadosFiltrados.Any())
+            {
+                <div class="lista-certificados">
+                    @foreach (var cert in CertificadosFiltrados)
+                    {
+                        <div class="tarjeta-certificado">
+
+                            @* Ícono del certificado *@
+                            <div class="certificado-icono-contenedor">
+                                <div class="certificado-icono">🏆</div>
+                            </div>
+
+                            @* Información del certificado *@
+                            <div class="certificado-info">
+                                <h3 class="certificado-nombre">@cert.NombreEvento</h3>
+                                <div class="certificado-detalles">
+                                    <span>📅 Fecha del evento: @cert.FechaEvento</span>
+                                    <span>✅ Asistencia registrada: @cert.FechaAsistencia</span>
+                                    <span>🏛️ Emitido por: @cert.Emisor</span>
+                                </div>
+                            </div>
+
+                            @* Estado y botón de descarga *@
+                            <div class="certificado-acciones">
+                                @if (cert.Disponible)
+                                {
+                                    <span class="cert-estado cert-disponible">Disponible</span>
+                                    <button class="boton-descargar-cert">
+                                        📥 Descargar PDF
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="cert-estado cert-generando">En Generación</span>
+                                    <p class="cert-mensaje">
+                                        Disponible cuando finalice el evento
+                                    </p>
+                                }
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                @* Estado vacío cuando no hay certificados *@
+                <div class="certificados-vacios">
+                    <div class="vacios-icono">🏅</div>
+                    <h3 class="vacios-titulo">No tienes certificados disponibles</h3>
+                    <p class="vacios-desc">
+                        Los certificados se generan automáticamente al finalizar tu participación en los eventos
+                    </p>
+                    <button class="boton-principal" style="width: auto; padding: 12px 24px;"
+                            @onclick='() => Navegacion.NavigateTo("/mis-inscripciones")'>
+                        Ver Mis Inscripciones
+                    </button>
+                </div>
+            }
+
+            @* ---- NOTA INFORMATIVA ---- *@
+            <div class="nota-informativa" style="margin-top: 32px;">
+                <div class="nota-icono">🏆</div>
+                <div class="nota-texto">
+                    <strong>Sobre tus Certificados</strong>
+                    <p>
+                        Los certificados se generan automáticamente al finalizar tu participación en un evento.
+                        Asegúrate de haber confirmado tu pago y asistido al evento para recibir tu certificado
+                        de participación. Puedes descargarlos en formato PDF y compartirlos en tus redes profesionales.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        @* fin cuerpo-dashboard *@
+
+    </div>
+    @* fin contenido-principal *@
+
+</div>
+
+@* ===================== C# - LA LÓGICA ===================== *@
+@code {
+
+    // Variable que guarda la fecha de hoy
+    private string fechaHoy = "";
+
+    // Variable que guarda lo que el usuario escribe en la búsqueda
+    private string busqueda = "";
+
+    // Clase que representa un certificado con todos sus datos
+    private class Certificado
+    {
+        public string NombreEvento { get; set; } = "";
+        public string FechaEvento { get; set; } = "";
+        public string FechaAsistencia { get; set; } = "";
+        public string Emisor { get; set; } = "";
+        // Disponible indica si el certificado ya está listo para descargar
+        public bool Disponible { get; set; }
+    }
+
+    // Lista de certificados de ejemplo (vacía para mostrar el estado vacío)
+    private List<Certificado> certificados = new List<Certificado>();
+
+    // Propiedad que filtra la lista según la búsqueda
+    private IEnumerable<Certificado> CertificadosFiltrados => certificados
+        .Where(c =>
+            string.IsNullOrEmpty(busqueda) ||
+            c.NombreEvento.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+
+    // OnInitialized se ejecuta cuando la página carga
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+}
