@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="GestionEventosBack/GestionEventosBack.csproj" Id="b3f90ef5-eed1-4ea6-8530-19ded0337e13" />
   <Project Path="GestionEventosFront/GestionEventosFront.csproj" />
+  <Project Path="GestionEventosModelo/GestionEventosModelo.csproj" Id="c46e5b8b-3245-4a25-b78c-b11defb7888b" />
 </Solution>
