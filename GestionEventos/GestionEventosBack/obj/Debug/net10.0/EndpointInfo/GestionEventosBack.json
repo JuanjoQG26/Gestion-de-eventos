@@ -1,0 +1,527 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "GestionEventosBack",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Usuarios/login": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuarios/registro": {
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Usuarios": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Actividad": {
+        "type": "object",
+        "properties": {
+          "id_Actividad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Evento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Ponente": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "titulo": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "horaInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "horaFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "cupo": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "evento": {
+            "$ref": "#/components/schemas/Evento"
+          },
+          "ponente": {
+            "$ref": "#/components/schemas/Ponente"
+          },
+          "asistencias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asistencia"
+            },
+            "nullable": true
+          },
+          "inscripcionActividades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InscripcionActividad"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Asistencia": {
+        "type": "object",
+        "properties": {
+          "id_Asistencia": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Inscripcion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Actividad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metodoRegistro": {
+            "type": "string",
+            "nullable": true
+          },
+          "inscripcion": {
+            "$ref": "#/components/schemas/Inscripcion"
+          },
+          "actividad": {
+            "$ref": "#/components/schemas/Actividad"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Certificado": {
+        "type": "object",
+        "properties": {
+          "id_Certificado": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Inscripcion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaGeneracion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "urlPDF": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoValidacion": {
+            "type": "string",
+            "nullable": true
+          },
+          "inscripcion": {
+            "$ref": "#/components/schemas/Inscripcion"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Evento": {
+        "type": "object",
+        "properties": {
+          "id_Evento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "descripcion": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaInicio": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaFin": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lugar": {
+            "type": "string",
+            "nullable": true
+          },
+          "precio": {
+            "type": "number",
+            "format": "double"
+          },
+          "cupoTotal": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "id_Organizador": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "organizador": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "actividades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Actividad"
+            },
+            "nullable": true
+          },
+          "inscripciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Inscripcion"
+            },
+            "nullable": true
+          },
+          "materiales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Material"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Inscripcion": {
+        "type": "object",
+        "properties": {
+          "id_Inscripcion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Evento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaInscripcion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "usuario": {
+            "$ref": "#/components/schemas/Usuario"
+          },
+          "evento": {
+            "$ref": "#/components/schemas/Evento"
+          },
+          "pago": {
+            "$ref": "#/components/schemas/Pago"
+          },
+          "asistencias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Asistencia"
+            },
+            "nullable": true
+          },
+          "inscripcionActividades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InscripcionActividad"
+            },
+            "nullable": true
+          },
+          "certificado": {
+            "$ref": "#/components/schemas/Certificado"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InscripcionActividad": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Inscripcion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Actividad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "inscripcion": {
+            "$ref": "#/components/schemas/Inscripcion"
+          },
+          "actividad": {
+            "$ref": "#/components/schemas/Actividad"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "contrasena": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Material": {
+        "type": "object",
+        "properties": {
+          "id_Material": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Evento": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "url": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaSubida": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "evento": {
+            "$ref": "#/components/schemas/Evento"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Pago": {
+        "type": "object",
+        "properties": {
+          "id_Pago": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "id_Inscripcion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "monto": {
+            "type": "number",
+            "format": "double"
+          },
+          "fechaPago": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "metodoPago": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "transaccionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "inscripcion": {
+            "$ref": "#/components/schemas/Inscripcion"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Ponente": {
+        "type": "object",
+        "properties": {
+          "id_Ponente": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "nullable": true
+          },
+          "foto": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "especialidad": {
+            "type": "string",
+            "nullable": true
+          },
+          "actividades": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Actividad"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id_Usuario": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "contrasena": {
+            "type": "string",
+            "nullable": true
+          },
+          "rol": {
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "eventos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Evento"
+            },
+            "nullable": true
+          },
+          "inscripciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Inscripcion"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Usuarios"
+    }
+  ]
+}
