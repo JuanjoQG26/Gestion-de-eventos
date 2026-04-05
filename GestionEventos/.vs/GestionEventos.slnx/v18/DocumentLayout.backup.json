@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosfront\\pages\\reportes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|solutionrelative:gestioneventosfront\\pages\\reportes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosfront\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|solutionrelative:gestioneventosfront\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosfront\\pages\\asistencia.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|solutionrelative:gestioneventosfront\\pages\\asistencia.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +27,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\appsettings.json",
-              "RelativeDocumentMoniker": "GestionEventosBack\\appsettings.json",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\appsettings.json",
-              "RelativeToolTip": "GestionEventosBack\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-04-05T02:32:08.155Z",
+              "Title": "Reportes.razor",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\Pages\\Reportes.razor",
+              "RelativeDocumentMoniker": "GestionEventosFront\\Pages\\Reportes.razor",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\Pages\\Reportes.razor",
+              "RelativeToolTip": "GestionEventosFront\\Pages\\Reportes.razor",
+              "ViewState": "AgIAAGkBAAAAAAAAAAAswH0BAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-05T18:03:15.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "GestionEventosFront\\wwwroot\\css\\app.css",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "GestionEventosFront\\wwwroot\\css\\app.css",
+              "ViewState": "AgIAAOkJAAAAAAAAAAAowAEKAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-04-05T17:40:40.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Asistencia.razor",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\Pages\\Asistencia.razor",
+              "RelativeDocumentMoniker": "GestionEventosFront\\Pages\\Asistencia.razor",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\Pages\\Asistencia.razor",
+              "RelativeToolTip": "GestionEventosFront\\Pages\\Asistencia.razor",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAAAP4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-04-05T17:37:41.534Z",
               "EditorCaption": ""
             }
           ]

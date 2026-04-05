@@ -44,6 +44,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1lbnVPcmdhbml6YWRvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Asistencia.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNpc3RlbmNpYS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Certificados.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2VydGlmaWNhZG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/DashboardAsistente.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkQXNpc3RlbnRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,6 +76,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Materiales.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF0ZXJpYWxlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/MisCertificados.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzQ2VydGlmaWNhZG9zLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -90,6 +102,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Registro.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0cm8ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Reportes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVwb3J0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/_Imports.razor]

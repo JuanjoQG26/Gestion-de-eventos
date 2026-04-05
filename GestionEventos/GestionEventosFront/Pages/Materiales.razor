@@ -1,0 +1,335 @@
+﻿@* Ruta de esta página *@
+@page "/materiales"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+<div class="pagina-con-menu">
+
+    <MenuOrganizador />
+
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Luis</span>
+                <span class="barra-email">luis@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        <div class="cuerpo-dashboard">
+
+            @* ---- ENCABEZADO ---- *@
+            <div class="explorar-header">
+                <div>
+                    <h1 class="titulo-pagina">Materiales Digitales</h1>
+                    <p class="subtitulo-pagina">Gestiona y distribuye recursos para los eventos</p>
+                </div>
+                <button class="boton-crear" @onclick="MostrarFormulario">
+                    📤 Subir Material
+                </button>
+            </div>
+
+            @* ---- MENSAJE ÉXITO ---- *@
+            @if (!string.IsNullOrEmpty(mensajeExito))
+            {
+                <p class="mensaje-exito">@mensajeExito</p>
+            }
+
+            @* ---- FORMULARIO SUBIR MATERIAL ---- *@
+            @if (mostrarFormulario)
+            {
+                <div class="formulario-card">
+                    <h2 class="formulario-titulo">Subir Nuevo Material</h2>
+                    <div class="formulario-grid">
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Nombre del Material</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Ej: Presentación Keynote"
+                                   @bind="nuevoNombre" />
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Evento</label>
+                            <select class="campo-texto" @bind="nuevoEvento">
+                                <option value="">Selecciona un evento</option>
+                                <option value="Conferencia de Tecnología 2026">Conferencia de Tecnología 2026</option>
+                                <option value="Cumbre de Innovación Digital">Cumbre de Innovación Digital</option>
+                                <option value="Foro de Emprendimiento">Foro de Emprendimiento</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Tipo</label>
+                            <select class="campo-texto" @bind="nuevoTipo">
+                                <option value="">Selecciona el tipo</option>
+                                <option value="PDF">PDF</option>
+                                <option value="PPT">PPT</option>
+                                <option value="VIDEO">VIDEO</option>
+                                <option value="IMAGE">IMAGE</option>
+                            </select>
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Tamaño</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Ej: 2.5 MB"
+                                   @bind="nuevoTamanio" />
+                        </div>
+
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(mensajeError))
+                    {
+                        <p class="mensaje-error">@mensajeError</p>
+                    }
+
+                    <div class="formulario-botones">
+                        <button class="boton-principal" style="width:auto; padding:12px 32px;"
+                                @onclick="GuardarMaterial">
+                            Subir Material
+                        </button>
+                        <button class="boton-cancelar" @onclick="() => mostrarFormulario = false">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            }
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📄</div>
+                    <div class="estadistica-label-pequeño">Total Materiales</div>
+                    <div class="estadistica-numero">@listaMateriales.Count</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">📥</div>
+                    <div class="estadistica-label-pequeño">Total Descargas</div>
+                    <div class="estadistica-numero">@listaMateriales.Sum(m => m.Descargas)</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-morado">📋</div>
+                    <div class="estadistica-label-pequeño">PDFs</div>
+                    <div class="estadistica-numero">@listaMateriales.Count(m => m.Tipo == "PDF")</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🎥</div>
+                    <div class="estadistica-label-pequeño">Videos</div>
+                    <div class="estadistica-numero">@listaMateriales.Count(m => m.Tipo == "VIDEO")</div>
+                </div>
+
+            </div>
+
+            @* ---- BARRA DE BÚSQUEDA Y FILTROS ---- *@
+            <div class="barra-busqueda-filtros">
+                <div class="contenedor-busqueda">
+                    <span class="icono-busqueda">🔍</span>
+                    <input class="campo-busqueda" type="text"
+                           placeholder="Buscar materiales..."
+                           @bind="busqueda"
+                           @bind:event="oninput" />
+                </div>
+                <select class="campo-texto" style="width:auto; padding: 10px 16px;"
+                        @bind="filtroEvento">
+                    <option value="todos">Todos los eventos</option>
+                    <option value="Conferencia de Tecnología 2026">Conferencia de Tecnología 2026</option>
+                    <option value="Cumbre de Innovación Digital">Cumbre de Innovación Digital</option>
+                    <option value="Foro de Emprendimiento">Foro de Emprendimiento</option>
+                </select>
+                <select class="campo-texto" style="width:auto; padding: 10px 16px;"
+                        @bind="filtroTipo">
+                    <option value="todos">Todos</option>
+                    <option value="PDF">PDF</option>
+                    <option value="PPT">PPT</option>
+                    <option value="VIDEO">VIDEO</option>
+                    <option value="IMAGE">IMAGE</option>
+                </select>
+            </div>
+
+            @* ---- GRID DE MATERIALES ---- *@
+            <div class="grid-materiales-org">
+                @foreach (var material in MaterialesFiltrados)
+                {
+                    <div class="tarjeta-material-org">
+
+                        @* Ícono según tipo *@
+                        <div class="material-org-icono @material.ColorFondo">
+                            @material.Icono
+                        </div>
+
+                        <div class="material-org-info">
+                            <h3 class="material-org-nombre">@material.Nombre</h3>
+                            <p class="material-org-evento">@material.Evento</p>
+
+                            <div class="material-org-detalles">
+                                <div class="material-org-fila">
+                                    <span class="material-org-label">Tipo</span>
+                                    <span class="material-tipo-badge">@material.Tipo</span>
+                                </div>
+                                <div class="material-org-fila">
+                                    <span class="material-org-label">Tamaño</span>
+                                    <span>@material.Tamanio</span>
+                                </div>
+                                <div class="material-org-fila">
+                                    <span class="material-org-label">Descargas</span>
+                                    <span>@material.Descargas</span>
+                                </div>
+                                <div class="material-org-fila">
+                                    <span class="material-org-label">Subido</span>
+                                    <span>@material.FechaSubida</span>
+                                </div>
+                            </div>
+
+                            <div class="material-botones">
+                                <button class="boton-ver-material">👁 Ver</button>
+                                <button class="boton-descargar-material">📥 Descargar</button>
+                                <button class="boton-eliminar-material"
+                                        @onclick="() => EliminarMaterial(material)">
+                                    🗑️
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+            @if (!MaterialesFiltrados.Any())
+            {
+                <div class="sin-resultados">
+                    <p>😕 No se encontraron materiales.</p>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string fechaHoy = "";
+    private string busqueda = "";
+    private string filtroEvento = "todos";
+    private string filtroTipo = "todos";
+    private bool mostrarFormulario = false;
+    private string mensajeError = "";
+    private string mensajeExito = "";
+
+    // Variables formulario
+    private string nuevoNombre = "";
+    private string nuevoEvento = "";
+    private string nuevoTipo = "";
+    private string nuevoTamanio = "";
+
+    private class MaterialItem
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Evento { get; set; } = "";
+        public string Tipo { get; set; } = "";
+        public string Tamanio { get; set; } = "";
+        public int Descargas { get; set; }
+        public string FechaSubida { get; set; } = "";
+        public string Icono { get; set; } = "";
+        public string ColorFondo { get; set; } = "";
+    }
+
+    private List<MaterialItem> listaMateriales = new List<MaterialItem>
+    {
+        new MaterialItem { Id=1, Nombre="Presentación Keynote - IA", Evento="Conferencia de Tecnología 2026", Tipo="PDF", Tamanio="2.5 MB", Descargas=245, FechaSubida="20/2/2026", Icono="📄", ColorFondo="material-fondo-rojo" },
+        new MaterialItem { Id=2, Nombre="Guía Workshop ML", Evento="Conferencia de Tecnología 2026", Tipo="PDF", Tamanio="5.8 MB", Descargas=178, FechaSubida="21/2/2026", Icono="📄", ColorFondo="material-fondo-rojo" },
+        new MaterialItem { Id=3, Nombre="Video: Transformación Digital", Evento="Cumbre de Innovación Digital", Tipo="VIDEO", Tamanio="150 MB", Descargas=89, FechaSubida="10/3/2026", Icono="🎥", ColorFondo="material-fondo-morado" },
+        new MaterialItem { Id=4, Nombre="Infografía: Inversión en Startups", Evento="Foro de Emprendimiento", Tipo="IMAGE", Tamanio="1.2 MB", Descargas=312, FechaSubida="20/2/2026", Icono="🖼️", ColorFondo="material-fondo-verde" },
+    };
+
+    private IEnumerable<MaterialItem> MaterialesFiltrados => listaMateriales
+        .Where(m =>
+            (string.IsNullOrEmpty(busqueda) ||
+             m.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+             m.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
+            &&
+            (filtroEvento == "todos" || m.Evento == filtroEvento)
+            &&
+            (filtroTipo == "todos" || m.Tipo == filtroTipo));
+
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    private void MostrarFormulario()
+    {
+        mostrarFormulario = true;
+        nuevoNombre = "";
+        nuevoEvento = "";
+        nuevoTipo = "";
+        nuevoTamanio = "";
+        mensajeError = "";
+    }
+
+    private void GuardarMaterial()
+    {
+        if (string.IsNullOrEmpty(nuevoNombre) || string.IsNullOrEmpty(nuevoEvento) ||
+            string.IsNullOrEmpty(nuevoTipo))
+        {
+            mensajeError = "Nombre, evento y tipo son obligatorios.";
+            return;
+        }
+
+        // Asigna ícono y color según el tipo
+        string icono = nuevoTipo switch
+        {
+            "PDF" => "📄",
+            "PPT" => "📊",
+            "VIDEO" => "🎥",
+            "IMAGE" => "🖼️",
+            _ => "📄"
+        };
+
+        string color = nuevoTipo switch
+        {
+            "PDF" => "material-fondo-rojo",
+            "PPT" => "material-fondo-azul",
+            "VIDEO" => "material-fondo-morado",
+            "IMAGE" => "material-fondo-verde",
+            _ => "material-fondo-azul"
+        };
+
+        listaMateriales.Add(new MaterialItem
+        {
+            Id = listaMateriales.Count + 1,
+            Nombre = nuevoNombre,
+            Evento = nuevoEvento,
+            Tipo = nuevoTipo,
+            Tamanio = nuevoTamanio,
+            Descargas = 0,
+            FechaSubida = DateTime.Now.ToString("d/M/yyyy"),
+            Icono = icono,
+            ColorFondo = color
+        });
+
+        mensajeExito = "Material subido exitosamente.";
+        mostrarFormulario = false;
+        mensajeError = "";
+    }
+
+    private void EliminarMaterial(MaterialItem material)
+    {
+        listaMateriales.Remove(material);
+        mensajeExito = "Material eliminado exitosamente.";
+    }
+}

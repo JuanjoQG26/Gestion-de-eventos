@@ -1,0 +1,208 @@
+﻿@* Ruta de esta página *@
+@page "/certificados"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+<div class="pagina-con-menu">
+
+    <MenuOrganizador />
+
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Luis</span>
+                <span class="barra-email">luis@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        <div class="cuerpo-dashboard">
+
+            @* ---- ENCABEZADO ---- *@
+            <div class="explorar-header">
+                <div>
+                    <h1 class="titulo-pagina">Certificados</h1>
+                    <p class="subtitulo-pagina">Genera y distribuye certificados de participación</p>
+                </div>
+                <button class="boton-crear" @onclick="GenerarCertificados">
+                    🏆 Generar Certificado
+                </button>
+            </div>
+
+            @* ---- MENSAJE ÉXITO ---- *@
+            @if (!string.IsNullOrEmpty(mensajeExito))
+            {
+                <p class="mensaje-exito">@mensajeExito</p>
+            }
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(3, 1fr);">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">✅</div>
+                    <div class="estadistica-label-pequeño">Generados</div>
+                    <div class="estadistica-numero">
+                        @listaCertificados.Count(c => c.Estado == "Enviado" || c.Estado == "Generado")
+                    </div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📤</div>
+                    <div class="estadistica-label-pequeño">Enviados</div>
+                    <div class="estadistica-numero">
+                        @listaCertificados.Count(c => c.Estado == "Enviado")
+                    </div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🕐</div>
+                    <div class="estadistica-label-pequeño">Pendientes</div>
+                    <div class="estadistica-numero">
+                        @listaCertificados.Count(c => c.Estado == "Pendiente")
+                    </div>
+                </div>
+
+            </div>
+
+            @* ---- LISTA DE CERTIFICADOS ---- *@
+            <div class="tabla-contenedor">
+
+                <div style="display:flex; justify-content:space-between; align-items:center; padding: 16px 20px; border-bottom: 1px solid #e5e7eb;">
+                    <span class="tabla-titulo-seccion" style="padding:0; border:none;">Lista de Certificados</span>
+                    <button class="boton-crear" style="padding: 8px 20px; font-size:0.85rem;"
+                            @onclick="EnviarTodos">
+                        📤 Enviar Todos
+                    </button>
+                </div>
+
+                @* Barra de búsqueda dentro de la tarjeta *@
+                <div style="padding: 16px 20px; border-bottom: 1px solid #f3f4f6;">
+                    <div class="contenedor-busqueda">
+                        <span class="icono-busqueda">🔍</span>
+                        <input class="campo-busqueda" type="text"
+                               placeholder="Buscar por nombre o email..."
+                               @bind="busqueda"
+                               @bind:event="oninput" />
+                    </div>
+                </div>
+
+                <table class="tabla-inscripciones">
+                    <thead>
+                        <tr>
+                            <th>Participante</th>
+                            <th>Email</th>
+                            <th>Fecha Generación</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cert in CertificadosFiltrados)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="tabla-participante">
+                                        <span class="tabla-nombre">@cert.Nombre</span>
+                                        <span class="tabla-email">@cert.Evento</span>
+                                    </div>
+                                </td>
+                                <td>@cert.Email</td>
+                                <td>@cert.FechaGeneracion.ToString("d/M/yyyy")</td>
+                                <td>
+                                    <span class="badge-tabla @cert.EstadoClase">
+                                        @cert.IconoEstado @cert.Estado
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="boton-enviar-cert"
+                                            @onclick="() => EnviarCertificado(cert)">
+                                        📤 Enviar
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            @if (!CertificadosFiltrados.Any())
+            {
+                <div class="sin-resultados">
+                    <p>😕 No se encontraron certificados.</p>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string fechaHoy = "";
+    private string busqueda = "";
+    private string mensajeExito = "";
+
+    private class CertificadoItem
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Evento { get; set; } = "";
+        public DateTime FechaGeneracion { get; set; }
+        public string Estado { get; set; } = "";
+        public string EstadoClase { get; set; } = "";
+        public string IconoEstado { get; set; } = "";
+    }
+
+    private List<CertificadoItem> listaCertificados = new List<CertificadoItem>
+    {
+        new CertificadoItem { Id=1, Nombre="María González", Email="maria.gonzalez@email.com", Evento="Conferencia de Tecnología 2026", FechaGeneracion=DateTime.Now.AddDays(-5), Estado="Enviado", EstadoClase="badge-completado-tabla", IconoEstado="✅" },
+        new CertificadoItem { Id=2, Nombre="Juan Pérez", Email="juan.perez@email.com", Evento="Conferencia de Tecnología 2026", FechaGeneracion=DateTime.Now.AddDays(-3), Estado="Generado", EstadoClase="badge-generado-tabla", IconoEstado="🏆" },
+        new CertificadoItem { Id=3, Nombre="Laura Martín", Email="laura.martin@email.com", Evento="Cumbre de Innovación Digital", FechaGeneracion=DateTime.Now, Estado="Pendiente", EstadoClase="badge-pendiente-tabla", IconoEstado="🕐" },
+    };
+
+    private IEnumerable<CertificadoItem> CertificadosFiltrados => listaCertificados
+        .Where(c =>
+            string.IsNullOrEmpty(busqueda) ||
+            c.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+            c.Email.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    private void GenerarCertificados()
+    {
+        mensajeExito = "Certificados generados exitosamente.";
+    }
+
+    private void EnviarCertificado(CertificadoItem cert)
+    {
+        cert.Estado = "Enviado";
+        cert.EstadoClase = "badge-completado-tabla";
+        cert.IconoEstado = "✅";
+        mensajeExito = $"Certificado enviado a {cert.Email} exitosamente.";
+    }
+
+    private void EnviarTodos()
+    {
+        foreach (var cert in listaCertificados)
+        {
+            cert.Estado = "Enviado";
+            cert.EstadoClase = "badge-completado-tabla";
+            cert.IconoEstado = "✅";
+        }
+        mensajeExito = "Todos los certificados fueron enviados exitosamente.";
+    }
+}

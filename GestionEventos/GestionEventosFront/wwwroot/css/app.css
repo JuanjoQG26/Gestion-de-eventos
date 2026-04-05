@@ -2297,3 +2297,266 @@ GRID DE MATERIALES
     font-size: 0.75rem;
     color: #9ca3af;
 }
+
+/*ASISTENCIAS*/
+/* =============================================
+   TABLA TÍTULO SECCIÓN
+   ============================================= */
+
+.tabla-titulo-seccion {
+    padding: 16px 20px;
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* =============================================
+   ASISTENCIA - TIEMPOS CHECK IN/OUT
+   ============================================= */
+
+.asistencia-tiempo {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tiempo-hora {
+    font-size: 0.78rem;
+    color: #6b7280;
+}
+
+.sin-dato {
+    color: #9ca3af;
+}
+
+/* =============================================
+   ASISTENCIA - ACTIVIDADES
+   ============================================= */
+
+.asistencia-actividades-grupo {
+    margin-bottom: 20px;
+}
+
+.asistencia-grupo-titulo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.asistencia-actividad-item {
+    background: #f9fafb;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+
+/* =============================================
+   GRID MATERIALES ORGANIZADOR
+   ============================================= */
+
+.grid-materiales-org {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.tarjeta-material-org {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.material-org-icono {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+
+.material-fondo-rojo {
+    background: #fee2e2;
+}
+
+.material-fondo-azul {
+    background: #dbeafe;
+}
+
+.material-fondo-morado {
+    background: #f3e8ff;
+}
+
+.material-fondo-verde {
+    background: #dcfce7;
+}
+
+.material-org-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.material-org-nombre {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.material-org-evento {
+    font-size: 0.82rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+.material-org-detalles {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.material-org-fila {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    color: #374151;
+}
+
+.material-org-label {
+    color: #9ca3af;
+}
+
+.boton-eliminar-material {
+    padding: 8px 12px;
+    background: white;
+    border: 1.5px solid #dc2626;
+    color: #dc2626;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+    .boton-eliminar-material:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+/*CERTIFICADOS*/
+/* =============================================
+   BOTÓN ENVIAR CERTIFICADO
+   ============================================= */
+
+.boton-enviar-cert {
+    padding: 8px 16px;
+    background: #1a56db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+    .boton-enviar-cert:hover {
+        background: #1648c0;
+    }
+
+/* =============================================
+   BADGE GENERADO
+   ============================================= */
+
+.badge-generado-tabla {
+    background: #ede9fe;
+    color: #7c3aed;
+}
+
+/*REPORTES*/
+/* =============================================
+   REPORTES - SECCIÓN
+   ============================================= */
+
+.reporte-seccion {
+    margin-bottom: 40px;
+}
+
+.reporte-seccion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+/* =============================================
+   REPORTE - RESUMEN PAGO CONFIRMADO
+   ============================================= */
+
+.reporte-resumen-pago {
+    background: #dcfce7;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.reporte-resumen-icono {
+    font-size: 1.5rem;
+}
+
+.reporte-resumen-titulo {
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.reporte-resumen-sub {
+    font-size: 0.82rem;
+    color: #6b7280;
+}
+
+/* =============================================
+   REPORTE - BARRA DE OCUPACIÓN EN TABLA
+   ============================================= */
+
+.reporte-barra-contenedor {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.reporte-barra {
+    flex: 1;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    overflow: hidden;
+    min-width: 60px;
+}
+
+.reporte-barra-progreso {
+    height: 100%;
+    background: #1a56db;
+    border-radius: 3px;
+}
+
+.reporte-barra-texto {
+    font-size: 0.78rem;
+    color: #6b7280;
+    white-space: nowrap;
+}

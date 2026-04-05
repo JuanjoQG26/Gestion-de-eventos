@@ -1,0 +1,382 @@
+﻿@* Ruta de esta página *@
+@page "/reportes"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+<div class="pagina-con-menu">
+
+    <MenuOrganizador />
+
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Luis</span>
+                <span class="barra-email">luis@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        <div class="cuerpo-dashboard">
+
+            @* ---- ENCABEZADO ---- *@
+            <div class="explorar-header">
+                <div>
+                    <h1 class="titulo-pagina">Reportes</h1>
+                    <p class="subtitulo-pagina">Análisis y datos de todos los eventos</p>
+                </div>
+                <button class="boton-exportar" @onclick="ExportarTodo">
+                    📥 Exportar Todo
+                </button>
+            </div>
+
+            @* ---- MENSAJE ÉXITO ---- *@
+            @if (!string.IsNullOrEmpty(mensajeExito))
+            {
+                <p class="mensaje-exito">@mensajeExito</p>
+            }
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📅</div>
+                    <div class="estadistica-label-pequeño">Total Eventos</div>
+                    <div class="estadistica-numero">4</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">💲</div>
+                    <div class="estadistica-label-pequeño">Ingresos Totales</div>
+                    <div class="estadistica-numero">$300</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-morado">👥</div>
+                    <div class="estadistica-label-pequeño">Participantes</div>
+                    <div class="estadistica-numero">4</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">📊</div>
+                    <div class="estadistica-label-pequeño">Tasa Asistencia</div>
+                    <div class="estadistica-numero">66.7%</div>
+                </div>
+
+            </div>
+
+            @* ---- REPORTE DE ASISTENTES POR EVENTO ---- *@
+            <div class="reporte-seccion">
+                <div class="reporte-seccion-header">
+                    <h2 class="titulo-seccion">Reporte de Asistentes por Evento</h2>
+                    <div style="display:flex; gap:8px; align-items:center;">
+                        <select class="campo-texto" style="width:auto; padding: 8px 12px; font-size:0.85rem;"
+                                @bind="filtroEventoAsistentes">
+                            <option value="todos">Todos los eventos</option>
+                            <option value="Cumbre de Innovación Digital">Cumbre de Innovación Digital</option>
+                            <option value="Conferencia de Tecnología 2026">Conferencia de Tecnología 2026</option>
+                        </select>
+                        <button class="boton-exportar" style="padding: 8px 16px; font-size:0.82rem;">
+                            📥 Exportar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-inscripciones">
+                        <thead>
+                            <tr>
+                                <th>Participante</th>
+                                <th>Evento</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Estado</th>
+                                <th>Actividades</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in AsistentesFiltrados)
+                            {
+                                <tr>
+                                    <td><span class="tabla-nombre">@a.Nombre</span></td>
+                                    <td>@a.Evento</td>
+                                    <td>@(string.IsNullOrEmpty(a.CheckIn) ? "-" : $"{a.CheckIn} {a.HoraIn}")</td>
+                                    <td>@(string.IsNullOrEmpty(a.CheckOut) ? "-" : $"{a.CheckOut} {a.HoraOut}")</td>
+                                    <td>
+                                        <span class="badge-tabla @(a.Estado == "Presente" ? "badge-completado-tabla" : "badge-fallido-tabla")">
+                                            @a.Estado
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge-actividades">@a.Actividades</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @* ---- ASISTENTES CON PAGO CONFIRMADO ---- *@
+            <div class="reporte-seccion">
+                <div class="reporte-seccion-header">
+                    <h2 class="titulo-seccion">Asistentes con Pago Confirmado</h2>
+                    <button class="boton-exportar" style="padding: 8px 16px; font-size:0.82rem;">
+                        📥 Exportar
+                    </button>
+                </div>
+
+                @* Resumen de pagos confirmados *@
+                <div class="reporte-resumen-pago">
+                    <span class="reporte-resumen-icono">✅</span>
+                    <div>
+                        <span class="reporte-resumen-titulo">2 asistentes con pago confirmado</span>
+                        <span class="reporte-resumen-sub">Total recaudado: $300</span>
+                    </div>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-inscripciones">
+                        <thead>
+                            <tr>
+                                <th>Participante</th>
+                                <th>Email</th>
+                                <th>Evento</th>
+                                <th>Método de Pago</th>
+                                <th>Monto</th>
+                                <th>Fecha de Pago</th>
+                                <th>Actividades</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var p in listaPagosConfirmados)
+                            {
+                                <tr>
+                                    <td><span class="tabla-nombre">@p.Nombre</span></td>
+                                    <td><span class="tabla-email">@p.Email</span></td>
+                                    <td>@p.Evento</td>
+                                    <td>@p.MetodoPago</td>
+                                    <td>$@p.Monto</td>
+                                    <td>@p.FechaPago</td>
+                                    <td>
+                                        <span class="badge-actividades">@p.Actividades</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @* ---- REPORTE POR EVENTO ---- *@
+            <div class="reporte-seccion">
+                <div class="reporte-seccion-header">
+                    <h2 class="titulo-seccion">Reporte por Evento</h2>
+                    <button class="boton-exportar" style="padding: 8px 16px; font-size:0.82rem;">
+                        📥 Exportar
+                    </button>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-inscripciones">
+                        <thead>
+                            <tr>
+                                <th>Evento</th>
+                                <th>Fecha</th>
+                                <th>Ubicación</th>
+                                <th>Capacidad</th>
+                                <th>Inscritos</th>
+                                <th>Ocupación</th>
+                                <th>Ingresos</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var e in listaEventosReporte)
+                            {
+                                <tr>
+                                    <td><span class="tabla-nombre">@e.Nombre</span></td>
+                                    <td>@e.Fecha</td>
+                                    <td>@e.Lugar</td>
+                                    <td>@e.Capacidad</td>
+                                    <td>@e.Inscritos</td>
+                                    <td>
+                                        <div class="reporte-barra-contenedor">
+                                            <div class="reporte-barra">
+                                                <div class="reporte-barra-progreso"
+                                                     style="width: @e.Ocupacion%"></div>
+                                            </div>
+                                            <span class="reporte-barra-texto">@e.Ocupacion%</span>
+                                        </div>
+                                    </td>
+                                    <td>$@e.Ingresos</td>
+                                    <td>
+                                        <span class="badge-tabla @e.EstadoClase">@e.Estado</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            @* ---- REPORTE DE CERTIFICADOS ---- *@
+            <div class="reporte-seccion">
+                <div class="reporte-seccion-header">
+                    <h2 class="titulo-seccion">Reporte de Certificados</h2>
+                    <button class="boton-exportar" style="padding: 8px 16px; font-size:0.82rem;">
+                        📥 Exportar
+                    </button>
+                </div>
+
+                <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(3,1fr); margin-bottom:16px;">
+                    <div class="tarjeta-estadistica fondo-verde-suave">
+                        <div class="estadistica-label-pequeño">Enviados</div>
+                        <div class="estadistica-numero">1</div>
+                    </div>
+                    <div class="tarjeta-estadistica fondo-azul-suave">
+                        <div class="estadistica-label-pequeño">Generados</div>
+                        <div class="estadistica-numero">1</div>
+                    </div>
+                    <div class="tarjeta-estadistica fondo-naranja-suave">
+                        <div class="estadistica-label-pequeño">Pendientes</div>
+                        <div class="estadistica-numero">1</div>
+                    </div>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-inscripciones">
+                        <thead>
+                            <tr>
+                                <th>Participante</th>
+                                <th>Email</th>
+                                <th>Evento</th>
+                                <th>Fecha Emitido</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in listaCertificadosReporte)
+                            {
+                                <tr>
+                                    <td><span class="tabla-nombre">@c.Nombre</span></td>
+                                    <td><span class="tabla-email">@c.Email</span></td>
+                                    <td>@c.Evento</td>
+                                    <td>@c.FechaEmitido</td>
+                                    <td>
+                                        <span class="badge-tabla @c.EstadoClase">@c.Estado</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string fechaHoy = "";
+    private string mensajeExito = "";
+    private string filtroEventoAsistentes = "todos";
+
+    // ---- CLASES ----
+    private class AsistenteReporte
+    {
+        public string Nombre { get; set; } = "";
+        public string Evento { get; set; } = "";
+        public string CheckIn { get; set; } = "";
+        public string HoraIn { get; set; } = "";
+        public string CheckOut { get; set; } = "";
+        public string HoraOut { get; set; } = "";
+        public string Estado { get; set; } = "";
+        public string Actividades { get; set; } = "";
+    }
+
+    private class PagoConfirmado
+    {
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Evento { get; set; } = "";
+        public string MetodoPago { get; set; } = "";
+        public string Monto { get; set; } = "";
+        public string FechaPago { get; set; } = "";
+        public string Actividades { get; set; } = "";
+    }
+
+    private class EventoReporte
+    {
+        public string Nombre { get; set; } = "";
+        public string Fecha { get; set; } = "";
+        public string Lugar { get; set; } = "";
+        public int Capacidad { get; set; }
+        public int Inscritos { get; set; }
+        public int Ocupacion { get; set; }
+        public string Ingresos { get; set; } = "";
+        public string Estado { get; set; } = "";
+        public string EstadoClase { get; set; } = "";
+    }
+
+    private class CertificadoReporte
+    {
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Evento { get; set; } = "";
+        public string FechaEmitido { get; set; } = "";
+        public string Estado { get; set; } = "";
+        public string EstadoClase { get; set; } = "";
+    }
+
+    // ---- DATOS ----
+    private List<AsistenteReporte> listaAsistentes = new List<AsistenteReporte>
+    {
+        new AsistenteReporte { Nombre="María González", Evento="Cumbre de Innovación Digital", CheckIn="10/3", HoraIn="08:45", CheckOut="10/3", HoraOut="18:30", Estado="Presente", Actividades="2/2" },
+        new AsistenteReporte { Nombre="Juan Pérez", Evento="Cumbre de Innovación Digital", CheckIn="10/3", HoraIn="09:15", CheckOut="", HoraOut="", Estado="Presente", Actividades="1/2" },
+        new AsistenteReporte { Nombre="Laura Martín", Evento="Cumbre de Innovación Digital", CheckIn="", HoraIn="", CheckOut="", HoraOut="", Estado="Ausente", Actividades="0/0" },
+    };
+
+    private List<PagoConfirmado> listaPagosConfirmados = new List<PagoConfirmado>
+    {
+        new PagoConfirmado { Nombre="María González", Email="maria.gonzalez@email.com", Evento="Conferencia de Tecnología 2026", MetodoPago="Tarjeta de crédito", Monto="150", FechaPago="15/2/2026", Actividades="2" },
+        new PagoConfirmado { Nombre="Juan Pérez", Email="juan.perez@email.com", Evento="Conferencia de Tecnología 2026", MetodoPago="PayPal", Monto="150", FechaPago="16/2/2026", Actividades="1" },
+    };
+
+    private List<EventoReporte> listaEventosReporte = new List<EventoReporte>
+    {
+        new EventoReporte { Nombre="Conferencia de Tecnología 2026", Fecha="14/4/2026", Lugar="Centro de Convenciones Internacional", Capacidad=500, Inscritos=387, Ocupacion=77, Ingresos="150", Estado="Próximo", EstadoClase="badge-proximo" },
+        new EventoReporte { Nombre="Cumbre de Innovación Digital", Fecha="9/3/2026", Lugar="Hotel Grand Palace", Capacidad=300, Inscritos=245, Ocupacion=82, Ingresos="200", Estado="En Curso", EstadoClase="badge-en-curso" },
+        new EventoReporte { Nombre="Foro de Emprendimiento", Fecha="19/2/2026", Lugar="Centro Empresarial", Capacidad=200, Inscritos=200, Ocupacion=100, Ingresos="0", Estado="Completado", EstadoClase="badge-completado" },
+        new EventoReporte { Nombre="Seminario de Marketing Digital", Fecha="21/5/2026", Lugar="Auditorio Nacional", Capacidad=400, Inscritos=156, Ocupacion=39, Ingresos="120", Estado="Próximo", EstadoClase="badge-proximo" },
+    };
+
+    private List<CertificadoReporte> listaCertificadosReporte = new List<CertificadoReporte>
+    {
+        new CertificadoReporte { Nombre="María González", Email="maria.gonzalez@email.com", Evento="Foro de Emprendimiento", FechaEmitido="2/5/2026", Estado="Enviado", EstadoClase="badge-completado-tabla" },
+        new CertificadoReporte { Nombre="Juan Pérez", Email="juan.perez@email.com", Evento="Foro de Emprendimiento", FechaEmitido="2/5/2026", Estado="Generado", EstadoClase="badge-generado-tabla" },
+        new CertificadoReporte { Nombre="Laura Martín", Email="laura.martin@email.com", Evento="Cumbre de Innovación Digital", FechaEmitido="11/5/2026", Estado="Pendiente", EstadoClase="badge-pendiente-tabla" },
+    };
+
+    private IEnumerable<AsistenteReporte> AsistentesFiltrados => listaAsistentes
+        .Where(a => filtroEventoAsistentes == "todos" || a.Evento == filtroEventoAsistentes);
+
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    private void ExportarTodo()
+    {
+        mensajeExito = "Reporte exportado exitosamente.";
+    }
+}
