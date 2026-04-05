@@ -1,0 +1,117 @@
+﻿@* Componente del menú lateral del organizador
+   Se reutiliza en todas las páginas del organizador *@
+
+@inject NavigationManager Navegacion
+
+<div class="menu-lateral">
+
+    @* ---- LOGO ARRIBA DEL MENÚ ---- *@
+    <div class="menu-logo">
+        <div class="menu-icono-logo">📅</div>
+        <div class="menu-texto-logo">
+            <span class="menu-titulo-logo">Gestión de</span>
+            <span class="menu-titulo-logo">eventos</span>
+            <span class="menu-subtitulo-logo">Panel Organizador</span>
+        </div>
+    </div>
+
+    @* ---- INFORMACIÓN DEL USUARIO ---- *@
+    <div class="menu-usuario">
+        <div class="menu-avatar">👤</div>
+        <div class="menu-info-usuario">
+            <span class="menu-nombre-usuario">Luis</span>
+            @* Etiqueta que dice "Organizador" *@
+            <span class="menu-rol menu-rol-organizador">Organizador</span>
+        </div>
+    </div>
+
+    @* ---- ITEMS DE NAVEGACIÓN ---- *@
+    <nav class="menu-nav">
+
+        <a class="menu-item @(rutaActual == "/dashboard-organizador" ? "activo" : "")"
+               @onclick='() => NavegaA("/dashboard-organizador")'>
+            <span class="menu-item-icono">🏠</span>
+            <span>Inicio</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/eventos" ? "activo" : "")"
+               @onclick='() => NavegaA("/eventos")'>
+            <span class="menu-item-icono">📅</span>
+            <span>Eventos</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/ponentes" ? "activo" : "")"
+               @onclick='() => NavegaA("/ponentes")'>
+            <span class="menu-item-icono">👤</span>
+            <span>Ponentes</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/inscripciones" ? "activo" : "")"
+               @onclick='() => NavegaA("/inscripciones")'>
+            <span class="menu-item-icono">📋</span>
+            <span>Inscripciones</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/asistencia" ? "activo" : "")"
+               @onclick='() => NavegaA("/asistencia")'>
+            <span class="menu-item-icono">✅</span>
+            <span>Asistencia</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/materiales" ? "activo" : "")"
+               @onclick='() => NavegaA("/materiales")'>
+            <span class="menu-item-icono">📄</span>
+            <span>Materiales</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/certificados" ? "activo" : "")"
+               @onclick='() => NavegaA("/certificados")'>
+            <span class="menu-item-icono">🏆</span>
+            <span>Certificados</span>
+        </a>
+
+        <a class="menu-item @(rutaActual == "/reportes" ? "activo" : "")"
+               @onclick='() => NavegaA("/reportes")'>
+            <span class="menu-item-icono">📊</span>
+            <span>Reportes</span>
+        </a>
+
+    </nav>
+
+    @* ---- BOTÓN CERRAR SESIÓN AL FONDO ---- *@
+    <div class="menu-pie">
+        <a class="menu-item menu-cerrar-sesion" @onclick="CerrarSesion">
+            <span class="menu-item-icono">🚪</span>
+            <span>Cerrar Sesión</span>
+        </a>
+    </div>
+
+</div>
+
+@code {
+
+    // Variable que guarda la ruta actual
+    private string rutaActual = "";
+
+    // Se ejecuta cuando el componente carga
+    protected override void OnInitialized()
+    {
+        // Obtiene la ruta actual de la URL
+        rutaActual = Navegacion.Uri.Replace(Navegacion.BaseUri, "/");
+
+        if (rutaActual != "/" && rutaActual.EndsWith("/"))
+            rutaActual = rutaActual.TrimEnd('/');
+    }
+
+    // Navega a la ruta indicada
+    private void NavegaA(string ruta)
+    {
+        Navegacion.NavigateTo(ruta);
+    }
+
+    // Cierra sesión y vuelve al login
+    private void CerrarSesion()
+    {
+        Navegacion.NavigateTo("/");
+    }
+}

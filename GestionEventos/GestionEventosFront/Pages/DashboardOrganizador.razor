@@ -1,0 +1,239 @@
+﻿@* Ruta de esta página *@
+@page "/dashboard-organizador"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+<div class="pagina-con-menu">
+
+    @* ---- MENÚ LATERAL ---- *@
+    <MenuOrganizador />
+
+    @* ---- CONTENIDO PRINCIPAL ---- *@
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">Luis</span>
+                <span class="barra-email">luis@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        @* ---- CUERPO ---- *@
+        <div class="cuerpo-dashboard">
+
+            <h1 class="titulo-pagina">Dashboard Organizador</h1>
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-azul">📅</div>
+                    <div class="estadistica-numero">4</div>
+                    <div class="estadistica-texto">Total Eventos</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-morado">👥</div>
+                    <div class="estadistica-numero">988</div>
+                    <div class="estadistica-texto">Total Inscripciones</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">💲</div>
+                    <div class="estadistica-numero">$300</div>
+                    <div class="estadistica-texto">Ingresos Totales</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🏆</div>
+                    <div class="estadistica-numero">3</div>
+                    <div class="estadistica-texto">Certificados Emitidos</div>
+                </div>
+
+            </div>
+
+            @* ---- ACCIONES RÁPIDAS ---- *@
+            <h2 class="titulo-seccion">Acciones Rápidas</h2>
+            <div class="acciones-rapidas">
+
+                <div class="accion-rapida fondo-azul-grad"
+                     @onclick='() => NavegaA("/eventos")'>
+                    <span class="accion-icono">📅</span>
+                    <span class="accion-titulo">Crear Evento</span>
+                    <span class="accion-desc">Publicar nuevo evento</span>
+                </div>
+
+                <div class="accion-rapida fondo-morado-grad"
+                     @onclick='() => NavegaA("/ponentes")'>
+                    <span class="accion-icono">👤</span>
+                    <span class="accion-titulo">Gestionar Ponentes</span>
+                    <span class="accion-desc">Asignar charlas</span>
+                </div>
+
+                <div class="accion-rapida fondo-verde-grad"
+                     @onclick='() => NavegaA("/inscripciones")'>
+                    <span class="accion-icono">💲</span>
+                    <span class="accion-titulo">Ver Pagos</span>
+                    <span class="accion-desc">Gestionar inscripciones</span>
+                </div>
+
+                <div class="accion-rapida fondo-naranja-grad"
+                     @onclick='() => NavegaA("/asistencia")'>
+                    <span class="accion-icono">✅</span>
+                    <span class="accion-titulo">Control Asistencia</span>
+                    <span class="accion-desc">Monitorear participantes</span>
+                </div>
+
+            </div>
+
+            @* ---- EVENTOS PRÓXIMOS E INSCRIPCIONES RECIENTES ---- *@
+            <div class="dashboard-dos-columnas">
+
+                @* ---- COLUMNA IZQUIERDA: EVENTOS PRÓXIMOS ---- *@
+                <div class="columna-dashboard">
+                    <div class="seccion-header">
+                        <h2 class="titulo-seccion">Eventos Próximos</h2>
+                        <a class="ver-todos" @onclick='() => NavegaA("/eventos")'>Ver todos →</a>
+                    </div>
+
+                    <div class="lista-eventos-org">
+                        <div class="tarjeta-evento-org">
+                            <div class="evento-org-imagen">🎪</div>
+                            <div class="evento-org-info">
+                                <h3 class="evento-org-nombre">Conferencia de Tecnología 2026</h3>
+                                <p class="evento-org-fecha">14/04/2026</p>
+                            </div>
+                        </div>
+                        <div class="tarjeta-evento-org">
+                            <div class="evento-org-imagen">📢</div>
+                            <div class="evento-org-info">
+                                <h3 class="evento-org-nombre">Seminario de Marketing Digital</h3>
+                                <p class="evento-org-fecha">21/05/2026</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @* ---- COLUMNA DERECHA: INSCRIPCIONES RECIENTES ---- *@
+                <div class="columna-dashboard">
+                    <div class="seccion-header">
+                        <h2 class="titulo-seccion">Inscripciones Recientes</h2>
+                        <a class="ver-todos" @onclick='() => NavegaA("/inscripciones")'>Ver todas →</a>
+                    </div>
+
+                    <div class="lista-inscripciones-org">
+
+                        <div class="tarjeta-inscripcion-org">
+                            <div class="inscripcion-org-avatar">👤</div>
+                            <div class="inscripcion-org-info">
+                                <span class="inscripcion-org-nombre">Maria González</span>
+                                <span class="inscripcion-org-evento">Conferencia de Tecnología 2026</span>
+                                <span class="badge-pago badge-confirmado">Pagado</span>
+                            </div>
+                            <span class="inscripcion-org-monto">$150</span>
+                        </div>
+
+                        <div class="tarjeta-inscripcion-org">
+                            <div class="inscripcion-org-avatar">👤</div>
+                            <div class="inscripcion-org-info">
+                                <span class="inscripcion-org-nombre">Juan Pérez</span>
+                                <span class="inscripcion-org-evento">Conferencia de Tecnología 2026</span>
+                                <span class="badge-pago badge-confirmado">Pagado</span>
+                            </div>
+                            <span class="inscripcion-org-monto">$150</span>
+                        </div>
+
+                        <div class="tarjeta-inscripcion-org">
+                            <div class="inscripcion-org-avatar">👤</div>
+                            <div class="inscripcion-org-info">
+                                <span class="inscripcion-org-nombre">Laura Martín</span>
+                                <span class="inscripcion-org-evento">Cumbre de Innovación Digital</span>
+                                <span class="badge-pago badge-pendiente">Pendiente</span>
+                            </div>
+                            <span class="inscripcion-org-monto">$200</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            @* ---- RESUMEN DE PAGOS ---- *@
+            <h2 class="titulo-seccion">Resumen de Pagos</h2>
+            <div class="resumen-pagos">
+
+                <div class="tarjeta-resumen fondo-verde-suave">
+                    <div class="resumen-icono">💲</div>
+                    <div class="resumen-info">
+                        <span class="resumen-label">Pagos Completados</span>
+                        <span class="resumen-numero">2</span>
+                        <span class="resumen-sub">$300 en total</span>
+                    </div>
+                </div>
+
+                <div class="tarjeta-resumen fondo-naranja-suave">
+                    <div class="resumen-icono">🕐</div>
+                    <div class="resumen-info">
+                        <span class="resumen-label">Pagos Pendientes</span>
+                        <span class="resumen-numero">1</span>
+                        <span class="resumen-sub">$200 esperando confirmación</span>
+                    </div>
+                </div>
+
+                <div class="tarjeta-resumen fondo-azul-suave">
+                    <div class="resumen-icono">📊</div>
+                    <div class="resumen-info">
+                        <span class="resumen-label">Tasa de Asistencia</span>
+                        <span class="resumen-numero">67%</span>
+                        <span class="resumen-sub">2 de 3 asistentes</span>
+                    </div>
+                </div>
+
+            </div>
+
+            @* ---- TAREAS PENDIENTES ---- *@
+            <h2 class="titulo-seccion">Tareas Pendientes</h2>
+            <div class="lista-tareas">
+                <div class="tarea-item">
+                    <span class="tarea-icono">⚠️</span>
+                    <span>Revisar 1 pagos pendientes de confirmación</span>
+                </div>
+                <div class="tarea-item">
+                    <span class="tarea-icono">⚠️</span>
+                    <span>Generar certificados para 1 participantes</span>
+                </div>
+                <div class="tarea-item">
+                    <span class="tarea-icono">⚠️</span>
+                    <span>Publicar materiales para eventos completados</span>
+                </div>
+            </div>
+
+        </div>
+        @* fin cuerpo-dashboard *@
+
+    </div>
+    @* fin contenido-principal *@
+
+</div>
+
+@code {
+
+    private string fechaHoy = "";
+
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    private void NavegaA(string ruta)
+    {
+        Navegacion.NavigateTo(ruta);
+    }
+}   

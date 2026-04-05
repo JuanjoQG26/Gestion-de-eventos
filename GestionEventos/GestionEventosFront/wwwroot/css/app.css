@@ -1617,3 +1617,683 @@ GRID DE MATERIALES
     max-width: 400px;
     line-height: 1.6;
 }
+
+
+/* =============================================
+   ETIQUETA ROL ORGANIZADOR
+   ============================================= */
+
+.menu-rol-organizador {
+    background: #f97316;
+    /* Naranja para diferenciarlo del asistente que es azul */
+}
+
+/* =============================================
+   DASHBOARD ORGANIZADOR - DOS COLUMNAS
+   ============================================= */
+
+.dashboard-dos-columnas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.columna-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* =============================================
+   EVENTOS PRÓXIMOS ORGANIZADOR
+   ============================================= */
+
+.lista-eventos-org {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tarjeta-evento-org {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.evento-org-imagen {
+    font-size: 2rem;
+    background: #f0f4f8;
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.evento-org-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.evento-org-nombre {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.evento-org-fecha {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* =============================================
+   INSCRIPCIONES RECIENTES ORGANIZADOR
+   ============================================= */
+
+.lista-inscripciones-org {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tarjeta-inscripcion-org {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.inscripcion-org-avatar {
+    font-size: 1.2rem;
+    background: #1a56db;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.inscripcion-org-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.inscripcion-org-nombre {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.inscripcion-org-evento {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.inscripcion-org-monto {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    flex-shrink: 0;
+}
+
+/* =============================================
+   RESUMEN DE PAGOS
+   ============================================= */
+
+.resumen-pagos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.tarjeta-resumen {
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.resumen-icono {
+    font-size: 1.8rem;
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.resumen-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.resumen-label {
+    font-size: 0.8rem;
+    color: #374151;
+    font-weight: 500;
+}
+
+.resumen-numero {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.resumen-sub {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+.fondo-verde-suave {
+    background: #dcfce7;
+}
+
+.fondo-naranja-suave {
+    background: #ffedd5;
+}
+
+.fondo-azul-suave {
+    background: #dbeafe;
+}
+
+/* =============================================
+   TAREAS PENDIENTES
+   ============================================= */
+
+.lista-tareas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 40px;
+}
+
+.tarea-item {
+    background: white;
+    border-radius: 10px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    color: #374151;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.tarea-icono {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* =============================================
+   BOTÓN CREAR EVENTO
+   ============================================= */
+
+.boton-crear {
+    padding: 12px 24px;
+    background: #1a56db;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .boton-crear:hover {
+        background: #1648c0;
+    }
+
+/* =============================================
+   FORMULARIO CREAR/EDITAR EVENTO
+   ============================================= */
+
+.formulario-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 32px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.formulario-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 24px;
+}
+
+.formulario-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.campo-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.formulario-botones {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.boton-cancelar {
+    padding: 12px 32px;
+    background: white;
+    border: 1.5px solid #e5e7eb;
+    color: #374151;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .boton-cancelar:hover {
+        border-color: #374151;
+    }
+
+/* =============================================
+   BOTONES EDITAR Y ELIMINAR EVENTO
+   ============================================= */
+
+.evento-acciones-org {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.boton-editar-evento {
+    flex: 1;
+    padding: 8px;
+    background: white;
+    border: 1.5px solid #1a56db;
+    color: #1a56db;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+    .boton-editar-evento:hover {
+        background: #1a56db;
+        color: white;
+    }
+
+.boton-eliminar-evento {
+    flex: 1;
+    padding: 8px;
+    background: white;
+    border: 1.5px solid #dc2626;
+    color: #dc2626;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+    .boton-eliminar-evento:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+/* =============================================
+   BOTÓN ASIGNAR CHARLA
+   ============================================= */
+
+.boton-asignar {
+    padding: 12px 24px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+    .boton-asignar:hover {
+        background: #6d28d9;
+    }
+
+/* =============================================
+   GRID DE PONENTES
+   ============================================= */
+
+.grid-ponentes {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+}
+
+.tarjeta-ponente {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.ponente-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ponente-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #7c3aed;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.ponente-header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ponente-nombre {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.ponente-email {
+    font-size: 0.82rem;
+    color: #6b7280;
+}
+
+.ponente-detalle {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ponente-label {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.ponente-valor {
+    font-size: 0.88rem;
+    color: #374151;
+}
+
+.ponente-charlas-badge {
+    background: #7c3aed;
+    color: white;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+/* =============================================
+   LISTA DE CHARLAS ASIGNADAS
+   ============================================= */
+
+.lista-charlas {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.tarjeta-charla {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.charla-titulo {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 4px 0;
+}
+
+.charla-detalle {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* =============================================
+   BOTÓN EXPORTAR
+   ============================================= */
+
+.boton-exportar {
+    padding: 12px 24px;
+    background: white;
+    border: 1.5px solid #1a56db;
+    color: #1a56db;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+    .boton-exportar:hover {
+        background: #1a56db;
+        color: white;
+    }
+
+/* =============================================
+   TABLA DE INSCRIPCIONES
+   ============================================= */
+
+.tabla-contenedor {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin-bottom: 32px;
+}
+
+.tabla-inscripciones {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+    .tabla-inscripciones thead tr {
+        background: #f9fafb;
+        border-bottom: 1.5px solid #e5e7eb;
+    }
+
+    .tabla-inscripciones th {
+        padding: 14px 16px;
+        text-align: left;
+        font-weight: 600;
+        color: #374151;
+        font-size: 0.82rem;
+    }
+
+    .tabla-inscripciones tbody tr {
+        border-bottom: 1px solid #f3f4f6;
+        transition: background 0.15s;
+    }
+
+        .tabla-inscripciones tbody tr:hover {
+            background: #f9fafb;
+        }
+
+    .tabla-inscripciones td {
+        padding: 14px 16px;
+        color: #374151;
+        vertical-align: middle;
+    }
+
+.tabla-participante {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.tabla-nombre {
+    font-weight: 600;
+    color: #111827;
+}
+
+.tabla-email {
+    font-size: 0.78rem;
+    color: #6b7280;
+}
+
+.tabla-id {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* =============================================
+   BADGES DE LA TABLA
+   ============================================= */
+
+.badge-tabla {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-completado-tabla {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.badge-pendiente-tabla {
+    background: #fef9c3;
+    color: #ca8a04;
+}
+
+.badge-fallido-tabla {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.badge-actividades {
+    background: #e5e7eb;
+    color: #374151;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 500;
+}
+
+.estadistica-label-pequeño {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+/* =============================================
+   TRAZABILIDAD DE PAGOS
+   ============================================= */
+
+.lista-trazabilidad {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 32px;
+}
+
+.tarjeta-trazabilidad {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.trazabilidad-icono {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.trazabilidad-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.trazabilidad-nombre {
+    font-weight: 600;
+    color: #111827;
+    font-size: 0.9rem;
+}
+
+.trazabilidad-detalle {
+    font-size: 0.82rem;
+    color: #6b7280;
+}
+
+.trazabilidad-derecha {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.trazabilidad-fecha {
+    font-size: 0.82rem;
+    color: #374151;
+    font-weight: 500;
+}
+
+.trazabilidad-id {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}

@@ -1,0 +1,203 @@
+﻿@* Ruta de esta página *@
+@page "/inscripciones"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+<div class="pagina-con-menu">
+
+    <MenuOrganizador />
+
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">luis</span>
+                <span class="barra-email">luisa@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        <div class="cuerpo-dashboard">
+
+            @* ---- ENCABEZADO ---- *@
+            <div class="explorar-header">
+                <div>
+                    <h1 class="titulo-pagina">Inscripciones</h1>
+                    <p class="subtitulo-pagina">Gestiona las inscripciones y pagos de los eventos</p>
+                </div>
+                <button class="boton-exportar">
+                    📥 Exportar
+                </button>
+            </div>
+
+            @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
+            <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(3, 1fr);">
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-verde">💲</div>
+                    <div class="estadistica-label-pequeño">Ingresos Totales</div>
+                    <div class="estadistica-numero">$300</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-morado">✅</div>
+                    <div class="estadistica-label-pequeño">Pagos Completados</div>
+                    <div class="estadistica-numero">2</div>
+                </div>
+
+                <div class="tarjeta-estadistica">
+                    <div class="estadistica-icono fondo-naranja">🕐</div>
+                    <div class="estadistica-label-pequeño">Pagos Pendientes</div>
+                    <div class="estadistica-numero">1</div>
+                </div>
+
+            </div>
+
+            @* ---- BARRA DE BÚSQUEDA Y FILTRO ---- *@
+            <div class="barra-busqueda-filtros">
+                <div class="contenedor-busqueda">
+                    <span class="icono-busqueda">🔍</span>
+                    <input class="campo-busqueda" type="text"
+                           placeholder="Buscar por nombre, email o evento..."
+                           @bind="busqueda"
+                           @bind:event="oninput" />
+                </div>
+                @* Select para filtrar por estado *@
+                <select class="campo-texto" style="width:auto; padding: 10px 16px;"
+                        @bind="filtroEstado">
+                    <option value="todos">Todos</option>
+                    <option value="Completado">Completado</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Fallido">Fallido</option>
+                </select>
+            </div>
+
+            @* ---- TABLA DE INSCRIPCIONES ---- *@
+            <h2 class="titulo-seccion">Lista de Inscripciones</h2>
+            <div class="tabla-contenedor">
+                <table class="tabla-inscripciones">
+                    <thead>
+                        <tr>
+                            <th>Participante</th>
+                            <th>Evento</th>
+                            <th>Fecha de Registro</th>
+                            <th>Monto</th>
+                            <th>Método de Pago</th>
+                            <th>Estado</th>
+                            <th>Actividades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ins in InscripcionesFiltradas)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="tabla-participante">
+                                        <span class="tabla-nombre">@ins.Nombre</span>
+                                        <span class="tabla-email">@ins.Email</span>
+                                        <span class="tabla-id">ID: @ins.Id</span>
+                                    </div>
+                                </td>
+                                <td>@ins.Evento</td>
+                                <td>@ins.Fecha</td>
+                                <td>$@ins.Monto</td>
+                                <td>@ins.MetodoPago</td>
+                                <td>
+                                    <span class="badge-tabla @ins.EstadoClase">
+                                        @ins.Estado
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge-actividades">
+                                        @ins.NumActividades actividades
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            @if (!InscripcionesFiltradas.Any())
+            {
+                <div class="sin-resultados">
+                    <p>😕 No se encontraron inscripciones.</p>
+                </div>
+            }
+
+            @* ---- TRAZABILIDAD DE PAGOS ---- *@
+            <h2 class="titulo-seccion" style="margin-top:40px;">Trazabilidad de Pagos</h2>
+            <div class="lista-trazabilidad">
+                @foreach (var ins in listaInscripciones)
+                {
+                    <div class="tarjeta-trazabilidad">
+                        <div class="trazabilidad-icono @ins.EstadoClase">
+                            @ins.IconoEstado
+                        </div>
+                        <div class="trazabilidad-info">
+                            <span class="trazabilidad-nombre">@ins.Nombre</span>
+                            <span class="trazabilidad-detalle">@ins.MetodoPago - $@ins.Monto</span>
+                        </div>
+                        <div class="trazabilidad-derecha">
+                            <span class="trazabilidad-fecha">@ins.Fecha</span>
+                            <span class="trazabilidad-id">ID: @ins.Id</span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string fechaHoy = "";
+    private string busqueda = "";
+    private string filtroEstado = "todos";
+
+    private class InscripcionItem
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Evento { get; set; } = "";
+        public string Fecha { get; set; } = "";
+        public string Monto { get; set; } = "";
+        public string MetodoPago { get; set; } = "";
+        public string Estado { get; set; } = "";
+        public string EstadoClase { get; set; } = "";
+        public string IconoEstado { get; set; } = "";
+        public int NumActividades { get; set; }
+    }
+
+    private List<InscripcionItem> listaInscripciones = new List<InscripcionItem>
+    {
+        new InscripcionItem { Id=1, Nombre="María González", Email="maria.gonzalez@email.com", Evento="Conferencia de Tecnología 2026", Fecha="15/2/2026", Monto="150", MetodoPago="Tarjeta de crédito", Estado="Completado", EstadoClase="badge-completado-tabla", IconoEstado="✅", NumActividades=2 },
+        new InscripcionItem { Id=2, Nombre="Juan Pérez", Email="juan.perez@email.com", Evento="Conferencia de Tecnología 2026", Fecha="16/2/2026", Monto="150", MetodoPago="PayPal", Estado="Completado", EstadoClase="badge-completado-tabla", IconoEstado="✅", NumActividades=1 },
+        new InscripcionItem { Id=3, Nombre="Laura Martín", Email="laura.martin@email.com", Evento="Cumbre de Innovación Digital", Fecha="18/2/2026", Monto="200", MetodoPago="Transferencia bancaria", Estado="Pendiente", EstadoClase="badge-pendiente-tabla", IconoEstado="🕐", NumActividades=0 },
+        new InscripcionItem { Id=4, Nombre="Carlos Rodríguez", Email="carlos.rodriguez@email.com", Evento="Conferencia de Tecnología 2026", Fecha="20/2/2026", Monto="150", MetodoPago="Tarjeta de crédito", Estado="Fallido", EstadoClase="badge-fallido-tabla", IconoEstado="❌", NumActividades=2 },
+    };
+
+    private IEnumerable<InscripcionItem> InscripcionesFiltradas => listaInscripciones
+        .Where(i =>
+            (string.IsNullOrEmpty(busqueda) ||
+             i.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+             i.Email.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+             i.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
+            &&
+            (filtroEstado == "todos" || i.Estado == filtroEstado));
+
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+}

@@ -40,12 +40,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1lbnVBc2lzdGVudGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Layout/MenuOrganizador.razor]
+build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE1lbnVPcmdhbml6YWRvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/DashboardAsistente.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkQXNpc3RlbnRlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/DashboardOrganizador.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkT3JnYW5pemFkb3IucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Eventos.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXZlbnRvcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/ExplorarEventos.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXhwbG9yYXJFdmVudG9zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Inscripciones.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5zY3JpcGNpb25lcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Login.razor]
@@ -66,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Ponentes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUG9uZW50ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Registro.razor]

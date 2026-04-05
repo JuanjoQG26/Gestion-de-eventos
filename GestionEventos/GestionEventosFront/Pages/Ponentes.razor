@@ -1,0 +1,394 @@
+﻿@* Ruta de esta página *@
+@page "/ponentes"
+
+@* Permite usar el componente del menú *@
+@using GestionEventosFront.Layout
+
+@inject NavigationManager Navegacion
+
+<div class="pagina-con-menu">
+
+    <MenuOrganizador />
+
+    <div class="contenido-principal">
+
+        @* ---- BARRA SUPERIOR ---- *@
+        <div class="barra-superior">
+            <span class="barra-fecha">@fechaHoy</span>
+            <div class="barra-usuario">
+                <span class="barra-nombre">luis</span>
+                <span class="barra-email">luisa@gmail.com</span>
+                <div class="barra-avatar">👤</div>
+            </div>
+        </div>
+
+        <div class="cuerpo-dashboard">
+
+            @* ---- ENCABEZADO ---- *@
+            <div class="explorar-header">
+                <div>
+                    <h1 class="titulo-pagina">Gestión de Ponentes</h1>
+                    <p class="subtitulo-pagina">Administra ponentes y asigna charlas a los eventos</p>
+                </div>
+                <div style="display:flex; gap:12px;">
+                    <button class="boton-crear" @onclick="MostrarFormularioPonente">
+                        + Agregar Ponente
+                    </button>
+                    <button class="boton-asignar" @onclick="MostrarFormularioCharla">
+                        📋 Asignar Charla
+                    </button>
+                </div>
+            </div>
+
+            @* ---- MENSAJE ÉXITO ---- *@
+            @if (!string.IsNullOrEmpty(mensajeExito))
+            {
+                <p class="mensaje-exito">@mensajeExito</p>
+            }
+
+            @* ---- FORMULARIO AGREGAR PONENTE ---- *@
+            @if (mostrarFormularioPonente)
+            {
+                <div class="formulario-card">
+                    <h2 class="formulario-titulo">Agregar Nuevo Ponente</h2>
+                    <div class="formulario-grid">
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Nombre Completo</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Dr. Juan Pérez"
+                                   @bind="nuevoNombre" />
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Email</label>
+                            <input class="campo-texto" type="email"
+                                   placeholder="juan@email.com"
+                                   @bind="nuevoEmail" />
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Especialidad</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Inteligencia Artificial"
+                                   @bind="nuevaEspecialidad" />
+                        </div>
+
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label class="etiqueta">Biografía</label>
+                        <textarea class="campo-texto campo-textarea"
+                                  placeholder="Describe al ponente..."
+                                  @bind="nuevaBio"></textarea>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(mensajeError))
+                    {
+                        <p class="mensaje-error">@mensajeError</p>
+                    }
+
+                    <div class="formulario-botones">
+                        <button class="boton-principal" style="width:auto; padding:12px 32px;"
+                                @onclick="GuardarPonente">
+                            Guardar Ponente
+                        </button>
+                        <button class="boton-cancelar" @onclick="CancelarFormularios">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            }
+
+            @* ---- FORMULARIO ASIGNAR CHARLA ---- *@
+            @if (mostrarFormularioCharla)
+            {
+                <div class="formulario-card">
+                    <h2 class="formulario-titulo">Asignar Charla a Ponente</h2>
+                    <div class="formulario-grid">
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Ponente</label>
+                            <select class="campo-texto" @bind="charlaPonenteId">
+                                <option value="0">Selecciona un ponente</option>
+                                @foreach (var p in listaPonentes)
+                                {
+                                    <option value="@p.Id">@p.Nombre</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Título de la Charla</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Ej: Keynote: El Futuro de la IA"
+                                   @bind="charlaTitulo" />
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Horario</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Ej: 09:00"
+                                   @bind="charlaHorario" />
+                        </div>
+
+                        <div class="grupo-campo">
+                            <label class="etiqueta">Sala / Lugar</label>
+                            <input class="campo-texto" type="text"
+                                   placeholder="Ej: Auditorio Principal"
+                                   @bind="charlaSala" />
+                        </div>
+
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(mensajeError))
+                    {
+                        <p class="mensaje-error">@mensajeError</p>
+                    }
+
+                    <div class="formulario-botones">
+                        <button class="boton-principal" style="width:auto; padding:12px 32px;"
+                                @onclick="GuardarCharla">
+                            Asignar Charla
+                        </button>
+                        <button class="boton-cancelar" @onclick="CancelarFormularios">
+                            Cancelar
+                        </button>
+                    </div>
+                </div>
+            }
+
+            @* ---- BARRA DE BÚSQUEDA ---- *@
+            <div class="contenedor-busqueda" style="margin-bottom:24px;">
+                <span class="icono-busqueda">🔍</span>
+                <input class="campo-busqueda" type="text"
+                       placeholder="Buscar ponentes por nombre o especialidad..."
+                       @bind="busqueda"
+                       @bind:event="oninput" />
+            </div>
+
+            @* ---- GRID DE PONENTES ---- *@
+            <div class="grid-ponentes">
+                @foreach (var ponente in PonentesFiltrados)
+                {
+                    <div class="tarjeta-ponente">
+
+                        @* Avatar con iniciales *@
+                        <div class="ponente-header">
+                            <div class="ponente-avatar">@ponente.Iniciales</div>
+                            <div class="ponente-header-info">
+                                <h3 class="ponente-nombre">@ponente.Nombre</h3>
+                                <span class="ponente-email">✉️ @ponente.Email</span>
+                            </div>
+                        </div>
+
+                        <div class="ponente-detalle">
+                            <span class="ponente-label">Especialidad</span>
+                            <span class="ponente-valor">@ponente.Especialidad</span>
+                        </div>
+
+                        <div class="ponente-detalle">
+                            <span class="ponente-label">Biografía</span>
+                            <span class="ponente-valor">@ponente.Bio</span>
+                        </div>
+
+                        <div class="ponente-detalle">
+                            <span class="ponente-label">Charlas Asignadas</span>
+                            <span class="ponente-charlas-badge">
+                                @ponente.NumCharlas charlas
+                            </span>
+                        </div>
+
+                        <div class="evento-acciones-org" style="margin-top:16px;">
+                            <button class="boton-eliminar-evento"
+                                    @onclick="() => EliminarPonente(ponente)">
+                                🗑️ Eliminar
+                            </button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+            @if (!PonentesFiltrados.Any())
+            {
+                <div class="sin-resultados">
+                    <p>😕 No se encontraron ponentes.</p>
+                </div>
+            }
+
+            @* ---- LISTA DE CHARLAS ASIGNADAS ---- *@
+            @if (listaCharlas.Any())
+            {
+                <h2 class="titulo-seccion" style="margin-top:32px;">Lista de Charlas Asignadas</h2>
+                <div class="lista-charlas">
+                    @foreach (var charla in listaCharlas)
+                    {
+                        <div class="tarjeta-charla">
+                            <div class="charla-info">
+                                <h3 class="charla-titulo">@charla.Titulo</h3>
+                                <p class="charla-detalle">
+                                    Ponente: @charla.NombrePonente • @charla.Horario • @charla.Sala
+                                </p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string fechaHoy = "";
+    private string busqueda = "";
+    private bool mostrarFormularioPonente = false;
+    private bool mostrarFormularioCharla = false;
+    private string mensajeError = "";
+    private string mensajeExito = "";
+
+    // Variables formulario ponente
+    private string nuevoNombre = "";
+    private string nuevoEmail = "";
+    private string nuevaEspecialidad = "";
+    private string nuevaBio = "";
+
+    // Variables formulario charla
+    private int charlaPonenteId = 0;
+    private string charlaTitulo = "";
+    private string charlaHorario = "";
+    private string charlaSala = "";
+
+    private class PonenteItem
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Especialidad { get; set; } = "";
+        public string Bio { get; set; } = "";
+        public int NumCharlas { get; set; }
+        // Iniciales para el avatar
+        public string Iniciales => string.Join("",
+            Nombre.Split(' ').Take(2).Select(n => n[0].ToString().ToUpper()));
+    }
+
+    private class CharlaItem
+    {
+        public string Titulo { get; set; } = "";
+        public string NombrePonente { get; set; } = "";
+        public string Horario { get; set; } = "";
+        public string Sala { get; set; } = "";
+    }
+
+    private List<PonenteItem> listaPonentes = new List<PonenteItem>
+    {
+        new PonenteItem { Id=1, Nombre="Dr. Ana Martínez", Email="ana.martinez@email.com", Especialidad="Inteligencia Artificial", Bio="Especialista en inteligencia artificial con más de 10 años de experiencia", NumCharlas=1 },
+        new PonenteItem { Id=2, Nombre="Carlos Ruiz", Email="carlos.ruiz@email.com", Especialidad="Desarrollo de Software", Bio="Ingeniero en sistemas con experiencia en desarrollo de software", NumCharlas=1 },
+    };
+
+    private List<CharlaItem> listaCharlas = new List<CharlaItem>
+    {
+        new CharlaItem { Titulo="Keynote: El Futuro de la IA", NombrePonente="Dr. Ana Martínez", Horario="09:00", Sala="Auditorio Principal" },
+        new CharlaItem { Titulo="Workshop: Machine Learning", NombrePonente="Carlos Ruiz", Horario="14:00", Sala="Sala B" },
+    };
+
+    private IEnumerable<PonenteItem> PonentesFiltrados => listaPonentes
+        .Where(p =>
+            string.IsNullOrEmpty(busqueda) ||
+            p.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+            p.Especialidad.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+
+    protected override void OnInitialized()
+    {
+        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+                   new System.Globalization.CultureInfo("es-ES"));
+    }
+
+    private void MostrarFormularioPonente()
+    {
+        mostrarFormularioPonente = true;
+        mostrarFormularioCharla = false;
+        mensajeError = "";
+    }
+
+    private void MostrarFormularioCharla()
+    {
+        mostrarFormularioCharla = true;
+        mostrarFormularioPonente = false;
+        mensajeError = "";
+    }
+
+    private void GuardarPonente()
+    {
+        if (string.IsNullOrEmpty(nuevoNombre) || string.IsNullOrEmpty(nuevoEmail))
+        {
+            mensajeError = "Nombre y email son obligatorios.";
+            return;
+        }
+
+        listaPonentes.Add(new PonenteItem
+        {
+            Id = listaPonentes.Count + 1,
+            Nombre = nuevoNombre,
+            Email = nuevoEmail,
+            Especialidad = nuevaEspecialidad,
+            Bio = nuevaBio,
+            NumCharlas = 0
+        });
+
+        mensajeExito = "Ponente agregado exitosamente.";
+        mostrarFormularioPonente = false;
+        nuevoNombre = "";
+        nuevoEmail = "";
+        nuevaEspecialidad = "";
+        nuevaBio = "";
+        mensajeError = "";
+    }
+
+    private void GuardarCharla()
+    {
+        if (charlaPonenteId == 0 || string.IsNullOrEmpty(charlaTitulo))
+        {
+            mensajeError = "Selecciona un ponente y escribe el título.";
+            return;
+        }
+
+        var ponente = listaPonentes.FirstOrDefault(p => p.Id == charlaPonenteId);
+        if (ponente != null)
+        {
+            listaCharlas.Add(new CharlaItem
+            {
+                Titulo = charlaTitulo,
+                NombrePonente = ponente.Nombre,
+                Horario = charlaHorario,
+                Sala = charlaSala
+            });
+            ponente.NumCharlas++;
+        }
+
+        mensajeExito = "Charla asignada exitosamente.";
+        mostrarFormularioCharla = false;
+        charlaTitulo = "";
+        charlaHorario = "";
+        charlaSala = "";
+        charlaPonenteId = 0;
+        mensajeError = "";
+    }
+
+    private void EliminarPonente(PonenteItem ponente)
+    {
+        listaPonentes.Remove(ponente);
+        mensajeExito = "Ponente eliminado exitosamente.";
+    }
+
+    private void CancelarFormularios()
+    {
+        mostrarFormularioPonente = false;
+        mostrarFormularioCharla = false;
+        mensajeError = "";
+    }
+}
