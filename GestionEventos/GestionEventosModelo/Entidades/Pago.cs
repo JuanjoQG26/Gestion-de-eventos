@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GestionEventosModelo.Entidades
@@ -8,6 +9,7 @@ namespace GestionEventosModelo.Entidades
     {
         public int Id_Pago {  get; set; }
         public int Id_Inscripcion { get; set; }
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Monto { get; set; }
         public DateTime FechaPago { get; set; }
         public string MetodoPago { get; set; } = string.Empty;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace GestionEventosModelo.Entidades
@@ -12,6 +13,7 @@ namespace GestionEventosModelo.Entidades
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin {  get; set; }
         public string Lugar { get; set; } = string.Empty;
+        [Column(TypeName = "decimal(10,2)")]
         public decimal Precio { get; set; }
         public int CupoTotal { get; set; }
         public string Estado { get; set; } = string.Empty;
@@ -20,7 +22,7 @@ namespace GestionEventosModelo.Entidades
         public int Id_Organizador { get; set; }
 
         // Relación: el organizador que creó este evento
-        public Usuario Organizador { get; set; } = null!;
+        public Usuario? Organizador { get; set; } /*= null!;*/
 
         // Relación: un evento tiene muchas actividades
         public List<Actividad> Actividades { get; set; } = new();
