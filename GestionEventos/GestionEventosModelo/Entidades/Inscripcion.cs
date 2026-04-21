@@ -12,8 +12,8 @@ namespace GestionEventosModelo.Entidades
         public int Id_Evento { get; set; }
         public DateTime FechaInscripcion { get; set; }
         public string Estado { get; set; } = string.Empty;
-        public Usuario Usuario { get; set; } = null!;
-        public Evento Evento { get; set; } = null!;
+        public Usuario? Usuario { get; set; } //= null!;
+        public Evento? Evento { get; set; } //= null!;
         //UNO A UNO INSCRIPCION - PAGO
         public Pago? Pago { get; set; }
         public List<Asistencia> Asistencias { get; set; } = new();

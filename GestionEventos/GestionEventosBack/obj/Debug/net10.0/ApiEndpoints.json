@@ -1,5 +1,84 @@
 [
   {
+    "ContainingType": "GestionEventosBack.Controllers.ActividadesController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Actividades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.ActividadesController",
+    "Method": "Crear",
+    "RelativePath": "api/Actividades",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "actividad",
+        "Type": "GestionEventosModelo.Entidades.Actividad",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.ActividadesController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Actividades/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.ActividadesController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Actividades/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "actualizado",
+        "Type": "GestionEventosModelo.Entidades.Actividad",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.ActividadesController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Actividades/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GestionEventosBack.Controllers.EventosController",
     "Method": "ObtenerTodos",
     "RelativePath": "api/Eventos",
@@ -102,6 +181,85 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Inscripciones",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
+    "Method": "Crear",
+    "RelativePath": "api/Inscripciones",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "inscripcion",
+        "Type": "GestionEventosModelo.Entidades.Inscripcion",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Inscripciones/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Inscripciones/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "actualizado",
+        "Type": "GestionEventosModelo.Entidades.Inscripcion",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Inscripciones/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": []
   },
   {

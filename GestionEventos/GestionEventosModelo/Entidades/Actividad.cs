@@ -15,7 +15,7 @@ namespace GestionEventosModelo.Entidades
         public DateTime HoraFin {  get; set; }
         public int Cupo { get; set; }
         public string Tipo { get; set; } = string.Empty;
-        public Evento Evento { get; set; } = null!;
+        public Evento? Evento { get; set; } //= null!;
         public Ponente? Ponente { get; set; }
         public List<Asistencia> Asistencias { get; set; } = new();
         public List<InscripcionActividad> InscripcionActividades { get; set; } = new();

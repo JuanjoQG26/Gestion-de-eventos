@@ -1,3 +1,3 @@
-wwwroot\icon-192.png
 wwwroot\css\app.css
+wwwroot\icon-192.png
 C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosFront\wwwroot\css\app.css

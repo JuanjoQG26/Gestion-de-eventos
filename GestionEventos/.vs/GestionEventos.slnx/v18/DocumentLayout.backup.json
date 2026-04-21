@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\controllers\\eventoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\controllers\\eventoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\controllers\\inscripcionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\controllers\\inscripcionescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\controllers\\actividadescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\controllers\\actividadescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\controllers\\pagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\controllers\\pagoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosmodelo\\entidades\\pago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|solutionrelative:gestioneventosmodelo\\entidades\\pago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosmodelo\\entidades\\evento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|solutionrelative:gestioneventosmodelo\\entidades\\evento.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +30,70 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Pago.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Pago.cs",
-              "RelativeDocumentMoniker": "GestionEventosModelo\\Entidades\\Pago.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Pago.cs",
-              "RelativeToolTip": "GestionEventosModelo\\Entidades\\Pago.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAsAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "InscripcionesController.cs",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\InscripcionesController.cs",
+              "RelativeDocumentMoniker": "GestionEventosBack\\Controllers\\InscripcionesController.cs",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\InscripcionesController.cs",
+              "RelativeToolTip": "GestionEventosBack\\Controllers\\InscripcionesController.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAqwD8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-14T23:43:30.562Z",
+              "WhenOpened": "2026-04-18T13:41:16.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ActividadesController.cs",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\ActividadesController.cs",
+              "RelativeDocumentMoniker": "GestionEventosBack\\Controllers\\ActividadesController.cs",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\ActividadesController.cs",
+              "RelativeToolTip": "GestionEventosBack\\Controllers\\ActividadesController.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAAAF4AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-18T13:40:40.653Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Evento.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Evento.cs",
-              "RelativeDocumentMoniker": "GestionEventosModelo\\Entidades\\Evento.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Evento.cs",
-              "RelativeToolTip": "GestionEventosModelo\\Entidades\\Evento.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAwA8AAAAIAAAAAAAAAA==",
+              "Title": "PagosController.cs",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\PagosController.cs",
+              "RelativeDocumentMoniker": "GestionEventosBack\\Controllers\\PagosController.cs",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\PagosController.cs",
+              "RelativeToolTip": "GestionEventosBack\\Controllers\\PagosController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-11T01:22:09.42Z",
+              "WhenOpened": "2026-04-16T21:02:49.349Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UsuariosController.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\UsuariosController.cs",
-              "RelativeDocumentMoniker": "GestionEventosBack\\Controllers\\UsuariosController.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\UsuariosController.cs",
-              "RelativeToolTip": "GestionEventosBack\\Controllers\\UsuariosController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Title": "Pago.cs",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Pago.cs",
+              "RelativeDocumentMoniker": "GestionEventosModelo\\Entidades\\Pago.cs",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Pago.cs",
+              "RelativeToolTip": "GestionEventosModelo\\Entidades\\Pago.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T21:55:27.562Z"
+              "WhenOpened": "2026-04-16T21:02:20.412Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EventosController.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\EventosController.cs",
-              "RelativeDocumentMoniker": "GestionEventosBack\\Controllers\\EventosController.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\EventosController.cs",
-              "RelativeToolTip": "GestionEventosBack\\Controllers\\EventosController.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAowHEAAAAPAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "DataContext.cs",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Data\\DataContext.cs",
+              "RelativeDocumentMoniker": "GestionEventosBack\\Data\\DataContext.cs",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Data\\DataContext.cs",
+              "RelativeToolTip": "GestionEventosBack\\Data\\DataContext.cs",
+              "ViewState": "AgIAAIEAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-10T21:53:54.464Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-16T20:03:10.032Z"
             }
           ]
         }
