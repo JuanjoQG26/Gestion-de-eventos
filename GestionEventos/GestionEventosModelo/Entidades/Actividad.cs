@@ -18,6 +18,6 @@ namespace GestionEventosModelo.Entidades
         public Evento? Evento { get; set; } //= null!;
         public Ponente? Ponente { get; set; }
         public List<Asistencia> Asistencias { get; set; } = new();
-        public List<InscripcionActividad> InscripcionActividades { get; set; } = new();
+        public List<Inscripcion_Actividad> Inscripciones_Actividades { get; set; } = new();
     }
 }

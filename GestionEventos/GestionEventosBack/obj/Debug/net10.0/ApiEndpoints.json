@@ -79,6 +79,164 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "GestionEventosBack.Controllers.AsistenciasController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Asistencias",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.AsistenciasController",
+    "Method": "Crear",
+    "RelativePath": "api/Asistencias",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "asistencia",
+        "Type": "GestionEventosModelo.Entidades.Asistencia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.AsistenciasController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Asistencias/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.AsistenciasController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Asistencias/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "actualizado",
+        "Type": "GestionEventosModelo.Entidades.Asistencia",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.AsistenciasController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Asistencias/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.CertificadosController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Certificados",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.CertificadosController",
+    "Method": "Crear",
+    "RelativePath": "api/Certificados",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "certificado",
+        "Type": "GestionEventosModelo.Entidades.Certificado",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.CertificadosController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Certificados/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.CertificadosController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Certificados/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "actualizado",
+        "Type": "GestionEventosModelo.Entidades.Certificado",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.CertificadosController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Certificados/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GestionEventosBack.Controllers.EventosController",
     "Method": "ObtenerTodos",
     "RelativePath": "api/Eventos",
@@ -184,6 +342,96 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionActividadesController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/InscripcionActividades",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionActividadesController",
+    "Method": "Crear",
+    "RelativePath": "api/InscripcionActividades",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "inscripcionActividad",
+        "Type": "GestionEventosModelo.Entidades.Inscripcion_Actividad",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionActividadesController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/InscripcionActividades/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionActividadesController",
+    "Method": "Eliminar",
+    "RelativePath": "api/InscripcionActividades/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionActividadesController",
+    "Method": "ObtenerPorActividad",
+    "RelativePath": "api/InscripcionActividades/actividad/{idActividad}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idActividad",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionActividadesController",
+    "Method": "ObtenerPorInscripcion",
+    "RelativePath": "api/InscripcionActividades/inscripcion/{idInscripcion}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idInscripcion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
     "Method": "ObtenerTodos",
     "RelativePath": "api/Inscripciones",
@@ -250,6 +498,164 @@
     "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
     "Method": "Eliminar",
     "RelativePath": "api/Inscripciones/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Materiales",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
+    "Method": "Crear",
+    "RelativePath": "api/Materiales",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "material",
+        "Type": "GestionEventosModelo.Entidades.Material",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Materiales/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Materiales/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "actualizado",
+        "Type": "GestionEventosModelo.Entidades.Material",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Materiales/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PagosController",
+    "Method": "ObtenerTodos",
+    "RelativePath": "api/Pagos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PagosController",
+    "Method": "Crear",
+    "RelativePath": "api/Pagos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pago",
+        "Type": "GestionEventosModelo.Entidades.Pago",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PagosController",
+    "Method": "ObtenerPorId",
+    "RelativePath": "api/Pagos/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PagosController",
+    "Method": "Actualizar",
+    "RelativePath": "api/Pagos/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "actualizado",
+        "Type": "GestionEventosModelo.Entidades.Pago",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PagosController",
+    "Method": "Eliminar",
+    "RelativePath": "api/Pagos/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
     "Order": 0,

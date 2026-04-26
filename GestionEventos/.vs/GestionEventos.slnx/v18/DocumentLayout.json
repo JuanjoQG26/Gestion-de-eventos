@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosmodelo\\entidades\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|solutionrelative:gestioneventosmodelo\\entidades\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosmodelo\\entidades\\certificado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C46E5B8B-3245-4A25-B78C-B11DEFB7888B}|GestionEventosModelo\\GestionEventosModelo.csproj|solutionrelative:gestioneventosmodelo\\entidades\\certificado.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\controllers\\asistenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\controllers\\asistenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosback\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3F90EF5-EED1-4EA6-8530-19DED0337E13}|GestionEventosBack\\GestionEventosBack.csproj|solutionrelative:gestioneventosback\\data\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|c:\\users\\juan jos\u00E9\\documents\\gestion de eventos\\gestioneventos\\gestioneventosfront\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F62E9BFC-CB0D-A5F3-3839-411F12C9023D}|GestionEventosFront\\GestionEventosFront.csproj|solutionrelative:gestioneventosfront\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,53 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Asistencia.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Asistencia.cs",
-              "RelativeDocumentMoniker": "GestionEventosModelo\\Entidades\\Asistencia.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Asistencia.cs",
-              "RelativeToolTip": "GestionEventosModelo\\Entidades\\Asistencia.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA4AAAA8AAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\Program.cs",
+              "RelativeDocumentMoniker": "GestionEventosFront\\Program.cs",
+              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\Program.cs",
+              "RelativeToolTip": "GestionEventosFront\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T17:14:46.514Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Certificado.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Certificado.cs",
-              "RelativeDocumentMoniker": "GestionEventosModelo\\Entidades\\Certificado.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosModelo\\Entidades\\Certificado.cs",
-              "RelativeToolTip": "GestionEventosModelo\\Entidades\\Certificado.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T17:14:39.154Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AsistenciasController.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\AsistenciasController.cs",
-              "RelativeDocumentMoniker": "GestionEventosBack\\Controllers\\AsistenciasController.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Controllers\\AsistenciasController.cs",
-              "RelativeToolTip": "GestionEventosBack\\Controllers\\AsistenciasController.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAA5wFEAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T16:55:01.025Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DataContext.cs",
-              "DocumentMoniker": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Data\\DataContext.cs",
-              "RelativeDocumentMoniker": "GestionEventosBack\\Data\\DataContext.cs",
-              "ToolTip": "C:\\Users\\Juan Jos\u00E9\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosBack\\Data\\DataContext.cs",
-              "RelativeToolTip": "GestionEventosBack\\Data\\DataContext.cs",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAiwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-16T20:03:10.032Z",
+              "WhenOpened": "2026-04-26T00:03:15.779Z",
               "EditorCaption": ""
             }
           ]

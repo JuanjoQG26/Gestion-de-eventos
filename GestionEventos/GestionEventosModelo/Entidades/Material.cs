@@ -12,6 +12,6 @@ namespace GestionEventosModelo.Entidades
         public string Tipo { get; set; } = string.Empty;
         public string Url {  get; set; } = string.Empty;
         public DateTime FechaSubida { get; set; }
-        public Evento Evento { get; set; } = null!;
+        public Evento? Evento { get; set; } //= null!;
     }
 }

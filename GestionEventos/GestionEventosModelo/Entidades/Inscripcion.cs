@@ -17,7 +17,7 @@ namespace GestionEventosModelo.Entidades
         //UNO A UNO INSCRIPCION - PAGO
         public Pago? Pago { get; set; }
         public List<Asistencia> Asistencias { get; set; } = new();
-        public List<InscripcionActividad> InscripcionActividades { get; set; } = new();
+        public List<Inscripcion_Actividad> Inscripciones_Actividades { get; set; } = new();
         public Certificado? Certificado { get; set; }
     }
 }

@@ -58,13 +58,13 @@ namespace GestionEventosBack.Controllers
             }
 
             asistencia.Id_Inscripcion = actualizado.Id_Inscripcion;
-            asistencia.Id_Asistencia = actualizado.Id_Actividad;
+            asistencia.Id_Actividad = actualizado.Id_Actividad;
             asistencia.MetodoRegistro = actualizado.MetodoRegistro;
 
             await _context.SaveChangesAsync();
             return Ok(asistencia);
         }
-
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Eliminar(int id)
         {
             var asistencia = await _context.Asistencias.FirstOrDefaultAsync(a => a.Id_Asistencia == id);

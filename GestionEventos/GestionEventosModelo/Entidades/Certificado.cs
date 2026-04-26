@@ -11,6 +11,6 @@ namespace GestionEventosModelo.Entidades
         public DateTime FechaGeneracion { get; set; }
         public string? UrlPDF { get; set; }
         public string CodigoValidacion { get; set; } = string.Empty;
-        public Inscripcion Inscripcion { get; set; } = null!;
+        public Inscripcion? Inscripcion { get; set; } //= null!;
     }
 }

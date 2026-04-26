@@ -18,7 +18,7 @@ namespace GestionEventosBack.Data
         public DbSet<Actividad> Actividades { get; set; }
         public DbSet<Inscripcion> Inscripciones { get; set; }
         public DbSet<Pago> Pagos { get; set; }
-        public DbSet<InscripcionActividad> InscripcionActividades { get; set; }
+        public DbSet<Inscripcion_Actividad> Inscripciones_Actividades { get; set; }
         public DbSet<Asistencia> Asistencias { get; set; }
         public DbSet<Material> Materiales { get; set; }
         public DbSet<Certificado> Certificados { get; set; }
@@ -98,17 +98,17 @@ namespace GestionEventosBack.Data
             });
 
             // ---- TABLA INSCRIPCION_ACTIVIDADES ----
-            modelBuilder.Entity<InscripcionActividad>(entity =>
+            modelBuilder.Entity<Inscripcion_Actividad>(entity =>
             {
                 entity.HasKey(ia => ia.Id);
                 // Pertenece a una inscripción
                 entity.HasOne(ia => ia.Inscripcion)
-                    .WithMany(i => i.InscripcionActividades)
+                    .WithMany(i => i.Inscripciones_Actividades)
                     .HasForeignKey(ia => ia.Id_Inscripcion);
                 // Pertenece a una actividad
                 entity.HasOne(ia => ia.Actividad)
-                    .WithMany(a => a.InscripcionActividades)
-                    .HasPrincipalKey(ia => ia.Id_Actividad);
+                    .WithMany(a => a.Inscripciones_Actividades)
+                    .HasForeignKey(ia => ia.Id_Actividad);
             });
 
             // ---- TABLA ASISTENCIAS ----
