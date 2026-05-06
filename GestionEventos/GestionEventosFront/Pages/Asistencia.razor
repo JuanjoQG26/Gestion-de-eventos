@@ -3,6 +3,8 @@
 
 @* Permite usar el componente del menú *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo.Entidades
+
 
 @inject NavigationManager Navegacion
 
@@ -45,19 +47,19 @@
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-morado">👥</div>
-                    <div class="estadistica-label-pequeño">Tasa de Asistencia</div>
+                    <div class="estadistica-label-pequeño">@TasaAsistencia</div>
                     <div class="estadistica-numero">66.7%</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-verde">✅</div>
-                    <div class="estadistica-label-pequeño">Presentes</div>
+                    <div class="estadistica-label-pequeño">@TotalPresentes</div>
                     <div class="estadistica-numero">2</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-naranja">❌</div>
-                    <div class="estadistica-label-pequeño">Ausentes</div>
+                    <div class="estadistica-label-pequeño">@TotalAusentes</div>
                     <div class="estadistica-numero">1</div>
                 </div>
 
@@ -92,59 +94,43 @@
                 <table class="tabla-inscripciones">
                     <thead>
                         <tr>
-                            <th>Participante</th>
-                            <th>Evento</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
+                            <th>Id Asistencia</th>
+                            <th>Id Inscripcion</th>
+                            <th>Id Actividad</th>
+                            <th>Fecha Registro</th>
+                            <th>Metodo</th>
                             <th>Estado</th>
-                            <th>Actividades</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @if (listaAsistencias == null)
+                        {
+                            <tr><td colspan="6">Cargando asistencias ...</td></tr>
+                        }
+                        else if (!listaAsistencias.Any())
+                        {
+                            <tr>
+                                <td colspan="6" style="text-align:center">
+                                    No hay registros de asistencia
+                                </td>
+                            </tr>
+                        }
+                        else{
                         @foreach (var asistencia in AsistenciasFiltradas)
                         {
                             <tr>
+                                <td>@asistencia.Id_Asistencia</td>
+                                <td>@asistencia.Id_Inscripcion</td>
+                                <td>@asistencia.Id_Actividad</td>
+                                <td>@asistencia.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@asistencia.MetodoRegistro</td>
                                 <td>
-                                    <span class="tabla-nombre">@asistencia.Nombre</span>
-                                </td>
-                                <td>@asistencia.Evento</td>
-                                <td>
-                                    @if (!string.IsNullOrEmpty(asistencia.CheckIn))
-                                    {
-                                        <div class="asistencia-tiempo">
-                                            <span>@asistencia.CheckIn</span>
-                                            <span class="tiempo-hora">@asistencia.HoraIn</span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <span class="sin-dato">-</span>
-                                    }
-                                </td>
-                                <td>
-                                    @if (!string.IsNullOrEmpty(asistencia.CheckOut))
-                                    {
-                                        <div class="asistencia-tiempo">
-                                            <span>@asistencia.CheckOut</span>
-                                            <span class="tiempo-hora">@asistencia.HoraOut</span>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <span class="sin-dato">-</span>
-                                    }
-                                </td>
-                                <td>
-                                    <span class="badge-tabla @(asistencia.Estado == "Presente" ? "badge-completado-tabla" : "badge-fallido-tabla")">
-                                        @asistencia.Estado
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge-actividades">
-                                        @asistencia.ActividadesCompletadas/@asistencia.TotalActividades completadas
+                                    <span class="badge-tabla @ObtenerClaseEstado(asistencia)">
+                                        @ObtenerEstado(asistencia)
                                     </span>
                                 </td>
                             </tr>
+                        }
                         }
                     </tbody>
                 </table>
@@ -157,24 +143,7 @@
                 </div>
             }
 
-            @* ---- SELECCIÓN DE ACTIVIDADES ---- *@
-            <div class="tabla-contenedor" style="padding: 24px;">
-                <div class="tabla-titulo-seccion">Selección de Actividades</div>
-                @foreach (var asistencia in listaAsistencias)
-                {
-                    <div class="asistencia-actividades-grupo">
-                        <h3 class="asistencia-grupo-titulo">
-                            @asistencia.Nombre - @asistencia.Evento
-                        </h3>
-                        @foreach (var actividad in asistencia.Actividades)
-                        {
-                            <div class="asistencia-actividad-item">
-                                @actividad
-                            </div>
-                        }
-                    </div>
-                }
-            </div>
+            
 
         </div>
 
@@ -183,73 +152,60 @@
 </div>
 
 @code {
+    [Inject] private IRepository Repository { get; set; } = null!;
+
 
     private string fechaHoy = "";
     private string busqueda = "";
     private string filtroEvento = "todos";
     private string filtroEstado = "todos";
 
-    private class AsistenciaItem
-    {
-        public string Nombre { get; set; } = "";
-        public string Evento { get; set; } = "";
-        public string CheckIn { get; set; } = "";
-        public string HoraIn { get; set; } = "";
-        public string CheckOut { get; set; } = "";
-        public string HoraOut { get; set; } = "";
-        public string Estado { get; set; } = "";
-        public int ActividadesCompletadas { get; set; }
-        public int TotalActividades { get; set; }
-        public List<string> Actividades { get; set; } = new();
-    }
+    private List<GestionEventosModelo.Entidades.Asistencia>? listaAsistencias;
 
-    private List<AsistenciaItem> listaAsistencias = new List<AsistenciaItem>
-    {
-        new AsistenciaItem
-        {
-            Nombre = "María González",
-            Evento = "Cumbre de Innovación Digital",
-            CheckIn = "10/3/2026", HoraIn = "08:45",
-            CheckOut = "10/3/2026", HoraOut = "18:30",
-            Estado = "Presente",
-            ActividadesCompletadas = 2, TotalActividades = 2,
-            Actividades = new List<string> { "Sesión Inaugural", "Panel de Expertos" }
-        },
-        new AsistenciaItem
-        {
-            Nombre = "Juan Pérez",
-            Evento = "Cumbre de Innovación Digital",
-            CheckIn = "10/3/2026", HoraIn = "09:15",
-            CheckOut = "", HoraOut = "",
-            Estado = "Presente",
-            ActividadesCompletadas = 1, TotalActividades = 2,
-            Actividades = new List<string> { "Sesión Inaugural", "Panel de Expertos" }
-        },
-        new AsistenciaItem
-        {
-            Nombre = "Laura Martín",
-            Evento = "Cumbre de Innovación Digital",
-            CheckIn = "", HoraIn = "",
-            CheckOut = "", HoraOut = "",
-            Estado = "Ausente",
-            ActividadesCompletadas = 0, TotalActividades = 0,
-            Actividades = new List<string>()
-        },
-    };
-
-    private IEnumerable<AsistenciaItem> AsistenciasFiltradas => listaAsistencias
+    private IEnumerable<GestionEventosModelo.Entidades.Asistencia> AsistenciasFiltradas =>
+        (listaAsistencias ?? new List<GestionEventosModelo.Entidades.Asistencia>())
         .Where(a =>
             (string.IsNullOrEmpty(busqueda) ||
-             a.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-             a.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
+             a.Id_Inscripcion.ToString().Contains(busqueda) ||
+             a.Id_Actividad.ToString().Contains(busqueda))
             &&
-            (filtroEvento == "todos" || a.Evento == filtroEvento)
-            &&
-            (filtroEstado == "todos" || a.Estado == filtroEstado));
+            (filtroEvento == "todos" || ObtenerEstado(a) == filtroEstado));
 
-    protected override void OnInitialized()
+    private string ObtenerEstado(GestionEventosModelo.Entidades.Asistencia a)
+    {
+        return "";
+    }
+
+    private string ObtenerClaseEstado(GestionEventosModelo.Entidades.Asistencia a)
+    {
+        return ObtenerEstado(a) == "Presente" ? "badge-completado-tabla" : "badge-fallido-tabla";
+    }
+
+    //retorna estadisticas
+    private int TotalPresentes => listaAsistencias?.Count ?? 0;
+    private int TotalAusentes => 0;
+    private string TasaAsistencia => listaAsistencias == null || !listaAsistencias.Any()
+     ? "0%"
+     : $"{Math.Round((double) TotalPresentes / (TotalPresentes + TotalAusentes) * 100)}%";
+
+
+    protected override async Task OnInitializedAsync()
     {
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+        await CargarAsistencias();
+    }
+
+    private async Task CargarAsistencias()
+    {
+        try
+        {
+            listaAsistencias = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Asistencia>>("api/asistencias");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            listaAsistencias = new List<GestionEventosModelo.Entidades.Asistencia>();
+        }
     }
 }

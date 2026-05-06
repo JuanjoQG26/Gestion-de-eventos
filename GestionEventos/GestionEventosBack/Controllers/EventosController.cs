@@ -74,7 +74,7 @@ namespace GestionEventosBack.Controllers
             // Valida que la fecha de inicio no sea anterior a hoy (RN-009)
             if (evento.FechaInicio < DateTime.Now)
             {
-                return BadRequest("La fecha de inicio no puede ser anterior a la fecha de inicio");
+                return BadRequest("La fecha de fin no puede ser anterior a la fecha de inicio");
             }
 
             // Valida que el precio sea mayor o igual a 0 (RN-008)

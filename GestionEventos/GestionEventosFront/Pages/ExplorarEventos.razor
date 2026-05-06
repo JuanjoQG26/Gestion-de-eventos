@@ -75,41 +75,33 @@
             @* ---- GRID DE TARJETAS DE EVENTOS ---- *@
             @* EventosFiltrados es una propiedad que filtra la lista según búsqueda y filtro *@
             <div class="grid-eventos">
-                @foreach (var evento in EventosFiltrados)
+                @if (listaEventos == null)
                 {
-                    @* Por cada evento en la lista genera una tarjeta *@
-                    <div class="tarjeta-evento-explorar">
-
-                        @* Imagen del evento con badge de estado encima *@
-                        <div class="evento-imagen-contenedor">
-                            <div class="evento-imagen-placeholder">🎪</div>
-                            <span class="badge-estado @evento.EstadoClase">@evento.Estado</span>
-                        </div>
-
-                        @* Información del evento *@
-                        <div class="evento-explorar-info">
-                            <h3 class="evento-explorar-nombre">@evento.Nombre</h3>
-                            <p class="evento-explorar-desc">@evento.Descripcion</p>
-
-                            <div class="evento-explorar-detalles">
-                                <span>📅 @evento.Fecha</span>
-                                <span>📍 @evento.Lugar</span>
-                                <span>👥 @evento.Inscritos / @evento.CupoTotal inscritos</span>
-                                <span class="evento-precio">💲 $@evento.Precio</span>
+                    <p class="subtitulo-pagina">Cargando eventos...</p>
+                }
+                else
+                {
+                    <div class="grid-eventos">
+                        @foreach (var evento in EventosFiltrados)
+                        {
+                            <div class="tarjeta-evento-explorar">
+                                <div class="evento-imagen-contenedor">
+                                    <div class="evento-imagen-placeholder">🎪</div>
+                                    <span class="badge-estado @(evento.Estado == "Publicado" ? "badge-proximo" : "badge-completado")">
+                                        @evento.Estado
+                                    </span>
+                                </div>
+                                <div class="evento-explorar-info">
+                                    <h3 class="evento-explorar-nombre">@evento.Nombre</h3>
+                                    <p class="evento-explorar-desc">@evento.Descripcion</p>
+                                    <div class="evento-explorar-detalles">
+                                        <span>📅 @evento.FechaInicio.ToString("dd/MM/yyyy")</span>
+                                        <span>📍 @evento.Lugar</span>
+                                        <span class="evento-precio">💲 $@evento.Precio</span>
+                                    </div>
+                                </div>
                             </div>
-
-                            @* Barra de ocupación *@
-                            <div class="barra-ocupacion-contenedor">
-                                <span class="ocupacion-texto">Ocupación</span>
-                                <span class="ocupacion-porcentaje">@evento.Ocupacion%</span>
-                            </div>
-                            <div class="barra-ocupacion">
-                                @* El ancho de la barra cambia según el porcentaje *@
-                                <div class="barra-ocupacion-progreso"
-                                     style="width: @evento.Ocupacion%"></div>
-                            </div>
-
-                        </div>
+                        }
                     </div>
                 }
             </div>
@@ -133,58 +125,38 @@
 @* ===================== C# - LA LÓGICA ===================== *@
 @code {
 
-    // Variable que guarda la fecha de hoy
+
+
+    [Inject] private IRepository Repository { get; set; } = null!;
+
     private string fechaHoy = "";
-
-    // Variable que guarda lo que el usuario escribe en la búsqueda
     private string busqueda = "";
-
-    // Variable que guarda el filtro activo: "todos", "proximo", "en curso", "completado"
     private string filtroActivo = "todos";
 
-    // Clase que representa un evento con todos sus datos
-    private class Evento
-    {
-        public string Nombre { get; set; } = "";
-        public string Descripcion { get; set; } = "";
-        public string Fecha { get; set; } = "";
-        public string Lugar { get; set; } = "";
-        public int Inscritos { get; set; }
-        public int CupoTotal { get; set; }
-        public string Precio { get; set; } = "";
-        public string Estado { get; set; } = "";
-        // EstadoClase es el nombre de la clase CSS según el estado
-        public string EstadoClase { get; set; } = "";
-        // Ocupacion calcula el porcentaje de inscritos sobre cupo total
-        public int Ocupacion => (int)((double)Inscritos / CupoTotal * 100);
-    }
+    private List<GestionEventosModelo.Entidades.Evento>? listaEventos;
 
-    // Lista de eventos de ejemplo (cuando tengamos el back vendrán de la base de datos)
-    private List<Evento> listaEventos = new List<Evento>
-    {
-        new Evento { Nombre = "Conferencia de Tecnología 2026", Descripcion = "El evento más importante de tecnología del año con expertos internacionales", Fecha = "14 de abril de 2026", Lugar = "Centro de Convenciones Internacional", Inscritos = 387, CupoTotal = 500, Precio = "150", Estado = "Próximo", EstadoClase = "badge-proximo" },
-        new Evento { Nombre = "Cumbre de Innovación Digital", Descripcion = "Explorando las últimas tendencias en transformación digital", Fecha = "9 de marzo de 2026", Lugar = "Hotel Grand Palace", Inscritos = 245, CupoTotal = 300, Precio = "200", Estado = "En Curso", EstadoClase = "badge-en-curso" },
-        new Evento { Nombre = "Foro de Emprendimiento", Descripcion = "Conectando startups con inversionistas", Fecha = "19 de febrero de 2026", Lugar = "Centro Empresarial", Inscritos = 200, CupoTotal = 200, Precio = "100", Estado = "Completado", EstadoClase = "badge-completado" },
-        new Evento { Nombre = "Taller de Inteligencia Artificial", Descripcion = "Aprende los fundamentos de IA con expertos del sector", Fecha = "20 de mayo de 2026", Lugar = "ITM Medellín", Inscritos = 80, CupoTotal = 150, Precio = "50", Estado = "Próximo", EstadoClase = "badge-proximo" },
-    };
-
-    // Propiedad que filtra la lista según búsqueda y filtro activo
-    // Se recalcula automáticamente cada vez que cambia busqueda o filtroActivo
-    private IEnumerable<Evento> EventosFiltrados => listaEventos
+    private IEnumerable<Evento> EventosFiltrados => (listaEventos ?? new List<Evento>())
         .Where(e =>
-            // Filtra por texto de búsqueda (nombre o lugar)
-            (string.IsNullOrEmpty(busqueda) ||
-             e.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-             e.Lugar.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
+            (string.IsNullOrEmpty(busqueda) || 
+            e.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+            e.Lugar.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
             &&
-            // Filtra por estado
-            (filtroActivo == "todos" ||
-             e.Estado.ToLower() == filtroActivo));
+            (filtroActivo == "todos" || e.Estado.ToLower() == filtroActivo));
 
-    // OnInitialized se ejecuta cuando la página carga
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
-                   new System.Globalization.CultureInfo("es-ES"));
+            new System.Globalization.CultureInfo("es-ES"));
+
+        try
+        {
+            listaEventos = await Repository.GetAsync<List<Evento>>("api/eventos");
+        }
+        catch
+        {
+            listaEventos = new List<Evento>();
+        }
     }
+
+    
 }

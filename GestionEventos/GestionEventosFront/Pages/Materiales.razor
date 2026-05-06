@@ -3,6 +3,7 @@
 
 @* Permite usar el componente del menú *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo.Entidades
 
 @inject NavigationManager Navegacion
 
@@ -56,13 +57,10 @@
                         </div>
 
                         <div class="grupo-campo">
-                            <label class="etiqueta">Evento</label>
-                            <select class="campo-texto" @bind="nuevoEvento">
-                                <option value="">Selecciona un evento</option>
-                                <option value="Conferencia de Tecnología 2026">Conferencia de Tecnología 2026</option>
-                                <option value="Cumbre de Innovación Digital">Cumbre de Innovación Digital</option>
-                                <option value="Foro de Emprendimiento">Foro de Emprendimiento</option>
-                            </select>
+                            <label class="etiqueta">ID Evento</label>
+                            <input class="campo-texto" type="number"
+                                placeholder="Ej: 1"
+                                @bind="nuevoIdEvento"/>
                         </div>
 
                         <div class="grupo-campo">
@@ -71,8 +69,7 @@
                                 <option value="">Selecciona el tipo</option>
                                 <option value="PDF">PDF</option>
                                 <option value="PPT">PPT</option>
-                                <option value="VIDEO">VIDEO</option>
-                                <option value="IMAGE">IMAGE</option>
+                                <option value="DOC">Documento</option>
                             </select>
                         </div>
 
@@ -108,25 +105,25 @@
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-azul">📄</div>
                     <div class="estadistica-label-pequeño">Total Materiales</div>
-                    <div class="estadistica-numero">@listaMateriales.Count</div>
+                    <div class="estadistica-numero">@(listaMateriales?.Count ?? 0)</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-verde">📥</div>
                     <div class="estadistica-label-pequeño">Total Descargas</div>
-                    <div class="estadistica-numero">@listaMateriales.Sum(m => m.Descargas)</div>
+                    <div class="estadistica-numero">0</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-morado">📋</div>
                     <div class="estadistica-label-pequeño">PDFs</div>
-                    <div class="estadistica-numero">@listaMateriales.Count(m => m.Tipo == "PDF")</div>
+                    <div class="estadistica-numero">@(listaMateriales?.Count(m => m.Tipo == "PDF") ?? 0)</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-naranja">🎥</div>
                     <div class="estadistica-label-pequeño">Videos</div>
-                    <div class="estadistica-numero">@listaMateriales.Count(m => m.Tipo == "VIDEO")</div>
+                    <div class="estadistica-numero">@(listaMateriales?.Count(m => m.Tipo == "VIDEO") ?? 0)</div>
                 </div>
 
             </div>
@@ -158,19 +155,24 @@
             </div>
 
             @* ---- GRID DE MATERIALES ---- *@
+            @if (listaMateriales == null)
+            {
+                <p class="subtitulo-pagina">Cargando Materiales</p>
+            }
+            else{
             <div class="grid-materiales-org">
                 @foreach (var material in MaterialesFiltrados)
                 {
                     <div class="tarjeta-material-org">
 
                         @* Ícono según tipo *@
-                        <div class="material-org-icono @material.ColorFondo">
-                            @material.Icono
+                        <div class="material-org-icono @ObtenerColorFondo(material.Tipo)">
+                            @ObtenerIcono(material.Tipo)
                         </div>
 
                         <div class="material-org-info">
                             <h3 class="material-org-nombre">@material.Nombre</h3>
-                            <p class="material-org-evento">@material.Evento</p>
+                            <p class="material-org-evento">@material.Id_Evento</p>
 
                             <div class="material-org-detalles">
                                 <div class="material-org-fila">
@@ -178,17 +180,10 @@
                                     <span class="material-tipo-badge">@material.Tipo</span>
                                 </div>
                                 <div class="material-org-fila">
-                                    <span class="material-org-label">Tamaño</span>
-                                    <span>@material.Tamanio</span>
-                                </div>
-                                <div class="material-org-fila">
-                                    <span class="material-org-label">Descargas</span>
-                                    <span>@material.Descargas</span>
-                                </div>
-                                <div class="material-org-fila">
                                     <span class="material-org-label">Subido</span>
-                                    <span>@material.FechaSubida</span>
+                                    <span>@material.FechaSubida.ToString("dd/MM/yyyy")</span>
                                 </div>
+                                
                             </div>
 
                             <div class="material-botones">
@@ -204,6 +199,7 @@
                     </div>
                 }
             </div>
+            }
 
             @if (!MaterialesFiltrados.Any())
             {
@@ -220,6 +216,8 @@
 
 @code {
 
+    [Inject] private IRepository Repository { get; set; } = null!;
+
     private string fechaHoy = "";
     private string busqueda = "";
     private string filtroEvento = "todos";
@@ -228,47 +226,67 @@
     private string mensajeError = "";
     private string mensajeExito = "";
 
+    private List<Material>? listaMateriales;
+
     // Variables formulario
     private string nuevoNombre = "";
     private string nuevoEvento = "";
     private string nuevoTipo = "";
     private string nuevoTamanio = "";
+    private int nuevoIdEvento = 0;
 
-    private class MaterialItem
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-        public string Evento { get; set; } = "";
-        public string Tipo { get; set; } = "";
-        public string Tamanio { get; set; } = "";
-        public int Descargas { get; set; }
-        public string FechaSubida { get; set; } = "";
-        public string Icono { get; set; } = "";
-        public string ColorFondo { get; set; } = "";
-    }
 
-    private List<MaterialItem> listaMateriales = new List<MaterialItem>
-    {
-        new MaterialItem { Id=1, Nombre="Presentación Keynote - IA", Evento="Conferencia de Tecnología 2026", Tipo="PDF", Tamanio="2.5 MB", Descargas=245, FechaSubida="20/2/2026", Icono="📄", ColorFondo="material-fondo-rojo" },
-        new MaterialItem { Id=2, Nombre="Guía Workshop ML", Evento="Conferencia de Tecnología 2026", Tipo="PDF", Tamanio="5.8 MB", Descargas=178, FechaSubida="21/2/2026", Icono="📄", ColorFondo="material-fondo-rojo" },
-        new MaterialItem { Id=3, Nombre="Video: Transformación Digital", Evento="Cumbre de Innovación Digital", Tipo="VIDEO", Tamanio="150 MB", Descargas=89, FechaSubida="10/3/2026", Icono="🎥", ColorFondo="material-fondo-morado" },
-        new MaterialItem { Id=4, Nombre="Infografía: Inversión en Startups", Evento="Foro de Emprendimiento", Tipo="IMAGE", Tamanio="1.2 MB", Descargas=312, FechaSubida="20/2/2026", Icono="🖼️", ColorFondo="material-fondo-verde" },
-    };
-
-    private IEnumerable<MaterialItem> MaterialesFiltrados => listaMateriales
-        .Where(m =>
+    private IEnumerable<Material> MaterialesFiltrados => (listaMateriales ?? 
+        new List<Material>())
+        .Where(m => 
             (string.IsNullOrEmpty(busqueda) ||
-             m.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-             m.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
-            &&
-            (filtroEvento == "todos" || m.Evento == filtroEvento)
+            m.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
             &&
             (filtroTipo == "todos" || m.Tipo == filtroTipo));
 
-    protected override void OnInitialized()
+    private string ObtenerIcono(string tipo)
+    {
+        return tipo switch
+        {
+            "PDF" => "📄",
+            "PPT" => "📊",
+            "DOC" => "📄",
+            _ => "📄"
+        };
+    }
+
+    private string ObtenerColorFondo(string tipo)
+    {
+        return tipo switch
+        {
+            "PDF" => "material-fondo-rojo",
+            "PPT" => "material-fondo-azul",
+            "DOC" => "material-fondo-morado",
+            
+            _ => "material-fondo-azul"
+        };
+    }
+
+
+    protected override async Task OnInitializedAsync()
     {
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+
+        await CargarMateriales();
+    }
+
+    private async Task CargarMateriales()
+    {
+        try
+        {
+            listaMateriales = await Repository.GetAsync<List<Material>>("api/materiales");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            listaMateriales = new List<Material>();
+        }
     }
 
     private void MostrarFormulario()
@@ -278,58 +296,53 @@
         nuevoEvento = "";
         nuevoTipo = "";
         nuevoTamanio = "";
+        nuevoIdEvento = 0;
         mensajeError = "";
     }
 
-    private void GuardarMaterial()
+    private async Task GuardarMaterial()
     {
-        if (string.IsNullOrEmpty(nuevoNombre) || string.IsNullOrEmpty(nuevoEvento) ||
+        if (string.IsNullOrEmpty(nuevoNombre) || nuevoIdEvento <= 0 ||
             string.IsNullOrEmpty(nuevoTipo))
         {
             mensajeError = "Nombre, evento y tipo son obligatorios.";
             return;
         }
 
-        // Asigna ícono y color según el tipo
-        string icono = nuevoTipo switch
+        try
         {
-            "PDF" => "📄",
-            "PPT" => "📊",
-            "VIDEO" => "🎥",
-            "IMAGE" => "🖼️",
-            _ => "📄"
-        };
+            var material = new Material
+                {
+                    Nombre = nuevoNombre,
+                    Id_Evento = nuevoIdEvento,
+                    Tipo = nuevoTipo,
+                    Url = "sin-url",
+                    FechaSubida = DateTime.Now
+                };
 
-        string color = nuevoTipo switch
+            await Repository.PostAsync("api/materiales", material);
+            mensajeExito = "Material subido exitosamente";
+            mostrarFormulario = false;
+            mensajeError = "";
+            await CargarMateriales();
+        }
+        catch (Exception ex)
         {
-            "PDF" => "material-fondo-rojo",
-            "PPT" => "material-fondo-azul",
-            "VIDEO" => "material-fondo-morado",
-            "IMAGE" => "material-fondo-verde",
-            _ => "material-fondo-azul"
-        };
-
-        listaMateriales.Add(new MaterialItem
-        {
-            Id = listaMateriales.Count + 1,
-            Nombre = nuevoNombre,
-            Evento = nuevoEvento,
-            Tipo = nuevoTipo,
-            Tamanio = nuevoTamanio,
-            Descargas = 0,
-            FechaSubida = DateTime.Now.ToString("d/M/yyyy"),
-            Icono = icono,
-            ColorFondo = color
-        });
-
-        mensajeExito = "Material subido exitosamente.";
-        mostrarFormulario = false;
-        mensajeError = "";
+            mensajeError = $"Error: {ex.Message}";
+        }
     }
 
-    private void EliminarMaterial(MaterialItem material)
+    private async Task EliminarMaterial(Material material)
     {
-        listaMateriales.Remove(material);
-        mensajeExito = "Material eliminado exitosamente.";
+        try
+        {
+            await Repository.DeleteAsync($"api/materiales/{material.Id_Material}");
+            mensajeExito = "Material eliminado exitosamente";
+            await CargarMateriales();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 }

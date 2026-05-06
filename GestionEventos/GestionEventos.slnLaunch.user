@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Nuevo perfil",
+    "Projects": [
+      {
+        "Path": "GestionEventosBack\\GestionEventosBack.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "GestionEventosFront\\GestionEventosFront.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

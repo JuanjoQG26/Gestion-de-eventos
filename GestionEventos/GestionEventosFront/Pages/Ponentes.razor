@@ -113,7 +113,7 @@
                                 <option value="0">Selecciona un ponente</option>
                                 @foreach (var p in listaPonentes)
                                 {
-                                    <option value="@p.Id">@p.Nombre</option>
+                                    <option value="@p.Id_Ponente">@p.Nombre</option>
                                 }
                             </select>
                         </div>
@@ -175,7 +175,7 @@
 
                         @* Avatar con iniciales *@
                         <div class="ponente-header">
-                            <div class="ponente-avatar">@ponente.Iniciales</div>
+                            <div class="ponente-avatar">@ObtenerIniciales(ponente.Nombre)</div>
                             <div class="ponente-header-info">
                                 <h3 class="ponente-nombre">@ponente.Nombre</h3>
                                 <span class="ponente-email">✉️ @ponente.Email</span>
@@ -195,7 +195,7 @@
                         <div class="ponente-detalle">
                             <span class="ponente-label">Charlas Asignadas</span>
                             <span class="ponente-charlas-badge">
-                                @ponente.NumCharlas charlas
+                                @ContarCharlas(ponente.Id_Ponente)
                             </span>
                         </div>
 
@@ -244,12 +244,17 @@
 
 @code {
 
+    [Inject] private IRepository Repository { get; set; } = null!;
+
     private string fechaHoy = "";
     private string busqueda = "";
     private bool mostrarFormularioPonente = false;
     private bool mostrarFormularioCharla = false;
     private string mensajeError = "";
     private string mensajeExito = "";
+
+    // Lista de ponentes que viene de la API
+    private List<Ponente>? listaPonentes;
 
     // Variables formulario ponente
     private string nuevoNombre = "";
@@ -263,19 +268,9 @@
     private string charlaHorario = "";
     private string charlaSala = "";
 
-    private class PonenteItem
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-        public string Email { get; set; } = "";
-        public string Especialidad { get; set; } = "";
-        public string Bio { get; set; } = "";
-        public int NumCharlas { get; set; }
-        // Iniciales para el avatar
-        public string Iniciales => string.Join("",
-            Nombre.Split(' ').Take(2).Select(n => n[0].ToString().ToUpper()));
-    }
 
+    // Clase local solo para mostrar charlas en pantalla
+    // (las charlas reales son Actividades en la BD)
     private class CharlaItem
     {
         public string Titulo { get; set; } = "";
@@ -284,11 +279,11 @@
         public string Sala { get; set; } = "";
     }
 
-    private List<PonenteItem> listaPonentes = new List<PonenteItem>
+    /*private List<PonenteItem> listaPonentes = new List<PonenteItem>
     {
         new PonenteItem { Id=1, Nombre="Dr. Ana Martínez", Email="ana.martinez@email.com", Especialidad="Inteligencia Artificial", Bio="Especialista en inteligencia artificial con más de 10 años de experiencia", NumCharlas=1 },
         new PonenteItem { Id=2, Nombre="Carlos Ruiz", Email="carlos.ruiz@email.com", Especialidad="Desarrollo de Software", Bio="Ingeniero en sistemas con experiencia en desarrollo de software", NumCharlas=1 },
-    };
+    };*/
 
     private List<CharlaItem> listaCharlas = new List<CharlaItem>
     {
@@ -296,93 +291,140 @@
         new CharlaItem { Titulo="Workshop: Machine Learning", NombrePonente="Carlos Ruiz", Horario="14:00", Sala="Sala B" },
     };
 
-    private IEnumerable<PonenteItem> PonentesFiltrados => listaPonentes
-        .Where(p =>
-            string.IsNullOrEmpty(busqueda) ||
-            p.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-            p.Especialidad.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+    private IEnumerable<Ponente> PonentesFiltrados => (listaPonentes ?? new List<Ponente>())
+    .Where(p => 
+    string.IsNullOrEmpty(busqueda) ||
+    p.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
+    (p.Especialidad != null && p.Especialidad.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
+    );
 
-    protected override void OnInitialized()
+    // Devuelve las iniciales del nombre para el avatar
+    private string ObtenerIniciales(string nombre)
     {
-        fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
-                   new System.Globalization.CultureInfo("es-ES"));
+    return string.Join("",
+        nombre.Split(' ').Take(2).Select(n => n[0].ToString().ToUpper())
+    );
+    }
+
+    private int ContarCharlas(int idPonente)
+    {
+    return listaCharlas.Count(c => c.NombrePonente == listaPonentes?
+    .FirstOrDefault(p => p.Id_Ponente == idPonente)?.Nombre);
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+    fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
+       new System.Globalization.CultureInfo("es-ES"));
+
+    await CargarPonentes();
+    }
+
+    private async Task CargarPonentes()
+    {
+    try
+    {
+        listaPonentes = await Repository.GetAsync<List<Ponente>>("api/ponentes");
+    }
+    catch (Exception ex)
+    {
+        mensajeError = $"Error al cargar ponentes: {ex.Message}" ;
+        listaPonentes = new List<Ponente>();
+    }
     }
 
     private void MostrarFormularioPonente()
     {
-        mostrarFormularioPonente = true;
-        mostrarFormularioCharla = false;
-        mensajeError = "";
+    mostrarFormularioPonente = true;
+    mostrarFormularioCharla = false;
+    nuevoNombre = "";
+    nuevoEmail = "";
+    nuevaEspecialidad = "";
+    nuevaBio = "";
+    mensajeError = "";
     }
 
     private void MostrarFormularioCharla()
     {
-        mostrarFormularioCharla = true;
-        mostrarFormularioPonente = false;
-        mensajeError = "";
+    mostrarFormularioCharla = true;
+    mostrarFormularioPonente = false;
+    mensajeError = "";
     }
 
-    private void GuardarPonente()
+    private async Task GuardarPonente()
     {
-        if (string.IsNullOrEmpty(nuevoNombre) || string.IsNullOrEmpty(nuevoEmail))
-        {
-            mensajeError = "Nombre y email son obligatorios.";
-            return;
-        }
+    if (string.IsNullOrEmpty(nuevoNombre) || string.IsNullOrEmpty(nuevoEmail))
+    {
+        mensajeError = "Nombre y email son obligatorios.";
+        return;
+    }
 
-        listaPonentes.Add(new PonenteItem
-        {
-            Id = listaPonentes.Count + 1,
-            Nombre = nuevoNombre,
-            Email = nuevoEmail,
-            Especialidad = nuevaEspecialidad,
-            Bio = nuevaBio,
-            NumCharlas = 0
-        });
+    try
+    {
+        var ponente = new Ponente
+                {
+                    Nombre = nuevoNombre,
+                    Email = nuevoEmail,
+                    Especialidad = nuevaEspecialidad,
+                    Bio = nuevaBio
+        };
 
-        mensajeExito = "Ponente agregado exitosamente.";
+        await Repository.PostAsync("api/ponentes", ponente);
+        mensajeExito = "Ponente agregado exitosamente";
         mostrarFormularioPonente = false;
-        nuevoNombre = "";
-        nuevoEmail = "";
-        nuevaEspecialidad = "";
-        nuevaBio = "";
         mensajeError = "";
+        await CargarPonentes();
+    }
+    catch (Exception ex)
+    {
+        mensajeError = $"Error: {ex.Message}";
+    }
+
     }
 
     private void GuardarCharla()
     {
-        if (charlaPonenteId == 0 || string.IsNullOrEmpty(charlaTitulo))
-        {
-            mensajeError = "Selecciona un ponente y escribe el título.";
-            return;
-        }
+    if (charlaPonenteId == 0 || string.IsNullOrEmpty(charlaTitulo))
+    {
+        mensajeError = "Selecciona un ponente y escribe el título.";
+        return;
+    }
 
-        var ponente = listaPonentes.FirstOrDefault(p => p.Id == charlaPonenteId);
-        if (ponente != null)
-        {
-            listaCharlas.Add(new CharlaItem
+    var ponente = listaPonentes?.FirstOrDefault(p => p.Id_Ponente == charlaPonenteId);
+    if (ponente != null)
+    {
+        listaCharlas.Add(new CharlaItem
             {
                 Titulo = charlaTitulo,
                 NombrePonente = ponente.Nombre,
                 Horario = charlaHorario,
                 Sala = charlaSala
             });
-            ponente.NumCharlas++;
-        }
 
-        mensajeExito = "Charla asignada exitosamente.";
-        mostrarFormularioCharla = false;
-        charlaTitulo = "";
-        charlaHorario = "";
-        charlaSala = "";
-        charlaPonenteId = 0;
-        mensajeError = "";
     }
 
-    private void EliminarPonente(PonenteItem ponente)
+    mensajeExito = "Charla asignada exitosamente.";
+    mostrarFormularioCharla = false;
+    charlaTitulo = "";
+    charlaHorario = "";
+    charlaSala = "";
+    charlaPonenteId = 0;
+    mensajeError = "";
+    }
+
+    private async Task EliminarPonente(Ponente ponente)
     {
-        listaPonentes.Remove(ponente);
-        mensajeExito = "Ponente eliminado exitosamente.";
+    try
+    {
+        await Repository.DeleteAsync($"api/ponentes/{ponente.Id_Ponente}");
+        mensajeExito = "Ponente eliminado exitosamente";
+        await CargarPonentes();
+    }
+    catch (Exception ex)
+    {
+        mensajeError = $"Error: {ex.Message}";
+    }
     }
 
     private void CancelarFormularios()

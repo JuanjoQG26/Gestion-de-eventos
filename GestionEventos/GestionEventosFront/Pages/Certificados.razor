@@ -3,6 +3,7 @@
 
 @* Permite usar el componente del menú *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo.Entidades
 
 @inject NavigationManager Navegacion
 
@@ -48,7 +49,7 @@
                     <div class="estadistica-icono fondo-verde">✅</div>
                     <div class="estadistica-label-pequeño">Generados</div>
                     <div class="estadistica-numero">
-                        @listaCertificados.Count(c => c.Estado == "Enviado" || c.Estado == "Generado")
+                        @(listaCertificados?.Count(c => !string.IsNullOrEmpty(c.UrlPDF)) ?? 0)
                     </div>
                 </div>
 
@@ -56,7 +57,7 @@
                     <div class="estadistica-icono fondo-azul">📤</div>
                     <div class="estadistica-label-pequeño">Enviados</div>
                     <div class="estadistica-numero">
-                        @listaCertificados.Count(c => c.Estado == "Enviado")
+                        @(listaCertificados?.Count(c => !string.IsNullOrEmpty(c.UrlPDF)) ?? 0)
                     </div>
                 </div>
 
@@ -64,7 +65,7 @@
                     <div class="estadistica-icono fondo-naranja">🕐</div>
                     <div class="estadistica-label-pequeño">Pendientes</div>
                     <div class="estadistica-numero">
-                        @listaCertificados.Count(c => c.Estado == "Pendiente")
+                        @(listaCertificados?.Count(c => string.IsNullOrEmpty(c.UrlPDF)) ?? 0)
                     </div>
                 </div>
 
@@ -95,37 +96,54 @@
                 <table class="tabla-inscripciones">
                     <thead>
                         <tr>
-                            <th>Participante</th>
-                            <th>Email</th>
-                            <th>Fecha Generación</th>
-                            <th>Estado</th>
+                            <th>ID</th>
+                            <th>ID Inscripcion</th>
+                            <th>Fecha Generacion</th>
+                            <th>Codigo Validación</th>
+                            <th>Url PDF</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var cert in CertificadosFiltrados)
+                        @if (listaCertificados == null)
                         {
-                            <tr>
-                                <td>
-                                    <div class="tabla-participante">
-                                        <span class="tabla-nombre">@cert.Nombre</span>
-                                        <span class="tabla-email">@cert.Evento</span>
-                                    </div>
-                                </td>
-                                <td>@cert.Email</td>
-                                <td>@cert.FechaGeneracion.ToString("d/M/yyyy")</td>
-                                <td>
-                                    <span class="badge-tabla @cert.EstadoClase">
-                                        @cert.IconoEstado @cert.Estado
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="boton-enviar-cert"
-                                            @onclick="() => EnviarCertificado(cert)">
-                                        📤 Enviar
-                                    </button>
-                                </td>
-                            </tr>
+                            <tr><td colspan="6">Cargando certificados ...</td></tr>
+                        }
+                        else if (!listaCertificados.Any())
+                        {
+                            <tr><td colpsan="6" style="text-align:center;">No hay certificados registrados</td></tr>
+
+                        }
+                        else
+                        {
+                            @foreach (var cert in CertificadosFiltrados)
+                            {
+                                <tr>
+                                    <td>@cert.Id_Certificado</td>
+                                    <td>@cert.Id_Inscripcion</td>
+                                    <td>@cert.FechaGeneracion.ToString("dd/MM/yyyy")</td>
+                                    <td>
+                                        <span class="badge-tabla badge-generado-tabla">
+                                            @cert.CodigoValidacion
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(cert.UrlPDF))
+                                        {
+                                            <span class="badge-table badge-pendiente-tabla">🕐 Pendiente</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge-table badge-completado-tabla">✅ Disponible</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <button class="boton-enviar-cert" @onclick="() => EnviarCertificado(cert)">
+                                            📤 Enviar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         }
                     </tbody>
                 </table>
@@ -146,40 +164,40 @@
 </div>
 
 @code {
+    [Inject] private IRepository Repository { get; set; } = null!;
 
     private string fechaHoy = "";
     private string busqueda = "";
     private string mensajeExito = "";
 
-    private class CertificadoItem
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-        public string Email { get; set; } = "";
-        public string Evento { get; set; } = "";
-        public DateTime FechaGeneracion { get; set; }
-        public string Estado { get; set; } = "";
-        public string EstadoClase { get; set; } = "";
-        public string IconoEstado { get; set; } = "";
-    }
+    private List<Certificado>? listaCertificados;
 
-    private List<CertificadoItem> listaCertificados = new List<CertificadoItem>
-    {
-        new CertificadoItem { Id=1, Nombre="María González", Email="maria.gonzalez@email.com", Evento="Conferencia de Tecnología 2026", FechaGeneracion=DateTime.Now.AddDays(-5), Estado="Enviado", EstadoClase="badge-completado-tabla", IconoEstado="✅" },
-        new CertificadoItem { Id=2, Nombre="Juan Pérez", Email="juan.perez@email.com", Evento="Conferencia de Tecnología 2026", FechaGeneracion=DateTime.Now.AddDays(-3), Estado="Generado", EstadoClase="badge-generado-tabla", IconoEstado="🏆" },
-        new CertificadoItem { Id=3, Nombre="Laura Martín", Email="laura.martin@email.com", Evento="Cumbre de Innovación Digital", FechaGeneracion=DateTime.Now, Estado="Pendiente", EstadoClase="badge-pendiente-tabla", IconoEstado="🕐" },
-    };
 
-    private IEnumerable<CertificadoItem> CertificadosFiltrados => listaCertificados
+
+    private IEnumerable<Certificado> CertificadosFiltrados => (listaCertificados ?? new List<Certificado>())
         .Where(c =>
             string.IsNullOrEmpty(busqueda) ||
-            c.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-            c.Email.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+            c.CodigoValidacion.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+
+        await CargarCertificados();
+    }
+
+    private async Task CargarCertificados()
+    {
+        try
+        {
+            listaCertificados = await Repository.GetAsync<List<Certificado>>("api/certificados");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            listaCertificados = new List<Certificado>();
+        }
     }
 
     private void GenerarCertificados()
@@ -187,22 +205,45 @@
         mensajeExito = "Certificados generados exitosamente.";
     }
 
-    private void EnviarCertificado(CertificadoItem cert)
+    private async Task EnviarCertificado(Certificado cert)
     {
-        cert.Estado = "Enviado";
-        cert.EstadoClase = "badge-completado-tabla";
-        cert.IconoEstado = "✅";
-        mensajeExito = $"Certificado enviado a {cert.Email} exitosamente.";
+        try
+        {
+            // Actualiza el certificado con la URL del PDF
+            cert.UrlPDF = $"certificados/{cert.Id_Certificado}.pdf";
+            await Repository.PutAsync($"api/certificados/{cert.Id_Certificado}", cert);
+            mensajeExito = $"Certificado #{cert.Id_Certificado} enviado correctamente";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 
-    private void EnviarTodos()
+    private async Task EnviarTodos()
     {
-        foreach (var cert in listaCertificados)
+        try
         {
-            cert.Estado = "Enviado";
-            cert.EstadoClase = "badge-completado-tabla";
-            cert.IconoEstado = "✅";
+            /*for (int i = 0; i < (listaCertificados?.Count ?? 0); i++)
+            {
+                var cert = listaCertificados[i];
+                cert.UrlPDF = $"certificados/{cert.Id_Certificado}.pdf";
+                await Repository.PutAsync($"api/certificados/{cert.Id_Certificado}", cert);
+                }*/
+
+
+        foreach (var cert in listaCertificados ?? new List<Certificado>())
+            {
+                cert.UrlPDF = $"certificados/{cert.Id_Certificado}.pdf";
+                await Repository.PutAsync($"api/certificados/{cert.Id_Certificado}", cert);
+            }
+
+            mensajeExito = "Todos los certificados fueron enviados exitosamente";
+            await CargarCertificados();
         }
-        mensajeExito = "Todos los certificados fueron enviados exitosamente.";
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 }

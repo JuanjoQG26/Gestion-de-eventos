@@ -102,7 +102,7 @@
 @* ===================== C# - LA LÓGICA ===================== *@
 @code {
 
-    // Variable que guarda el tipo de usuario seleccionado. Por defecto es "asistente"
+    /*// Variable que guarda el tipo de usuario seleccionado. Por defecto es "asistente"
     private string tipoUsuario = "asistente";
 
     // Variable que guarda el nombre completo escrito por el usuario
@@ -128,12 +128,12 @@
     {
         // Si algún campo está vacío, muestra error y para
         if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(email) ||
-            string.IsNullOrEmpty(telefono) || string.IsNullOrEmpty(password))
+        string.IsNullOrEmpty(telefono) || string.IsNullOrEmpty(password))
         {
             mensajeError = "Por favor completa todos los campos.";
             mensajeExito = "";
             return; // Detiene la función aquí
-        }
+            }
 
         // Si la contraseña tiene menos de 6 caracteres, muestra error
         if (password.Length < 6)
@@ -141,7 +141,7 @@
             mensajeError = "La contraseña debe tener al menos 6 caracteres.";
             mensajeExito = "";
             return;
-        }
+            }
 
         // Si todo está bien, limpia el error y muestra éxito
         mensajeError = "";
@@ -150,9 +150,60 @@
         // Por ahora navega al login después de registrarse
         // Cuando tengamos el back esto guardará el usuario en la base de datos
         Navegacion.NavigateTo("/");
-    }
+        }
 
     // Función que lleva de vuelta al Login
+    private void IrALogin()
+    {
+        Navegacion.NavigateTo("/");
+        }*/
+
+    [Inject] private IRepository Repository { get; set; } = null!;
+
+    private string tipoUsuario = "asistente";
+    private string nombre = "";
+    private string email = "";
+    private string telefono = "";
+    private string password = "";
+    private string mensajeError = "";
+    private string mensajeExito = "";
+
+    private async Task Registrarse()
+    {
+        if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            mensajeError = "Por favor completa todos los campos";
+            return;
+        }
+
+        if (password.Length < 6)
+        {
+            mensajeError = "La contraseña debe tener al menos 6 caracteres";
+            return;
+        }
+
+        try
+        {
+            var usuario = new Usuario
+            {
+                Nombre = nombre,
+                Email = email,
+                Contrasena = password,
+                Rol = tipoUsuario == "organizador"? "Organizador": "Asistente",
+                FechaRegistro = DateTime.Now
+            };
+
+            await Repository.PostAsync("api/usuarios/registro", usuario);
+            mensajeExito = "¡Registro exitoso! Redirigiendo...";
+            mensajeError = "";
+            Navegacion.NavigateTo("/");
+        }
+        catch
+        {
+            mensajeError = "El email ya esta registrado";
+        }
+    }
+
     private void IrALogin()
     {
         Navegacion.NavigateTo("/");

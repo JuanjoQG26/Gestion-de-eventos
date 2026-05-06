@@ -3,6 +3,7 @@
 
 @* Permite usar el componente del menú *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo.Entidades
 
 @inject NavigationManager Navegacion
 
@@ -83,41 +84,34 @@
                 <table class="tabla-inscripciones">
                     <thead>
                         <tr>
-                            <th>Participante</th>
+                            <th>ID</th>
+                            <th>ID Usuario</th>
                             <th>Evento</th>
-                            <th>Fecha de Registro</th>
-                            <th>Monto</th>
-                            <th>Método de Pago</th>
+                            <th>Fecha Inscripcion</th>
                             <th>Estado</th>
-                            <th>Actividades</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
+                        @if(listaInscripciones == null){
+                            <tr><td colspan="5">Cargando inscripciones...</td></tr>
+                        }
+                        else
+                        {
                         @foreach (var ins in InscripcionesFiltradas)
                         {
                             <tr>
+                                <td>@ins.Id_Inscripcion</td>
+                                <td>@ins.Id_Usuario</td>
+                                <td>@ins.Id_Evento</td>
+                                <td>@ins.FechaInscripcion.ToString("dd/MM/yyyy")</td>
                                 <td>
-                                    <div class="tabla-participante">
-                                        <span class="tabla-nombre">@ins.Nombre</span>
-                                        <span class="tabla-email">@ins.Email</span>
-                                        <span class="tabla-id">ID: @ins.Id</span>
-                                    </div>
-                                </td>
-                                <td>@ins.Evento</td>
-                                <td>@ins.Fecha</td>
-                                <td>$@ins.Monto</td>
-                                <td>@ins.MetodoPago</td>
-                                <td>
-                                    <span class="badge-tabla @ins.EstadoClase">
-                                        @ins.Estado
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge-actividades">
-                                        @ins.NumActividades actividades
+                                    <span class="badge-tabla @ObtenerClaseEstado(ins.Estado)">
+                                        @ObtenerIconoEstado(ins.Estado) @ins.Estado
                                     </span>
                                 </td>
                             </tr>
+                        }
                         }
                     </tbody>
                 </table>
@@ -133,19 +127,19 @@
             @* ---- TRAZABILIDAD DE PAGOS ---- *@
             <h2 class="titulo-seccion" style="margin-top:40px;">Trazabilidad de Pagos</h2>
             <div class="lista-trazabilidad">
-                @foreach (var ins in listaInscripciones)
+                @foreach (var ins in (listaInscripciones ?? new List<Inscripcion>()))
                 {
                     <div class="tarjeta-trazabilidad">
-                        <div class="trazabilidad-icono @ins.EstadoClase">
-                            @ins.IconoEstado
+                        <div class="trazabilidad-icono @ObtenerClaseEstado(ins.Estado)">
+                            @ObtenerIconoEstado(ins.Estado)
                         </div>
                         <div class="trazabilidad-info">
-                            <span class="trazabilidad-nombre">@ins.Nombre</span>
-                            <span class="trazabilidad-detalle">@ins.MetodoPago - $@ins.Monto</span>
+                            <span class="trazabilidad-nombre">Inscripcion #@ins.Id_Inscripcion</span>
+                            <span class="trazabilidad-detalle">Usuario: @ins.Id_Usuario - Evento: @ins.Id_Evento</span>
                         </div>
                         <div class="trazabilidad-derecha">
-                            <span class="trazabilidad-fecha">@ins.Fecha</span>
-                            <span class="trazabilidad-id">ID: @ins.Id</span>
+                            <span class="trazabilidad-fecha">@ins.FechaInscripcion</span>
+                            <span class="trazabilidad-id">ID: @ins.Id_Inscripcion</span>
                         </div>
                     </div>
                 }
@@ -158,46 +152,61 @@
 </div>
 
 @code {
+    [Inject] private IRepository Repository { get; set; } = null!;
 
     private string fechaHoy = "";
     private string busqueda = "";
     private string filtroEstado = "todos";
 
-    private class InscripcionItem
-    {
-        public int Id { get; set; }
-        public string Nombre { get; set; } = "";
-        public string Email { get; set; } = "";
-        public string Evento { get; set; } = "";
-        public string Fecha { get; set; } = "";
-        public string Monto { get; set; } = "";
-        public string MetodoPago { get; set; } = "";
-        public string Estado { get; set; } = "";
-        public string EstadoClase { get; set; } = "";
-        public string IconoEstado { get; set; } = "";
-        public int NumActividades { get; set; }
-    }
+    private List<Inscripcion>? listaInscripciones;
 
-    private List<InscripcionItem> listaInscripciones = new List<InscripcionItem>
-    {
-        new InscripcionItem { Id=1, Nombre="María González", Email="maria.gonzalez@email.com", Evento="Conferencia de Tecnología 2026", Fecha="15/2/2026", Monto="150", MetodoPago="Tarjeta de crédito", Estado="Completado", EstadoClase="badge-completado-tabla", IconoEstado="✅", NumActividades=2 },
-        new InscripcionItem { Id=2, Nombre="Juan Pérez", Email="juan.perez@email.com", Evento="Conferencia de Tecnología 2026", Fecha="16/2/2026", Monto="150", MetodoPago="PayPal", Estado="Completado", EstadoClase="badge-completado-tabla", IconoEstado="✅", NumActividades=1 },
-        new InscripcionItem { Id=3, Nombre="Laura Martín", Email="laura.martin@email.com", Evento="Cumbre de Innovación Digital", Fecha="18/2/2026", Monto="200", MetodoPago="Transferencia bancaria", Estado="Pendiente", EstadoClase="badge-pendiente-tabla", IconoEstado="🕐", NumActividades=0 },
-        new InscripcionItem { Id=4, Nombre="Carlos Rodríguez", Email="carlos.rodriguez@email.com", Evento="Conferencia de Tecnología 2026", Fecha="20/2/2026", Monto="150", MetodoPago="Tarjeta de crédito", Estado="Fallido", EstadoClase="badge-fallido-tabla", IconoEstado="❌", NumActividades=2 },
-    };
-
-    private IEnumerable<InscripcionItem> InscripcionesFiltradas => listaInscripciones
+    private IEnumerable<Inscripcion> InscripcionesFiltradas =>
+        (listaInscripciones ?? new List<Inscripcion>())
         .Where(i =>
             (string.IsNullOrEmpty(busqueda) ||
-             i.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-             i.Email.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-             i.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
+             i.Estado.Contains(busqueda, StringComparison.OrdinalIgnoreCase))
             &&
             (filtroEstado == "todos" || i.Estado == filtroEstado));
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+        await CargarInscripciones();
+    }
+
+    private async Task CargarInscripciones()
+    {
+        try
+        {
+            listaInscripciones = await Repository.GetAsync<List<Inscripcion>>("api/inscripciones");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            listaInscripciones = new List<Inscripcion>();
+        }
+    }
+
+    private string ObtenerClaseEstado(string estado)
+    {
+        return estado switch
+        {
+            "Confirmada" => "badge-completado-tabla",
+            "Pendiente" => "badge-pendiente-tabla",
+            "Cancelada" => "badge-fallido-tabla",
+            _ => "badge-pendiente-tabla"
+        };
+    }
+
+    private string ObtenerIconoEstado(string estado)
+    {
+        return estado switch
+        {
+            "Confirmada" => "✅",
+            "Pendiente" => "🕐",
+            "Cancelada" => "❌",
+            _ => "🕐"
+        };
     }
 }

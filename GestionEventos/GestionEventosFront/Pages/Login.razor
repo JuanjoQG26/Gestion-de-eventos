@@ -85,7 +85,7 @@
 @* ===================== C# - LA LÓGICA ===================== *@
 @code {
 
-    // Variable que guarda el tipo de usuario seleccionado. Por defecto es "asistente"
+    /*// Variable que guarda el tipo de usuario seleccionado. Por defecto es "asistente"
     private string tipoUsuario = "asistente";
 
     // Variable que guarda lo que escribe el usuario en el campo email
@@ -105,7 +105,7 @@
         {
             mensajeError = "Por favor completa todos los campos.";
             return; // Detiene la función aquí
-        }
+            }
 
         // Si los campos están llenos, limpia el error
         mensajeError = "";
@@ -115,9 +115,51 @@
             Navegacion.NavigateTo("/dashboard-organizador");
         else
             Navegacion.NavigateTo("/dashboard-asistente");
-    }
+        }
 
     // Función que lleva a la página de registro
+    private void IrARegistro()
+    {
+        Navegacion.NavigateTo("/registro");
+        }*/
+
+    [Inject] private IRepository Repository { get; set; } = null!;
+    //private NavigationManager Navegacion { get; set; } = null!;
+
+    private string tipoUsuario = "asistente";
+    private string email = "";
+    private string password = "";
+    private string mensajeError = "";
+
+    private async Task IniciarSesion()
+    {
+        if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+        {
+            mensajeError = "Porfavor completa todos los campos";
+            return;
+        }
+
+        try
+        {
+            var loginDto = new { Email  = email, Contrasena = password};
+            var resultado = await Repository.PostAsync("api/usuarios/login", loginDto);
+
+            mensajeError = "";
+            if (tipoUsuario == "organizador")
+            {
+                Navegacion.NavigateTo("/dashboard-organizador");
+            }
+            else
+            {
+                Navegacion.NavigateTo("/dashboard-asistente");
+            }
+        }
+        catch
+        {
+            mensajeError = "Email o contraseña incorrectos";
+        }
+    }
+
     private void IrARegistro()
     {
         Navegacion.NavigateTo("/registro");

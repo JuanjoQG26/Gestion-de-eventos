@@ -3,6 +3,7 @@
 
 @* Permite usar el componente del menú *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo.Entidades
 
 @inject NavigationManager Navegacion
 
@@ -34,25 +35,25 @@
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-azul">📅</div>
-                    <div class="estadistica-numero">4</div>
+                    <div class="estadistica-numero">@totalEventos</div>
                     <div class="estadistica-texto">Total Eventos</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-morado">👥</div>
-                    <div class="estadistica-numero">988</div>
+                    <div class="estadistica-numero">@totalInscripciones</div>
                     <div class="estadistica-texto">Total Inscripciones</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-verde">💲</div>
-                    <div class="estadistica-numero">$300</div>
+                    <div class="estadistica-numero">$0</div>
                     <div class="estadistica-texto">Ingresos Totales</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-naranja">🏆</div>
-                    <div class="estadistica-numero">3</div>
+                    <div class="estadistica-numero">@totalCertificados</div>
                     <div class="estadistica-texto">Certificados Emitidos</div>
                 </div>
 
@@ -103,20 +104,29 @@
                     </div>
 
                     <div class="lista-eventos-org">
-                        <div class="tarjeta-evento-org">
-                            <div class="evento-org-imagen">🎪</div>
-                            <div class="evento-org-info">
-                                <h3 class="evento-org-nombre">Conferencia de Tecnología 2026</h3>
-                                <p class="evento-org-fecha">14/04/2026</p>
-                            </div>
-                        </div>
-                        <div class="tarjeta-evento-org">
-                            <div class="evento-org-imagen">📢</div>
-                            <div class="evento-org-info">
-                                <h3 class="evento-org-nombre">Seminario de Marketing Digital</h3>
-                                <p class="evento-org-fecha">21/05/2026</p>
-                            </div>
-                        </div>
+                        @if (ultimosEventos == null)
+                        {
+                            <p class="subtitulo-pagina">Cargando eventos...</p>
+                        }
+                        else if (!ultimosEventos.Any())
+                        {
+                            <p class="subtitulo-pagina">No hay eventos registrados</p>
+                        }
+                        else
+                        {
+                            @foreach (var evento in ultimosEventos)
+                            {
+                                <div class="tarjeta-evento-org">
+                                    <div class="evento-org-imagen">🎪</div>
+                                    <div class="evento-org-info">
+                                        <h3 class="evento-org-nombre">@evento.Nombre</h3>
+                                        <p class="evento-org-fecha">
+                                            @evento.FechaInicio.ToString("dd/MM/yyyy")
+                                        </p>
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
                 </div>
 
@@ -129,35 +139,30 @@
 
                     <div class="lista-inscripciones-org">
 
-                        <div class="tarjeta-inscripcion-org">
-                            <div class="inscripcion-org-avatar">👤</div>
-                            <div class="inscripcion-org-info">
-                                <span class="inscripcion-org-nombre">Maria González</span>
-                                <span class="inscripcion-org-evento">Conferencia de Tecnología 2026</span>
-                                <span class="badge-pago badge-confirmado">Pagado</span>
-                            </div>
-                            <span class="inscripcion-org-monto">$150</span>
-                        </div>
-
-                        <div class="tarjeta-inscripcion-org">
-                            <div class="inscripcion-org-avatar">👤</div>
-                            <div class="inscripcion-org-info">
-                                <span class="inscripcion-org-nombre">Juan Pérez</span>
-                                <span class="inscripcion-org-evento">Conferencia de Tecnología 2026</span>
-                                <span class="badge-pago badge-confirmado">Pagado</span>
-                            </div>
-                            <span class="inscripcion-org-monto">$150</span>
-                        </div>
-
-                        <div class="tarjeta-inscripcion-org">
-                            <div class="inscripcion-org-avatar">👤</div>
-                            <div class="inscripcion-org-info">
-                                <span class="inscripcion-org-nombre">Laura Martín</span>
-                                <span class="inscripcion-org-evento">Cumbre de Innovación Digital</span>
-                                <span class="badge-pago badge-pendiente">Pendiente</span>
-                            </div>
-                            <span class="inscripcion-org-monto">$200</span>
-                        </div>
+                        @if (ultimasInscripciones == null)
+                        {
+                            <p class="subtitulo-pagina">Cargando inscripciones ...</p>
+                        }
+                        else if (!ultimasInscripciones.Any())
+                        {
+                            <p class="subtitulo-pagina">No hay inscripciones registradas</p>
+                        }
+                        else
+                        {
+                            @foreach (var ins in ultimasInscripciones)
+                            {
+                                <div class="tarjeta-inscripcion-org">
+                                    <div class="inscripcion-org-avatar">👤</div>
+                                    <div class="inscripcion-org-info">
+                                        <span class="inscripcion-org-nombre">Usuario #@ins.Id_Usuario</span>
+                                        <span class="inscripcion-org-evento">Evento #@ins.Id_Evento</span>
+                                        <span class="badge-pago @(ins.Estado == "Confirmada" ? "badge-confirmado" : "badge-pendiente")">
+                                            @ins.Estado
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                        }
 
                     </div>
                 </div>
@@ -224,12 +229,60 @@
 
 @code {
 
+    [Inject] private IRepository Repository { get; set; } = null!;
+
     private string fechaHoy = "";
 
-    protected override void OnInitialized()
+    private int totalEventos = 0;
+    private int totalInscripciones = 0;
+    private int totalCertificados = 0;
+    private string ingresosTotales = "0";
+
+    private List<GestionEventosModelo.Entidades.Evento>? ultimosEventos;
+    private List<GestionEventosModelo.Entidades.Inscripcion>? ultimasInscripciones;
+
+    protected override async Task OnInitializedAsync()
     {
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            var eventos = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Evento>>("api/eventos");
+            totalEventos = eventos?.Count ?? 0;
+            ultimosEventos = eventos?.Take(2).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error eventos {ex.Message}");
+            ultimosEventos = new List<GestionEventosModelo.Entidades.Evento>();
+        }
+
+        try
+        {
+            var inscripciones = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Inscripcion>>("api/inscripciones");
+            totalInscripciones = inscripciones?.Count ?? 0;
+            ultimasInscripciones = inscripciones?.Take(3).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inscripciones {ex.Message}");
+            ultimasInscripciones = new List<GestionEventosModelo.Entidades.Inscripcion>();
+        }
+
+        try
+        {
+            var certificados = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Certificado>>("api/certificados");
+            totalCertificados = certificados?.Count ?? 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error certificados: {ex.Message}");
+        }
     }
 
     private void NavegaA(string ruta)
