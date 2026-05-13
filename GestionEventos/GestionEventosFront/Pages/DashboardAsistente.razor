@@ -3,6 +3,9 @@
 
 @* Permite usar el componente del menú que creamos en Layout *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo.Entidades
+
+@inject GestionEventosFront.Service.SesionServicio Sesion
 
 @* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
 
@@ -19,8 +22,8 @@
         <div class="barra-superior">
             <span class="barra-fecha">@fechaHoy</span>
             <div class="barra-usuario">
-                <span class="barra-nombre">Asistente</span>
-                <span class="barra-email">asistente@email.com</span>
+                <span class="barra-nombre">@nombreUsuario</span>
+                <span class="barra-email">@emailUsuario</span>
                 <div class="barra-avatar">👤</div>
             </div>
         </div>
@@ -38,25 +41,25 @@
                 @* Cada tarjeta muestra un número y una descripción *@
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-azul">📅</div>
-                    <div class="estadistica-numero">4</div>
+                    <div class="estadistica-numero">@totalInscripciones</div>
                     <div class="estadistica-texto">Mis Inscripciones</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-verde">✅</div>
-                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-numero">0</div>
                     <div class="estadistica-texto">Pagos Confirmados</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-morado">🕐</div>
-                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-numero">@(proximosEventos?.Count ?? 0)</div>
                     <div class="estadistica-texto">Eventos Próximos</div>
                 </div>
 
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-naranja">🏆</div>
-                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-numero">@totalCertificados</div>
                     <div class="estadistica-texto">Certificados</div>
                 </div>
 
@@ -100,28 +103,34 @@
 
             <div class="lista-eventos">
 
-                @* Evento 1 *@
-                <div class="tarjeta-evento">
-                    <div class="evento-fecha-badge">15 May</div>
-                    <div class="evento-info">
-                        <h3 class="evento-nombre">Congreso de Tecnología 2026</h3>
-                        <p class="evento-detalle">📍 Medellín &nbsp;&nbsp; 💲 $150.000</p>
-                        <span class="evento-estado confirmado">Inscrito</span>
-                    </div>
-                    <button class="boton-evento">Ver detalle</button>
-                </div>
-
-                @* Evento 2 *@
-                <div class="tarjeta-evento">
-                    <div class="evento-fecha-badge">22 Jun</div>
-                    <div class="evento-info">
-                        <h3 class="evento-nombre">Taller de Innovación</h3>
-                        <p class="evento-detalle">📍 Bogotá &nbsp;&nbsp; 💲 $80.000</p>
-                        <span class="evento-estado pendiente">Pago Pendiente</span>
-                    </div>
-                    <button class="boton-evento">Ver detalle</button>
-                </div>
-
+                @if (proximosEventos == null)
+                {
+                    <p class="subtitulo-pagina">Cargando eventos...</p>
+                }
+                else if (!proximosEventos.Any())
+                {
+                    <p class="subtitulo-pagina">No hay eventos disponibles</p>
+                }
+                else
+                {
+                    @foreach (var evento in proximosEventos)
+                    {
+                        <div class="tarjeta-evento">
+                            <div class="evento-fecha-badge">
+                                @evento.FechaInicio.ToString("dd/MM", new System.Globalization.CultureInfo("es-ES"));
+                            </div>
+                            <div class="evento-info">
+                                <h3 class="evento-nombre">@evento.Nombre</h3>
+                                <p class="evento-detalle">📍 @evento.Lugar &nbsp; 💲$@evento.Precio</p>
+                                <span class="evento-estado @(evento.Estado == "Publicado" ? "confirmado" : "pendiente")">
+                                    @evento.Estado
+                                </span>
+                            </div>
+                            <button class="boton-evento">Ver detalle</button>
+                        </div>
+                    }
+                }
+                
             </div>
 
         </div>
@@ -136,17 +145,60 @@
 @* ===================== C# - LA LÓGICA ===================== *@
 @code {
 
-    @inject NavigationManager Navegacion
+@inject NavigationManager Navegacion
+    [Inject] private IRepository Repository { get; set; } = null!;
+
+    private string nombreUsuario = "";
+    private string emailUsuario = "";
 
     // Variable que guarda la fecha de hoy formateada
     private string fechaHoy = "";
+    private int totalInscripciones = 0;
+    private int totalCertificados = 0;
+    private List<GestionEventosModelo.Entidades.Evento>? proximosEventos;
 
     // OnInitialized se ejecuta automáticamente cuando la página carga
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        nombreUsuario = await Sesion.ObtenerNombre();
+        emailUsuario = await Sesion.ObtenerEmail();
         // Obtiene la fecha actual y la formatea en español
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+        await CargarDatos();
+    }
+
+    private async Task CargarDatos()
+    {
+        try
+        {
+            var inscripciones = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Inscripcion>>("api/inscripciones");
+            totalInscripciones = inscripciones?.Count ?? 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error inscripciones: {ex.Message}");
+        }
+
+        try
+        {
+            var certificados = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Certificado>>("api/certificados");
+            totalCertificados = certificados?.Count ?? 0;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error certificados: {ex.Message}");
+        }
+
+        try
+        {
+            var eventos = await Repository.GetAsync<List<GestionEventosModelo.Entidades.Evento>>("api/eventos");
+            proximosEventos = eventos?.Take(2).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error eventos: {ex.Message}");
+        }
     }
 
     // Función que navega a la ruta indicada

@@ -3,6 +3,7 @@
 
 @* Esto permite usar NavigationManager para navegar entre páginas *@
 @inject NavigationManager Navegacion
+@inject IJSRuntime JS
 
 @* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
 
@@ -144,14 +145,28 @@
             var loginDto = new { Email  = email, Contrasena = password};
             var resultado = await Repository.PostAsync("api/usuarios/login", loginDto);
 
+            var usuario = System.Text.Json.JsonSerializer.Deserialize<GestionEventosModelo.Entidades.Usuario>(
+                resultado.ToString()!,
+                new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true }
+            );
+
+            //mensajeError = usuario?.Rol;
             mensajeError = "";
-            if (tipoUsuario == "organizador")
+            await JS.InvokeVoidAsync("sessionStorage.setItem", "usuarioNombre", usuario.Nombre);
+            await JS.InvokeVoidAsync("sessionStorage.setItem", "usuarioEmail", usuario.Email);
+            await JS.InvokeVoidAsync("sessionStorage.setItem", "usuarioRol", usuario.Rol);
+            await JS.InvokeVoidAsync("sessionStorage.setItem", "usuarioId", usuario.Id_Usuario.ToString());
+            if (tipoUsuario == "organizador" && usuario?.Rol == "Organizador")
             {
                 Navegacion.NavigateTo("/dashboard-organizador");
             }
-            else
+            else if(tipoUsuario == "asistente" && usuario?.Rol == "Asistente")
             {
                 Navegacion.NavigateTo("/dashboard-asistente");
+            }
+            else
+            {
+                mensajeError = "Email o contraseña incorrectos";
             }
         }
         catch

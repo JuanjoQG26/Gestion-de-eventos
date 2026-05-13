@@ -17,5 +17,6 @@ builder.Services.AddScoped(sp => new HttpClient {
 // Registra el Repository para que pueda inyectarse en las páginas
 // Cuando una página pida IRepository, recibirá Repository
 builder.Services.AddScoped<IRepository, Repository>();
+builder.Services.AddScoped<GestionEventosFront.Service.SesionServicio>();
 
 await builder.Build().RunAsync();

@@ -3,8 +3,10 @@
 
 @* Permite usar el componente del menú *@
 @using GestionEventosFront.Layout
+@using GestionEventosModelo
 
 @inject NavigationManager Navegacion
+@inject GestionEventosFront.Service.SesionServicio Sesion
 
 @* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
 
@@ -20,8 +22,8 @@
         <div class="barra-superior">
             <span class="barra-fecha">@fechaHoy</span>
             <div class="barra-usuario">
-                <span class="barra-nombre">Juan</span>
-                <span class="barra-email">juan@gmail.com</span>
+                <span class="barra-nombre">@nombreUsuario</span>
+                <span class="barra-email">@emailUsuario</span>
                 <div class="barra-avatar">👤</div>
             </div>
         </div>
@@ -35,25 +37,21 @@
 
             @* ---- TARJETAS DE ESTADÍSTICAS ---- *@
             <div class="tarjetas-estadisticas" style="grid-template-columns: repeat(3, 1fr);">
-
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-azul">📄</div>
-                    <div class="estadistica-numero">2</div>
+                    <div class="estadistica-numero">@(listaMateriales?.Count ?? 0)</div>
                     <div class="estadistica-texto">Materiales Disponibles</div>
                 </div>
-
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-morado">📥</div>
-                    <div class="estadistica-numero">423</div>
+                    <div class="estadistica-numero">0</div>
                     <div class="estadistica-texto">Total Descargas</div>
                 </div>
-
                 <div class="tarjeta-estadistica">
                     <div class="estadistica-icono fondo-verde">📋</div>
-                    <div class="estadistica-numero">1</div>
-                    <div class="estadistica-texto">Eventos con Material</div>
+                    <div class="estadistica-numero">@(listaMateriales?.Count(m => m.Tipo == "PDF") ?? 0)</div>
+                    <div class="estadistica-texto">PDFs</div>
                 </div>
-
             </div>
 
             @* ---- BARRA DE BÚSQUEDA ---- *@
@@ -68,40 +66,36 @@
             @* ---- GRID DE MATERIALES ---- *@
             <div class="grid-materiales">
 
-                @foreach (var material in MaterialesFiltrados)
+                @if (listaMateriales == null)
                 {
-                    <div class="tarjeta-material">
-
-                        @* Ícono del tipo de archivo *@
-                        <div class="material-icono-contenedor">
-                            <div class="material-icono">📄</div>
-                            <span class="material-tipo-badge">@material.Tipo</span>
-                        </div>
-
-                        @* Información del material *@
-                        <div class="material-info">
-                            <h3 class="material-nombre">@material.Nombre</h3>
-
-                            <div class="material-detalles">
-                                <span><strong>Evento:</strong> @material.Evento</span>
-                                <span><strong>Tamaño:</strong> @material.Tamanio</span>
-                                <span><strong>Subido:</strong> @material.FechaSubida</span>
-                                <span><strong>Descargas:</strong> @material.Descargas</span>
+                    <p class="subtitulo-pagina">Cargando materiales...</p>
+                }
+                else if (!listaMateriales.Any())
+                {
+                    <p class="subtitulo-pagina">No hay materiales disponibles</p>
+                }
+                else
+                {
+                    @foreach (var material in MaterialesFiltrados)
+                    {
+                        <div class="tarjeta-material">
+                            <div class="material-icono-contenedor">
+                                <div class="material-icono">📄</div>
+                                <span class="material-tipo-badge">@material.Tipo</span>
                             </div>
-
-                            @* Botones Ver y Descargar *@
-                            <div class="material-botones">
-                                <button class="boton-ver-material">
-                                    👁 Ver
-                                </button>
-                                <button class="boton-descargar-material">
-                                    📥 Descargar
-                                </button>
+                            <div class="material-info">
+                                <h3 class="material-nombre">@material.Nombre</h3>
+                                <div class="material-detalles">
+                                    <span><strong>Evento:</strong> #@material.Id_Evento</span>
+                                    <span><strong>Subido:</strong> @material.FechaSubida.ToString("dd/MM/yyyy")</span>
+                                </div>
+                                <div class="material botones">
+                                    <button class="boton-ver-material">👁 Ver</button>
+                                    <button class="boton-descargar-material">📥 Descargar</button>
+                                </div>
                             </div>
-
                         </div>
-
-                    </div>
+                    }
                 }
 
             </div>
@@ -137,59 +131,44 @@
 
 @* ===================== C# - LA LÓGICA ===================== *@
 @code {
+    [Inject] private IRepository Repository { get; set; } = null!;
 
+    private string nombreUsuario = "";
+    private string emailUsuario = "";
     // Variable que guarda la fecha de hoy
     private string fechaHoy = "";
 
     // Variable que guarda lo que el usuario escribe en la búsqueda
     private string busqueda = "";
+    private List<Material>? listaMateriales;
 
-    // Clase que representa un material con todos sus datos
-    private class Material
-    {
-        public string Nombre { get; set; } = "";
-        public string Tipo { get; set; } = "";
-        // Evento al que pertenece el material
-        public string Evento { get; set; } = "";
-        public string Tamanio { get; set; } = "";
-        public string FechaSubida { get; set; } = "";
-        public int Descargas { get; set; }
-    }
-
-    // Lista de materiales de ejemplo
-    private List<Material> listaMateriales = new List<Material>
-    {
-        new Material
-        {
-            Nombre = "Presentación Keynote - IA",
-            Tipo = "pdf",
-            Evento = "Conferencia de Tecnología 2026",
-            Tamanio = "2.5 MB",
-            FechaSubida = "20/2/2026",
-            Descargas = 245
-        },
-        new Material
-        {
-            Nombre = "Guía Workshop ML",
-            Tipo = "pdf",
-            Evento = "Conferencia de Tecnología 2026",
-            Tamanio = "3.8 MB",
-            FechaSubida = "21/2/2026",
-            Descargas = 178
-        }
-    };
-
-    // Propiedad que filtra la lista según la búsqueda
-    private IEnumerable<Material> MaterialesFiltrados => listaMateriales
+    private IEnumerable<Material> MaterialesFiltrados =>
+        (listaMateriales ?? new List<Material>())
         .Where(m =>
             string.IsNullOrEmpty(busqueda) ||
-            m.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase) ||
-            m.Evento.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
+            m.Nombre.Contains(busqueda, StringComparison.OrdinalIgnoreCase));
 
     // OnInitialized se ejecuta cuando la página carga
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        nombreUsuario = await Sesion.ObtenerNombre();
+        emailUsuario = await Sesion.ObtenerEmail();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
+
+        await CargarMateriales();
+    }
+
+    private async Task CargarMateriales()
+    {
+        try
+        {
+            listaMateriales = await Repository.GetAsync<List<Material>>("api/materiales");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+            listaMateriales = new List<Material>();
+        }
     }
 }

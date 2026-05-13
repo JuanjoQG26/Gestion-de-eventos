@@ -2,6 +2,7 @@
    Se va a reutilizar en todas las páginas del asistente *@
 
 @inject NavigationManager Navegacion
+@inject GestionEventosFront.Service.SesionServicio Sesion
 
 @* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
 
@@ -22,7 +23,7 @@
     <div class="menu-usuario">
         <div class="menu-avatar">👤</div>
         <div class="menu-info-usuario">
-            <span class="menu-nombre-usuario">Asistente</span>
+            <span class="menu-nombre-usuario">@nombreUsuario</span>
             @* La etiqueta azul que dice "Asistente" *@
             <span class="menu-rol">Asistente</span>
         </div>
@@ -80,10 +81,14 @@
 
     // Variable que guarda la ruta actual para saber qué item del menú marcar como activo
     private string rutaActual = "";
+    private string nombreUsuario = "";
+    private string emailUsuario = "";
 
     // OnInitialized se ejecuta automáticamente cuando el componente carga
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        nombreUsuario = await Sesion.ObtenerNombre();
+        emailUsuario = await Sesion.ObtenerEmail();
         // Obtiene la ruta actual de la URL, por ejemplo "/dashboard-asistente"
         rutaActual = Navegacion.Uri.Replace(Navegacion.BaseUri, "/");
 

@@ -6,6 +6,7 @@
 @using GestionEventosModelo.Entidades
 
 @inject NavigationManager Navegacion
+@inject GestionEventosFront.Service.SesionServicio Sesion
 
 <div class="pagina-con-menu">
 
@@ -17,8 +18,8 @@
         <div class="barra-superior">
             <span class="barra-fecha">@fechaHoy</span>
             <div class="barra-usuario">
-                <span class="barra-nombre">Luis</span>
-                <span class="barra-email">luis@gmail.com</span>
+                <span class="barra-nombre">@nombreUsuario</span>
+                <span class="barra-email">@emailUsuario</span>
                 <div class="barra-avatar">👤</div>
             </div>
         </div>
@@ -218,6 +219,8 @@
 
     [Inject] private IRepository Repository { get; set; } = null!;
 
+    private string nombreUsuario = "";
+    private string emailUsuario = "";
     private string fechaHoy = "";
     private string busqueda = "";
     private string filtroEvento = "todos";
@@ -262,7 +265,7 @@
             "PDF" => "material-fondo-rojo",
             "PPT" => "material-fondo-azul",
             "DOC" => "material-fondo-morado",
-            
+
             _ => "material-fondo-azul"
         };
     }
@@ -270,6 +273,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        nombreUsuario = await Sesion.ObtenerNombre();
+        emailUsuario = await Sesion.ObtenerEmail();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
 

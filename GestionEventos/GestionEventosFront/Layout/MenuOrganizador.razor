@@ -2,6 +2,7 @@
    Se reutiliza en todas las páginas del organizador *@
 
 @inject NavigationManager Navegacion
+@inject GestionEventosFront.Service.SesionServicio Sesion
 
 <div class="menu-lateral">
 
@@ -19,7 +20,7 @@
     <div class="menu-usuario">
         <div class="menu-avatar">👤</div>
         <div class="menu-info-usuario">
-            <span class="menu-nombre-usuario">Luis</span>
+            <span class="menu-nombre-usuario">@nombreUsuario</span>
             @* Etiqueta que dice "Organizador" *@
             <span class="menu-rol menu-rol-organizador">Organizador</span>
         </div>
@@ -92,10 +93,13 @@
 
     // Variable que guarda la ruta actual
     private string rutaActual = "";
+    private string nombreUsuario = "";
 
     // Se ejecuta cuando el componente carga
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        nombreUsuario = await Sesion.ObtenerNombre();
+
         // Obtiene la ruta actual de la URL
         rutaActual = Navegacion.Uri.Replace(Navegacion.BaseUri, "/");
 
