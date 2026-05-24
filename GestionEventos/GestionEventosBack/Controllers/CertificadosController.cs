@@ -78,5 +78,14 @@ namespace GestionEventosBack.Controllers
             await _context.SaveChangesAsync();
             return Ok("Certificado eliminado correctamente");
         }
+
+        [HttpGet("inscripcion/{idInscripcion}")]
+        public async Task<IActionResult> ObtenerPorInscripcion(int idInscripcion)
+        {
+            var certificados = await _context.Certificados
+                .Where(c => c.Id_Inscripcion == idInscripcion)
+                .ToListAsync();
+            return Ok(certificados);
+        }
     }
 }

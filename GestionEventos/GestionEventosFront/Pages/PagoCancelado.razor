@@ -1,0 +1,16 @@
+﻿@page "/pago-cancelado"
+@inject NavigationManager Navegacion
+
+<div class="fondo-login">
+    <div class="contenedor-login">
+        <div class="tarjeta" style="text-align:center; padding: 60px 40px;">
+            <div style="font-size: 4rem;">❌</div>
+            <h2 class="titulo-tarjeta" style="color:#dc2626; margin-top:16px;">Pago Cancelado</h2>
+            <p class="subtitulo-tarjeta">El pago fue cancelado. Puedes intentarlo de nuevo.</p>
+            <button class="boton-principal" style="width:auto; padding: 12px 32px; margin-top:24px;"
+                    @onclick='() => Navegacion.NavigateTo("/mis-inscripciones")'>
+                Volver a Mis Inscripciones
+            </button>
+        </div>
+    </div>
+</div>

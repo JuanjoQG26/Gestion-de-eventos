@@ -7,6 +7,7 @@
 
 @inject NavigationManager Navegacion
 @inject GestionEventosFront.Service.SesionServicio Sesion
+@inject IJSRuntime JS
 
 @* ===================== HTML - LO QUE SE VE EN PANTALLA ===================== *@
 
@@ -114,8 +115,9 @@
                                 }
                                 else
                                 {
-                                    <button class="boton-inscripcion boton-pagar">
-                                        Completar Pago
+                                    <button class="boton-inscripcion boton-pagar"
+                                    @onclick="() => CompletarPago(ins)">
+                                        💳 Completar Pago con PayPal
                                     </button>
                                 }
                             </div>
@@ -145,6 +147,8 @@
 @code {
     [Inject] private IRepository Repository { get; set; } = null!;
 
+
+    private int idUsuario = 0;
     private string nombreUsuario = "";
     private string emailUsuario = "";
     // Variable que guarda la fecha de hoy
@@ -187,6 +191,7 @@
     {
         nombreUsuario = await Sesion.ObtenerNombre();
         emailUsuario = await Sesion.ObtenerEmail();
+        idUsuario = await Sesion.ObtenerId();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
                    new System.Globalization.CultureInfo("es-ES"));
         await CargarInscripciones();
@@ -196,7 +201,8 @@
     {
         try
         {
-            listaInscripciones = await Repository.GetAsync<List<Inscripcion>>("api/inscripciones");
+            listaInscripciones = await Repository.GetAsync<List<Inscripcion>>
+            ($"api/inscripciones/usuario/{idUsuario}");
         }
         catch (Exception ex)
         {
@@ -209,5 +215,29 @@
     private void NavegaA(string ruta)
     {
         Navegacion.NavigateTo(ruta);
+    }
+
+    private async Task CompletarPago(Inscripcion inscripcion)
+    {
+        try
+        {
+            // Llama al Back para crear la orden en PayPal
+            var respuesta = await Repository.PostAsync(
+            "api/paypal/crear-orden", new {IdInscripcion = inscripcion.Id_Inscripcion});
+
+            var data = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(
+                respuesta.ToString()!,
+                new System.Text.Json.JsonSerializerOptions{PropertyNameCaseInsensitive = true}
+            );
+
+            var approvalUrl = data.GetProperty("approvalUrl").GetString();
+
+            // Redirige al usuario a PayPal para aprobar el pago
+            await JS.InvokeVoidAsync("open", approvalUrl, "_self");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al procesar el pago: {ex.Message}");
+        }
     }
 }

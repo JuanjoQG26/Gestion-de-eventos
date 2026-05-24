@@ -171,5 +171,14 @@ namespace GestionEventosBack.Controllers
 
             return Ok("Evento eliminado correctamente");
         }
+
+        [HttpGet("organizador/{idOrganizador}")]
+        public async Task<IActionResult> ObtenerPorOrganizador(int idOrganizador)
+        {
+            var eventos = await _context.Eventos
+                .Where(e => e.Id_Organizador == idOrganizador)
+                .ToListAsync();
+            return Ok(eventos);
+        }
     }
 }

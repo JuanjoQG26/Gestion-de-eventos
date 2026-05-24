@@ -79,5 +79,14 @@ namespace GestionEventosBack.Controllers
             await _context.SaveChangesAsync();
             return Ok("Material eliminado correctamente");
         }
+
+        [HttpGet("evento/{idEvento}")]
+        public async Task<IActionResult> ObtenerPorEvento(int idEvento)
+        {
+            var materiales = await _context.Materiales
+                .Where(m => m.Id_Evento == idEvento)
+                .ToListAsync();
+            return Ok(materiales);
+        }
     }
 }

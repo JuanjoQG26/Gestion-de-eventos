@@ -218,6 +218,7 @@
 
     private string nombreUsuario = "";
     private string emailUsuario = "";
+    private int idOrganizador = 0;
 
     private string fechaHoy = "";
     private string busqueda = "";
@@ -251,6 +252,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        idOrganizador = await Sesion.ObtenerId();
         nombreUsuario = await Sesion.ObtenerNombre();
         emailUsuario = await Sesion.ObtenerEmail();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
@@ -262,7 +264,8 @@
     {
         try
         {
-            listaEventos = await Repository.GetAsync<List<Evento>>("api/eventos");
+            listaEventos = await Repository.GetAsync<List<Evento>>
+            ($"api/eventos/organizador/{idOrganizador}");
         }
         catch
         {
@@ -309,7 +312,7 @@
                     Precio = nuevoPrecio,
                     CupoTotal = nuevoCupo,
                     Estado = "Borrador",
-                    Id_Organizador = 1
+                    Id_Organizador = idOrganizador
                 };
 
 

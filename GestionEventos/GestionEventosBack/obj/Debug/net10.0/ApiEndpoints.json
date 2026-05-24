@@ -237,6 +237,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "GestionEventosBack.Controllers.CertificadosController",
+    "Method": "ObtenerPorInscripcion",
+    "RelativePath": "api/Certificados/inscripcion/{idInscripcion}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idInscripcion",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GestionEventosBack.Controllers.EventosController",
     "Method": "ObtenerTodos",
     "RelativePath": "api/Eventos",
@@ -325,6 +341,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.EventosController",
+    "Method": "ObtenerPorOrganizador",
+    "RelativePath": "api/Eventos/organizador/{idOrganizador}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idOrganizador",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -511,6 +543,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "GestionEventosBack.Controllers.InscripcionesController",
+    "Method": "ObtenerPorUsuario",
+    "RelativePath": "api/Inscripciones/usuario/{idUsuario}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idUsuario",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
     "Method": "ObtenerTodos",
     "RelativePath": "api/Materiales",
@@ -583,6 +631,22 @@
     "Parameters": [
       {
         "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.MaterialesController",
+    "Method": "ObtenerPorEvento",
+    "RelativePath": "api/Materiales/evento/{idEvento}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "idEvento",
         "Type": "System.Int32",
         "IsRequired": true
       }
@@ -664,6 +728,58 @@
         "Name": "id",
         "Type": "System.Int32",
         "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PayPalController",
+    "Method": "Cancelado",
+    "RelativePath": "api/PayPal/cancelado",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PayPalController",
+    "Method": "CrearOrden",
+    "RelativePath": "api/PayPal/crear-orden",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "GestionEventosBack.Controllers.PayPalController\u002BCrearOrdenDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "GestionEventosBack.Controllers.PayPalController",
+    "Method": "Exito",
+    "RelativePath": "api/PayPal/exito",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "token",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PayerID",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "idInscripcion",
+        "Type": "System.Int32",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []

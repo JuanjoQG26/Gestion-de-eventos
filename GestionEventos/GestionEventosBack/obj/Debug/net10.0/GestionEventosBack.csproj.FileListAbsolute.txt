@@ -164,3 +164,5 @@ C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosBa
 C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosBack\obj\Debug\net10.0\GestionEventosBack.pdb
 C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosBack\obj\Debug\net10.0\GestionEventosBack.genruntimeconfig.cache
 C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosBack\obj\Debug\net10.0\ref\GestionEventosBack.dll
+C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosBack\bin\Debug\net10.0\PayPalCheckoutSdk.dll
+C:\Users\Juan José\Documents\Gestion de Eventos\GestionEventos\GestionEventosBack\bin\Debug\net10.0\PayPalHttp-Dotnet.dll

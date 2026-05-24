@@ -380,6 +380,29 @@
         }
       }
     },
+    "/api/Certificados/inscripcion/{idInscripcion}": {
+      "get": {
+        "tags": [
+          "Certificados"
+        ],
+        "parameters": [
+          {
+            "name": "idInscripcion",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Eventos": {
       "get": {
         "tags": [
@@ -525,6 +548,29 @@
         "parameters": [
           {
             "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Eventos/organizador/{idOrganizador}": {
+      "get": {
+        "tags": [
+          "Eventos"
+        ],
+        "parameters": [
+          {
+            "name": "idOrganizador",
             "in": "path",
             "required": true,
             "schema": {
@@ -796,6 +842,29 @@
         }
       }
     },
+    "/api/Inscripciones/usuario/{idUsuario}": {
+      "get": {
+        "tags": [
+          "Inscripciones"
+        ],
+        "parameters": [
+          {
+            "name": "idUsuario",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Materiales": {
       "get": {
         "tags": [
@@ -906,6 +975,29 @@
         "parameters": [
           {
             "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Materiales/evento/{idEvento}": {
+      "get": {
+        "tags": [
+          "Materiales"
+        ],
+        "parameters": [
+          {
+            "name": "idEvento",
             "in": "path",
             "required": true,
             "schema": {
@@ -1038,6 +1130,85 @@
               "format": "int32"
             }
           }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PayPal/crear-orden": {
+      "post": {
+        "tags": [
+          "PayPal"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearOrdenDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearOrdenDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CrearOrdenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PayPal/exito": {
+      "get": {
+        "tags": [
+          "PayPal"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PayerID",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idInscripcion",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/PayPal/cancelado": {
+      "get": {
+        "tags": [
+          "PayPal"
         ],
         "responses": {
           "200": {
@@ -1368,6 +1539,16 @@
           },
           "inscripcion": {
             "$ref": "#/components/schemas/Inscripcion"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CrearOrdenDto": {
+        "type": "object",
+        "properties": {
+          "idInscripcion": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -1709,6 +1890,9 @@
     },
     {
       "name": "Pagos"
+    },
+    {
+      "name": "PayPal"
     },
     {
       "name": "Ponentes"

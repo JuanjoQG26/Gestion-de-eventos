@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "GestionEventosFront",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-w9/+dwuNPbPUUPZbWoL4MinCjkqTycyIBnq62Eo5rL8=",
+    "hash": "sha256-ef+buSWLVvSyfFOrIQAugFf8EID6uJHZAUJtC2kE2Is=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.rjbmzc4jpg.js"
@@ -1236,8 +1236,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "GestionEventosModelo.wasm",
-        "name": "GestionEventosModelo.v1kz0b0mb1.wasm",
-        "hash": "sha256-vSPpZoPuZjq42tLe994hCHGqOiZ7X2izheHdpIr8whE=",
+        "name": "GestionEventosModelo.kqytqdwwn6.wasm",
+        "hash": "sha256-5PwcM2Io7tSsPpkRibI7O8RnBGku6IftuScqyJF2Lt4=",
         "cache": "force-cache"
       },
       {
@@ -1248,22 +1248,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "GestionEventosFront.wasm",
-        "name": "GestionEventosFront.63dxvqxt4w.wasm",
-        "hash": "sha256-gjd5kBdIDTAhgEWwO8kvaTqpA8FM/tdaUet9DlUfGJ8=",
+        "name": "GestionEventosFront.t5a8hdq2ts.wasm",
+        "hash": "sha256-cQoFzCC2G84wXGF6Ssj8qvYk2ebGts7850ecgukB8y8=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "GestionEventosModelo.pdb",
-        "name": "GestionEventosModelo.rt4qxc5iyn.pdb",
-        "hash": "sha256-79tZcHJbrLsKexoSxVvD0pEjE2hIAhbzcsrU53heaMQ=",
+        "name": "GestionEventosModelo.eukta989yp.pdb",
+        "hash": "sha256-xtwjzMs5FfoFdUM4fUtLu/bEqEjTmZveIOLDv329aUY=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "GestionEventosFront.pdb",
-        "name": "GestionEventosFront.rvskz4xs4q.pdb",
-        "hash": "sha256-yY3p3PwyMNjOjLaO+Z0/xK+cwNsvYg5zyvnaxK06Nk8=",
+        "name": "GestionEventosFront.nklsw4zaxw.pdb",
+        "hash": "sha256-yUNOmSxRw1TgFOdZeDxU697N77zibrY9HvWbEoW2zME=",
         "cache": "force-cache"
       }
     ],

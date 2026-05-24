@@ -35,6 +35,9 @@ builder.Services.AddCors(options =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 //builder.Services.AddOpenApi();
 
+// Registra el servicio de PayPal
+builder.Services.AddHttpClient<GestionEventosBack.Pagos.PayPalServicio>();
+
 var app = builder.Build();
 
 // ---- SWAGGER EN DESARROLLO ----

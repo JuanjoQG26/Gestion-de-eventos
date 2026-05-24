@@ -2560,3 +2560,25 @@ GRID DE MATERIALES
     color: #6b7280;
     white-space: nowrap;
 }
+
+/* =============================================
+   BOTÓN INSCRIBIRSE
+   ============================================= */
+
+.boton-inscribirse {
+    width: 100%;
+    padding: 10px;
+    background: #1a56db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    margin-top: 12px;
+}
+
+    .boton-inscribirse:hover {
+        background: #1648c0;
+    }

@@ -97,6 +97,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/PagoCancelado.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFnb0NhbmNlbGFkby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/PagoExitoso.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGFnb0V4aXRvc28ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Juan José/Documents/Gestion de Eventos/GestionEventos/GestionEventosFront/Pages/Ponentes.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUG9uZW50ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 

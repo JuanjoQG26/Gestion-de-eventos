@@ -85,6 +85,7 @@
                     <div class="grid-eventos">
                         @foreach (var evento in EventosFiltrados)
                         {
+                            
                             <div class="tarjeta-evento-explorar">
                                 <div class="evento-imagen-contenedor">
                                     <div class="evento-imagen-placeholder">🎪</div>
@@ -100,6 +101,24 @@
                                         <span>📍 @evento.Lugar</span>
                                         <span class="evento-precio">💲 $@evento.Precio</span>
                                     </div>
+
+                                    <div class="barra-ocupacion-contenedor">
+                                        <span class="ocupacion-texto">Cupo</span>
+                                        <span class="ocupacion-porcentaje">@evento.CupoTotal disponibles</span>
+                                    </div>
+
+                                    <button class="boton-inscribirse" @onclick="() => Inscribirse(evento)">
+                                        ✅ Inscribirme
+                                    </button>
+
+                                    @if (!string.IsNullOrEmpty(mensajeExito) && mensajeExito == $"inscrito_{evento.Id_Evento}")
+                                    {
+                                        <p class="mensaje-exito">¡Inscripcion exitosa!</p>
+                                    }
+                                    @if (!string.IsNullOrEmpty(mensajeError) && mensajeError == $"error_{evento.Id_Evento}")
+                                    {
+                                        <p class="mensaje-error">Ya estas inscrito en este evento</p>
+                                    }
                                 </div>
                             </div>
                         }
@@ -129,7 +148,9 @@
 
 
     [Inject] private IRepository Repository { get; set; } = null!;
-
+    private string mensajeError = "";
+    private string mensajeExito = "";
+    private int idUsuario = 0;
     private string nombreUsuario = "";
     private string emailUsuario = "";
     private string fechaHoy = "";
@@ -148,6 +169,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+
+        idUsuario = await Sesion.ObtenerId();
         nombreUsuario = await Sesion.ObtenerNombre();
         emailUsuario = await Sesion.ObtenerEmail();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
@@ -160,6 +183,32 @@
         catch
         {
             listaEventos = new List<Evento>();
+        }
+    }
+
+    private async Task Inscribirse(Evento evento)
+    {
+        try
+        {
+            var inscripcion = new Inscripcion
+            {
+                Id_Usuario = idUsuario,
+                Id_Evento = evento.Id_Evento,
+                FechaInscripcion = DateTime.Now,
+                Estado = "Pendiente"
+            };
+
+            await Repository.PostAsync("api/inscripciones", inscripcion);
+
+            mensajeExito = $"inscrito_{evento.Id_Evento}";
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            mensajeExito = "";
+            mensajeError = $"error_{evento.Id_Evento}";
+            Console.WriteLine($"Error al inscribirse {ex.Message}");
+            StateHasChanged();
         }
     }
 

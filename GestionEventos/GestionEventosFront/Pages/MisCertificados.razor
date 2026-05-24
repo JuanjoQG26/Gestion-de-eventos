@@ -146,6 +146,7 @@
     [Inject] private IRepository Repository { get; set; } = null!;
 
     // Variable que guarda la fecha de hoy
+    private int idUsuario = 0;
     private string nombreUsuario = "";
     private string emailUsuario = "";
     private string fechaHoy = "";
@@ -163,6 +164,7 @@
     // OnInitialized se ejecuta cuando la página carga
     protected override async Task OnInitializedAsync()
     {
+        idUsuario = await Sesion.ObtenerId();
         nombreUsuario = await Sesion.ObtenerNombre();
         emailUsuario = await Sesion.ObtenerEmail();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
@@ -174,7 +176,28 @@
     {
         try
         {
-            certificados = await Repository.GetAsync<List<Certificado>>("api/certificados");
+            //certificados = await Repository.GetAsync<List<Certificado>>("api/certificados");
+            var inscripciones = await Repository.GetAsync<List<Inscripcion>>
+            ($"api/inscripciones/usuario/{idUsuario}");
+
+            certificados = new List<Certificado>();
+            foreach (var ins in inscripciones ?? new List<Inscripcion>())
+            {
+                try
+                {
+                    var certs = await Repository.GetAsync<List<Certificado>>
+                    ($"api/certificados/inscripcion/{ins.Id_Inscripcion}");
+
+                    if (certs != null)
+                    {
+                        certificados.AddRange(certs);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
         }
         catch (Exception ex)
         {

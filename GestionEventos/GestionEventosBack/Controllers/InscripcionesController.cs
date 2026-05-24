@@ -42,6 +42,15 @@ namespace GestionEventosBack.Controllers
         [HttpPost]
         public async Task<IActionResult> Crear([FromBody] Inscripcion inscripcion)
         {
+            var yainscrito = await _context.Inscripciones
+                .AnyAsync(i => i.Id_Usuario == inscripcion.Id_Usuario
+                && i.Id_Evento == inscripcion.Id_Evento
+                && i.Estado != "Cancelada");
+
+            if (yainscrito)
+            {
+                return BadRequest("Ya estas inscrito en este evento");
+            }
             
             inscripcion.FechaInscripcion = DateTime.Now;
             
@@ -85,6 +94,15 @@ namespace GestionEventosBack.Controllers
             _context.Inscripciones.Remove(inscripcion);
             await _context.SaveChangesAsync();
             return Ok("Inscripcion eliminada correctamente");
+        }
+
+        [HttpGet("usuario/{idUsuario}")]
+        public async Task<IActionResult> ObtenerPorUsuario(int idUsuario)
+        {
+            var inscripciones = await _context.Inscripciones
+                .Where(i => i.Id_Usuario == idUsuario)
+                .ToListAsync();
+            return Ok(inscripciones);
         }
     }
 }

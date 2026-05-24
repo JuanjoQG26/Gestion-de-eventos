@@ -133,6 +133,7 @@
 @code {
     [Inject] private IRepository Repository { get; set; } = null!;
 
+    private int idUsuario = 0;
     private string nombreUsuario = "";
     private string emailUsuario = "";
     // Variable que guarda la fecha de hoy
@@ -151,6 +152,7 @@
     // OnInitialized se ejecuta cuando la página carga
     protected override async Task OnInitializedAsync()
     {
+        idUsuario = await Sesion.ObtenerId();
         nombreUsuario = await Sesion.ObtenerNombre();
         emailUsuario = await Sesion.ObtenerEmail();
         fechaHoy = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy",
@@ -163,7 +165,27 @@
     {
         try
         {
-            listaMateriales = await Repository.GetAsync<List<Material>>("api/materiales");
+            var inscripciones = await Repository.GetAsync<List<Material>>
+            ($"api/materiales/usuario/{idUsuario}");
+
+            listaMateriales = new List<Material>();
+            foreach (var ins in inscripciones ?? new List<Material>())
+            {
+                try
+                {
+                    var mats = await Repository.GetAsync<List<Material>>
+                    ($"api/materiales/evento/{ins.Id_Evento}");
+                    if (mats != null)
+                    {
+                        listaMateriales.AddRange(mats);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    listaMateriales = new List<Material>();
+                }
+            }
         }
         catch (Exception ex)
         {
