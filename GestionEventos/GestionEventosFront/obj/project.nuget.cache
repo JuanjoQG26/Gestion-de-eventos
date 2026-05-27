@@ -1,60 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "CKF0QENQ8M4=",
+  "dgSpecHash": "Ih70ei1KHvk=",
   "success": true,
   "projectFilePath": "C:\\Users\\Juan José\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\GestionEventosFront.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.app.internal.assets\\10.0.8\\microsoft.aspnetcore.app.internal.assets.10.0.8.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.authorization\\10.0.6\\microsoft.aspnetcore.authorization.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.components\\10.0.6\\microsoft.aspnetcore.components.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\10.0.6\\microsoft.aspnetcore.components.analyzers.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.components.forms\\10.0.6\\microsoft.aspnetcore.components.forms.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.components.web\\10.0.6\\microsoft.aspnetcore.components.web.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly\\10.0.6\\microsoft.aspnetcore.components.webassembly.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.components.webassembly.devserver\\10.0.6\\microsoft.aspnetcore.components.webassembly.devserver.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.aspnetcore.metadata\\10.0.6\\microsoft.aspnetcore.metadata.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.6\\microsoft.extensions.configuration.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\10.0.6\\microsoft.extensions.configuration.abstractions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.configuration.binder\\10.0.6\\microsoft.extensions.configuration.binder.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\10.0.6\\microsoft.extensions.configuration.fileextensions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.configuration.json\\10.0.6\\microsoft.extensions.configuration.json.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\10.0.6\\microsoft.extensions.dependencyinjection.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\10.0.6\\microsoft.extensions.dependencyinjection.abstractions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.diagnostics\\10.0.6\\microsoft.extensions.diagnostics.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.diagnostics.abstractions\\10.0.6\\microsoft.extensions.diagnostics.abstractions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\10.0.6\\microsoft.extensions.fileproviders.abstractions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\10.0.6\\microsoft.extensions.fileproviders.physical.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\10.0.6\\microsoft.extensions.filesystemglobbing.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.logging\\10.0.6\\microsoft.extensions.logging.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\10.0.6\\microsoft.extensions.logging.abstractions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.options\\10.0.6\\microsoft.extensions.options.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.options.configurationextensions\\10.0.6\\microsoft.extensions.options.configurationextensions.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.6\\microsoft.extensions.primitives.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.extensions.validation\\10.0.6\\microsoft.extensions.validation.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.jsinterop\\10.0.6\\microsoft.jsinterop.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.jsinterop.webassembly\\10.0.6\\microsoft.jsinterop.webassembly.10.0.6.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.8\\microsoft.net.illink.tasks.10.0.8.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.net.sdk.webassembly.pack\\10.0.8\\microsoft.net.sdk.webassembly.pack.10.0.8.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.1\\microsoft.netcore.platforms.1.1.1.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\runtime.native.system\\4.3.0\\runtime.native.system.4.3.0.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\runtime.native.system.net.http\\4.3.0\\runtime.native.system.net.http.4.3.0.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\runtime.native.system.security.cryptography.openssl\\4.3.2\\runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\system.net.http\\4.3.4\\system.net.http.4.3.4.nupkg.sha512",
-    "C:\\Users\\Juan José\\.nuget\\packages\\microsoft.netcore.app.runtime.mono.browser-wasm\\10.0.8\\microsoft.netcore.app.runtime.mono.browser-wasm.10.0.8.nupkg.sha512"
-  ],
-  "logs": [
-    {
-      "code": "NU1510",
-      "level": "Warning",
-      "message": "PackageReference System.Net.Http no se eliminará. Considere la posibilidad de quitar este paquete de las dependencias, ya que es probable que no sea necesario.",
-      "projectPath": "C:\\Users\\Juan José\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\GestionEventosFront.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\Juan José\\Documents\\Gestion de Eventos\\GestionEventos\\GestionEventosFront\\GestionEventosFront.csproj",
-      "libraryId": "System.Net.Http",
-      "targetGraphs": [
-        "net10.0"
-      ]
-    }
-  ]
+  "expectedPackageFiles": [],
+  "logs": []
 }
